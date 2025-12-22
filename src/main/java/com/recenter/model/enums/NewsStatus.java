@@ -9,10 +9,10 @@ public enum NewsStatus {
     public String toDb() { return db; }
     public static NewsStatus fromDb(String v) {
         if (v == null) return null;
-        switch(v.toLowerCase()) {
-            case "draft": return DRAFT;
-            case "published": return PUBLISHED;
-            default: throw new IllegalArgumentException("Unknown NewsStatus: " + v);
-        }
+        return switch (v.toLowerCase()) {
+            case "draft" -> DRAFT;
+            case "published" -> PUBLISHED;
+            default -> throw new IllegalArgumentException("Unknown NewsStatus: " + v);
+        };
     }
 }

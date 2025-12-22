@@ -9,10 +9,10 @@ public enum DiscountType {
     public String toDb() { return db; }
     public static DiscountType fromDb(String v) {
         if (v == null) return null;
-        switch(v.toLowerCase()) {
-            case "percent": return PERCENT;
-            case "fixed": return FIXED;
-            default: throw new IllegalArgumentException("Unknown DiscountType: " + v);
-        }
+        return switch (v.toLowerCase()) {
+            case "percent" -> PERCENT;
+            case "fixed" -> FIXED;
+            default -> throw new IllegalArgumentException("Unknown DiscountType: " + v);
+        };
     }
 }

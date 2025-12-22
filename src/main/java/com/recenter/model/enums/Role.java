@@ -13,11 +13,11 @@ public enum Role {
 
     public static Role fromDb(String db) {
         if (db == null) return null;
-        switch(db.toLowerCase()) {
-            case "client": return CLIENT;
-            case "manager": return MANAGER;
-            case "admin": return ADMIN;
-            default: throw new IllegalArgumentException("Unknown role: " + db);
-        }
+        return switch (db.toLowerCase()) {
+            case "client" -> CLIENT;
+            case "manager" -> MANAGER;
+            case "admin" -> ADMIN;
+            default -> throw new IllegalArgumentException("Unknown role: " + db);
+        };
     }
 }

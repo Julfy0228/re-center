@@ -10,11 +10,11 @@ public enum PaymentStatus {
     public String toDb() { return db; }
     public static PaymentStatus fromDb(String v) {
         if (v == null) return null;
-        switch(v.toLowerCase()) {
-            case "pending": return PENDING;
-            case "paid": return PAID;
-            case "cancelled": return CANCELLED;
-            default: throw new IllegalArgumentException("Unknown PaymentStatus: " + v);
-        }
+        return switch (v.toLowerCase()) {
+            case "pending" -> PENDING;
+            case "paid" -> PAID;
+            case "cancelled" -> CANCELLED;
+            default -> throw new IllegalArgumentException("Unknown PaymentStatus: " + v);
+        };
     }
 }

@@ -1,6 +1,5 @@
-// Toggle theme script: toggles class 'theme-dark' on <html> and persists choice in localStorage
 (function(){
-    const KEY = 'site-theme'; // 'dark' or 'light'
+    const KEY = 'site-theme';
     const toggleId = 'theme-toggle';
 
     function applyTheme(theme) {
@@ -16,12 +15,10 @@
         try { localStorage.setItem(KEY, theme); } catch(e){}
     }
 
-    // init on DOMContentLoaded
     document.addEventListener('DOMContentLoaded', function(){
         const btn = document.getElementById(toggleId);
         if (!btn) return;
 
-        // set initial from storage or from prefers-color-scheme
         let theme = getStored();
         if (!theme) {
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;

@@ -11,12 +11,12 @@ public enum NotificationType {
     public String toDb() { return db; }
     public static NotificationType fromDb(String v) {
         if (v == null) return null;
-        switch(v.toLowerCase()) {
-            case "booking": return BOOKING;
-            case "payment": return PAYMENT;
-            case "promotion": return PROMOTION;
-            case "system": return SYSTEM;
-            default: throw new IllegalArgumentException("Unknown NotificationType: " + v);
-        }
+        return switch (v.toLowerCase()) {
+            case "booking" -> BOOKING;
+            case "payment" -> PAYMENT;
+            case "promotion" -> PROMOTION;
+            case "system" -> SYSTEM;
+            default -> throw new IllegalArgumentException("Unknown NotificationType: " + v);
+        };
     }
 }
