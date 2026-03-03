@@ -1,8 +1,10 @@
 package com.recenter.controllers;
 
 import com.recenter.dto.*;
-import com.recenter.repository.NewsRepository;
-import com.recenter.repository.ServiceRepository;
+import com.recenter.entity.News;
+import com.recenter.entity.Service;
+import com.recenter.repository.NewsJpaRepository;
+import com.recenter.repository.ServiceJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +14,8 @@ import java.time.LocalDateTime;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    @Autowired private ServiceRepository serviceRepository;
-    @Autowired private NewsRepository newsRepository;
+    @Autowired private ServiceJpaRepository serviceJpaRepository;
+    @Autowired private NewsJpaRepository newsJpaRepository;
 
     @GetMapping
     public String dashboard(Model model) {
@@ -29,8 +31,16 @@ public class AdminController {
     }
 
     @PostMapping("/services/add")
-    public String processAddService(@ModelAttribute ServiceDetailDto service) {
-        serviceRepository.save(service);
+    public String processAddService(@ModelAttribute ServiceDetailDto serviceDto) {
+        Service service = new Service(
+            serviceDto.getTitle(),
+            serviceDto.getDescription(),
+            serviceDto.getBasePrice() != null ? serviceDto.getBasePrice().doubleValue() : 0.0,
+            serviceDto.getServiceType(),
+            serviceDto.getMinCapacity(),
+            serviceDto.getMaxCapacity()
+        );
+        serviceJpaRepository.save(service);
         return "redirect:/services";
     }
 
@@ -40,9 +50,13 @@ public class AdminController {
     }
 
     @PostMapping("/news/add")
-    public String processAddNews(@ModelAttribute NewsDto news) {
-        news.setPublicationDate(LocalDateTime.now());
-        newsRepository.save(news);
+    public String processAddNews(@ModelAttribute NewsDto newsDto) {
+        News news = new News(
+            newsDto.getTitle(),
+            newsDto.getContent(),
+            LocalDateTime.now()
+        );
+        newsJpaRepository.save(news);
         return "redirect:/news";
     }
 }

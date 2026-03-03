@@ -1,6 +1,6 @@
 package com.recenter.controllers;
 
-import com.recenter.repository.NewsRepository;
+import com.recenter.repository.NewsJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class NewsController {
 
     @Autowired
-    private NewsRepository newsRepository;
+    private NewsJpaRepository newsJpaRepository;
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("newsList", newsRepository.findAll());
+        model.addAttribute("newsList", newsJpaRepository.findAllByOrderByPublicationDateDesc());
         return "news/list";
     }
 }
