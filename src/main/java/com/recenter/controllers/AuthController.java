@@ -2,8 +2,8 @@ package com.recenter.controllers;
 
 import com.recenter.dto.*;
 import com.recenter.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,19 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired private UserService userService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/login")
-    public String loginPage() { return "auth/login"; }
-
-    @PostMapping("/login")
-    public String processLogin(@ModelAttribute LoginRequestDto loginDto, HttpSession session, Model model) {
-        if (userService.checkPassword(loginDto.getEmail(), loginDto.getPassword())) {
-            UserResponseDto user = userService.findByEmail(loginDto.getEmail());
-            session.setAttribute("user", user);
-            return "ADMIN".equals(user.getRole()) ? "redirect:/admin" : "redirect:/cabinet";
-        }
-        model.addAttribute("error", "Неверный логин или пароль");
+    public String loginPage() {
         return "auth/login";
     }
 
@@ -47,8 +39,8 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
+    public String logout() {
+        SecurityContextHolder.clearContext();
         return "redirect:/";
     }
 }

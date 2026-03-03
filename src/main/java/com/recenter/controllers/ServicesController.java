@@ -3,7 +3,6 @@ package com.recenter.controllers;
 import com.recenter.dto.BookingRequestDto;
 import com.recenter.dto.ServiceDetailDto;
 import com.recenter.repository.ServiceRepository;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,13 +36,7 @@ public class ServicesController {
 
     @PostMapping("/{id}/book")
     public String book(@PathVariable("id") Long id,
-                       @ModelAttribute BookingRequestDto bookingRequest,
-                       HttpSession session) {
-
-        if (session.getAttribute("user") == null) {
-            return "redirect:/auth/login";
-        }
-
+                       @ModelAttribute BookingRequestDto bookingRequest) {
         System.out.println("Пользователь хочет забронировать услугу ID: " + id);
 
         return "redirect:/cabinet";

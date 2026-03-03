@@ -28,7 +28,7 @@
             <form action="${pageContext.request.contextPath}/auth/login" method="post">
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="text" name="email" required>
+                    <input type="text" name="email" required autofocus>
                 </div>
                 <div class="form-group">
                     <label>Пароль</label>

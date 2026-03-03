@@ -3,6 +3,8 @@ package com.recenter.config;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ public class DatabaseInitializer {
     private JdbcTemplate jdbcTemplate;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostConstruct
     public void init() {
@@ -63,14 +66,16 @@ public class DatabaseInitializer {
     private void seedUsers() {
         Integer count = jdbcTemplate.queryForObject("SELECT count(*) FROM users WHERE email = 'admin'", Integer.class);
         if (count != null && count == 0) {
+            String encodedPassword = passwordEncoder.encode("admin");
             jdbcTemplate.update("INSERT INTO users (email, password, first_name, role) VALUES (?, ?, ?, ?)",
-                    "admin", "admin", "Администратор", "ADMIN");
+                    "admin", encodedPassword, "Администратор", "ADMIN");
         }
 
         Integer clientCount = jdbcTemplate.queryForObject("SELECT count(*) FROM users WHERE email = 'ivan@mail.ru'", Integer.class);
         if (clientCount != null && clientCount == 0) {
+            String encodedPassword = passwordEncoder.encode("123");
             jdbcTemplate.update("INSERT INTO users (email, password, first_name, last_name, phone, role) VALUES (?, ?, ?, ?, ?, ?)",
-                    "ivan@mail.ru", "123", "Иван", "Петров", "+79991234567", "CLIENT");
+                    "ivan@mail.ru", encodedPassword, "Иван", "Петров", "+79991234567", "CLIENT");
         }
     }
 

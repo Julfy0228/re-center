@@ -1,5 +1,5 @@
+C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\config\AppInitializer.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\config\DatabaseInitializer.java
-C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\config\WebAppInitializer.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\config\WebConfig.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\controllers\AdminController.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\controllers\AuthController.java
@@ -49,4 +49,6 @@ C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Сем
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\repository\NewsRepository.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\repository\ServiceRepository.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\repository\UserRepository.java
+C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\security\CustomUserDetailsService.java
+C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\security\SecurityConfig.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\service\UserService.java

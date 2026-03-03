@@ -1,8 +1,8 @@
 package com.recenter.controllers;
 
 import com.recenter.dto.UserResponseDto;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +21,13 @@ public class CabinetController {
     private UserService userService;
 
     @GetMapping
-    public String index(HttpSession session, Model model) {
-        if (session.getAttribute("user") == null) return "redirect:/auth/login";
+    public String index(Model model) {
         model.addAttribute("bookings", new ArrayList<>());
         return "user/cabinet";
     }
 
     @GetMapping("/profile")
-    public String profile(HttpSession session) {
-        if (session.getAttribute("user") == null) return "redirect:/auth/login";
+    public String profile() {
         return "user/profile";
     }
 
@@ -37,8 +35,9 @@ public class CabinetController {
     public String updateProfile(@RequestParam("firstName") String firstName,
                                 @RequestParam("lastName") String lastName,
                                 @RequestParam("phone") String phone,
-                                HttpSession session) {
-        UserResponseDto user = (UserResponseDto) session.getAttribute("user");
+                                Authentication authentication) {
+        String email = authentication.getName();
+        UserResponseDto user = userService.findByEmail(email);
         if (user != null) {
             user.setFirstName(firstName);
             user.setLastName(lastName);
@@ -49,8 +48,7 @@ public class CabinetController {
     }
 
     @GetMapping("/history")
-    public String history(HttpSession session) {
-        if (session.getAttribute("user") == null) return "redirect:/auth/login";
+    public String history() {
         return "user/history";
     }
 }
