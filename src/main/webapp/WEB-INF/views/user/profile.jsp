@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html>
 <head>
@@ -30,19 +31,20 @@
                     <form action="${pageContext.request.contextPath}/cabinet/profile" method="post">
                         <div class="form-group">
                             <label>Имя</label>
-                            <input type="text" name="firstName" value="${sessionScope.user.firstName}">
+                            <input type="text" name="firstName" value="">
                         </div>
                         <div class="form-group">
                             <label>Фамилия</label>
-                            <input type="text" name="lastName" value="${sessionScope.user.lastName}">
+                            <input type="text" name="lastName" value="">
                         </div>
                         <div class="form-group">
                             <label>Телефон</label>
-                            <input type="text" name="phone" value="${sessionScope.user.phone}">
+                            <input type="text" name="phone" value="">
                         </div>
                         <div class="form-group">
                             <label>Email (нельзя изменить)</label>
-                            <input type="text" value="${sessionScope.user.email}" disabled style="background: #eee;">
+                            <sec:authentication property="principal.username" var="email" />
+                            <input type="text" value="${email}" disabled style="background: #eee;">
                         </div>
                         <button type="submit" style="width: auto;">Сохранить изменения</button>
                     </form>

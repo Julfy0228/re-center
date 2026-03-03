@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <header>
     <a href="${pageContext.request.contextPath}/" class="logo">
@@ -13,26 +14,28 @@
         <a href="${pageContext.request.contextPath}/news">Новости</a>
         <a href="${pageContext.request.contextPath}/contacts">Контакты</a>
 
-        <c:choose>
-            <c:when test="${not empty sessionScope.user}">
-                <div class="user-block">
-                    <c:if test="${sessionScope.user.role == 'ADMIN'}">
-                         <a href="${pageContext.request.contextPath}/admin" style="color:#e74c3c; margin-right: 15px;">Админка</a>
-                    </c:if>
+        <sec:authorize access="isAnonymous()">
+            <a href="${pageContext.request.contextPath}/auth/login" class="btn-small">Войти</a>
+        </sec:authorize>
 
-                    <a href="${pageContext.request.contextPath}/cabinet" class="user-profile-link">
-                        <span>${sessionScope.user.firstName}</span>
-                        <div class="avatar-circle">
-                            ${sessionScope.user.firstName.charAt(0)}
-                        </div>
-                    </a>
+        <sec:authorize access="isAuthenticated()">
+            <div class="user-block">
+                <sec:authorize access="hasRole('ADMIN')">
+                    <a href="${pageContext.request.contextPath}/admin" style="color:#e74c3c; margin-right: 15px;">Админка</a>
+                </sec:authorize>
 
-                    <a href="${pageContext.request.contextPath}/auth/logout" style="font-size: 0.8em; margin-left: 10px; color: #888; text-decoration: none;">(Выход)</a>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <a href="${pageContext.request.contextPath}/auth/login" class="btn-small">Войти</a>
-            </c:otherwise>
-        </c:choose>
+                <a href="${pageContext.request.contextPath}/cabinet" class="user-profile-link">
+                    <sec:authentication property="principal.username" var="userEmail" />
+                    <span>${userEmail}</span>
+                    <div class="avatar-circle">
+                        ${fn:substring(userEmail, 0, 1)}
+                    </div>
+                </a>
+
+                <form action="${pageContext.request.contextPath}/auth/logout" method="post" style="display:inline;">
+                    <button type="submit" style="all:unset; cursor:pointer; font-size: 0.8em; margin-left: 10px; color: #888; text-decoration: none;">(Выход)</button>
+                </form>
+            </div>
+        </sec:authorize>
     </nav>
 </header>

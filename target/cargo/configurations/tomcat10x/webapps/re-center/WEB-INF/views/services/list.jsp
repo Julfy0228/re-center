@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html>
 <head>
@@ -11,6 +12,11 @@
 
     <main>
         <h1>Наши услуги</h1>
+        <div style="margin-bottom: 15px;">
+            <sec:authorize access="hasRole('ADMIN')">
+                <a href="${pageContext.request.contextPath}/admin/services/add" class="btn-small" style="background: var(--primary); color: white;">+ Добавить услугу</a>
+            </sec:authorize>
+        </div>
         <div class="grid">
             <c:forEach var="service" items="${services}">
                 <div class="card">
