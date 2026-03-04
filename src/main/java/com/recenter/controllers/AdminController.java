@@ -1,48 +1,49 @@
 package com.recenter.controllers;
 
 import com.recenter.dto.*;
+import com.recenter.entity.News;
+import com.recenter.entity.Service;
+import com.recenter.entity.User;
+import com.recenter.repository.BookingRepository;
+import com.recenter.repository.NewsRepository;
+import com.recenter.repository.ServiceRepository;
+import com.recenter.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.transaction.support.TransactionTemplate;
-import org.springframework.transaction.PlatformTransactionManager;
+import java.util.Optional;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private UserRepository userRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
+
+    @Autowired
+    private NewsRepository newsRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    private final TransactionTemplate txTemplate;
-
-    @Autowired
-    public AdminController(PlatformTransactionManager transactionManager) {
-        this.txTemplate = new TransactionTemplate(transactionManager);
-    }
-
     @GetMapping
     public String dashboard(Model model) {
-        Integer newBookingsCount = jdbcTemplate.queryForObject(
-                "SELECT count(*) FROM bookings WHERE status = 'CREATED'",
-                Integer.class
-        );
-        Double revenue = jdbcTemplate.queryForObject(
-                "SELECT COALESCE(SUM(total_price), 0) FROM bookings WHERE status = 'PAID'",
-                Double.class
-        );
+        long newBookingsCount = bookingRepository.countPendingBookings();
+        Double revenue = bookingRepository.sumConfirmedBookingsRevenue();
 
-        model.addAttribute("newBookingsCount", newBookingsCount != null ? newBookingsCount : 0);
+        model.addAttribute("newBookingsCount", newBookingsCount);
         model.addAttribute("revenue", revenue != null ? revenue : 0);
         model.addAttribute("freeRooms", 0);
         return "admin/dashboard";
@@ -52,10 +53,8 @@ public class AdminController {
     public String users(Model model,
                         @RequestParam(value = "created", required = false) String created,
                         @RequestParam(value = "error", required = false) String error) {
-        List<Map<String, Object>> users = jdbcTemplate.queryForList(
-                "SELECT id, email, first_name, last_name, phone, role, created_at FROM users ORDER BY id"
-        );
-        model.addAttribute("users", users);
+        List<User> userList = userRepository.findAll();
+        model.addAttribute("users", userList);
         model.addAttribute("created", created);
         model.addAttribute("error", error);
         return "admin/users";
@@ -84,17 +83,11 @@ public class AdminController {
         }
 
         try {
-            txTemplate.executeWithoutResult(status -> jdbcTemplate.update(
-                    "INSERT INTO users (email, password, first_name, last_name, phone, role, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    email.trim(),
-                    passwordEncoder.encode(password),
-                    firstName,
-                    lastName,
-                    phone,
-                    normalizedRole,
-                    LocalDateTime.now()
-            ));
-        } catch (DuplicateKeyException ex) {
+            User user = new User(email.trim(), passwordEncoder.encode(password), firstName, lastName, normalizedRole);
+            user.setPhone(phone);
+            user.setCreatedAt(LocalDateTime.now());
+            userRepository.save(user);
+        } catch (DataIntegrityViolationException ex) {
             return "redirect:/admin/users?error=duplicate";
         }
 
@@ -112,7 +105,12 @@ public class AdminController {
             return "redirect:/admin/users";
         }
 
-        txTemplate.executeWithoutResult(status -> jdbcTemplate.update("UPDATE users SET role = ? WHERE id = ?", normalized, id));
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setRole(normalized);
+            userRepository.save(user);
+        }
         return "redirect:/admin/users";
     }
 
@@ -124,27 +122,22 @@ public class AdminController {
 
         Long currentUserId = null;
         if (authentication != null && authentication.getName() != null) {
-            currentUserId = jdbcTemplate.queryForObject(
-                    "SELECT id FROM users WHERE email = ?",
-                    Long.class,
-                    authentication.getName()
-            );
+            Optional<User> currentUser = userRepository.findByEmail(authentication.getName());
+            if (currentUser.isPresent()) {
+                currentUserId = currentUser.get().getId();
+            }
         }
 
         if (currentUserId != null && currentUserId.equals(id)) {
             return "redirect:/admin/users";
         }
 
-        String role = jdbcTemplate.queryForObject("SELECT role FROM users WHERE id = ?", String.class, id);
-        if (role != null && role.trim().equalsIgnoreCase("ADMIN")) {
+        Optional<User> userOpt = userRepository.findById(id);
+        if (userOpt.isPresent() && "ADMIN".equalsIgnoreCase(userOpt.get().getRole())) {
             return "redirect:/admin/users";
         }
 
-        txTemplate.executeWithoutResult(status -> {
-            jdbcTemplate.update("DELETE FROM bookings WHERE user_id = ?", id);
-            jdbcTemplate.update("DELETE FROM users WHERE id = ?", id);
-        });
-
+        userRepository.deleteById(id);
         return "redirect:/admin/users";
     }
 
@@ -155,8 +148,7 @@ public class AdminController {
 
     @PostMapping("/services/add")
     public String processAddService(@ModelAttribute ServiceDetailDto serviceDto) {
-        jdbcTemplate.update(
-                "INSERT INTO services (title, description, base_price, service_type, min_capacity, max_capacity) VALUES (?, ?, ?, ?, ?, ?)",
+        Service service = new Service(
                 serviceDto.getTitle(),
                 serviceDto.getDescription(),
                 serviceDto.getBasePrice() != null ? serviceDto.getBasePrice().doubleValue() : null,
@@ -164,6 +156,7 @@ public class AdminController {
                 serviceDto.getMinCapacity(),
                 serviceDto.getMaxCapacity()
         );
+        serviceRepository.save(service);
         return "redirect:/services";
     }
 
@@ -174,12 +167,11 @@ public class AdminController {
 
     @PostMapping("/news/add")
     public String processAddNews(@ModelAttribute NewsDto newsDto) {
-        jdbcTemplate.update(
-                "INSERT INTO news (title, content, publication_date) VALUES (?, ?, ?)",
-                newsDto.getTitle(),
-                newsDto.getContent(),
-                LocalDateTime.now().toString()
-        );
+        News news = new News();
+        news.setTitle(newsDto.getTitle());
+        news.setContent(newsDto.getContent());
+        news.setPublicationDate(LocalDateTime.now());
+        newsRepository.save(news);
         return "redirect:/news";
     }
 }

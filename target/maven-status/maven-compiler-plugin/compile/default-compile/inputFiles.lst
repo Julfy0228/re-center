@@ -53,6 +53,10 @@ C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Сем
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\model\Service.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\model\User.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\model\UserDiscount.java
+C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\repository\BookingRepository.java
+C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\repository\NewsRepository.java
+C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\repository\ServiceRepository.java
+C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\repository\UserRepository.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\security\CustomUserDetailsService.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\security\SecurityConfig.java
 C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center\src\main\java\com\recenter\service\UserService.java

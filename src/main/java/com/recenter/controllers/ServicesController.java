@@ -1,57 +1,52 @@
 package com.recenter.controllers;
 
 import com.recenter.dto.BookingRequestDto;
+import com.recenter.entity.Booking;
 import com.recenter.entity.Service;
+import com.recenter.entity.User;
+import com.recenter.repository.BookingRepository;
+import com.recenter.repository.ServiceRepository;
+import com.recenter.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/services")
 public class ServicesController {
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    private final TransactionTemplate txTemplate;
+    private ServiceRepository serviceRepository;
 
     @Autowired
-    public ServicesController(PlatformTransactionManager transactionManager) {
-        this.txTemplate = new TransactionTemplate(transactionManager);
-    }
+    private UserRepository userRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute(
-                "services",
-                jdbcTemplate.query("SELECT * FROM services", new BeanPropertyRowMapper<>(Service.class))
-        );
+        List<Service> services = serviceRepository.findAll();
+        model.addAttribute("services", services);
         return "services/list";
     }
 
     @GetMapping("/{id}")
     @SuppressWarnings("null")
     public String detail(@PathVariable("id") Long id, Model model) {
-        Service service;
-        try {
-            service = jdbcTemplate.queryForObject(
-                    "SELECT * FROM services WHERE id = ?",
-                    new BeanPropertyRowMapper<>(Service.class),
-                    id
-            );
-        } catch (Exception e) {
+        Optional<Service> serviceOpt = serviceRepository.findById(id);
+        if (serviceOpt.isEmpty()) {
             return "errors/404";
         }
-        model.addAttribute("service", service);
+        model.addAttribute("service", serviceOpt.get());
         model.addAttribute("bookingRequest", new BookingRequestDto());
         return "services/detail";
     }
@@ -66,25 +61,30 @@ public class ServicesController {
         }
 
         String email = authentication.getName();
-        Long userId = jdbcTemplate.queryForObject("SELECT id FROM users WHERE email = ?", Long.class, email);
+        Optional<User> userOpt = userRepository.findByEmail(email);
 
-        if (userId == null) {
+        if (userOpt.isEmpty()) {
             return "redirect:/auth/login";
         }
 
-        String serviceType = jdbcTemplate.queryForObject(
-                "SELECT service_type FROM services WHERE id = ?",
-                String.class,
-                id
-        );
+        Optional<Service> serviceOpt = serviceRepository.findById(id);
+        if (serviceOpt.isEmpty()) {
+            return "redirect:/services";
+        }
 
+        Service service = serviceOpt.get();
         LocalDate start = bookingRequest.getStartDate() != null ? bookingRequest.getStartDate() : LocalDate.now();
         LocalDate end = bookingRequest.getEndDate() != null ? bookingRequest.getEndDate() : start;
 
-        Double basePrice = jdbcTemplate.queryForObject("SELECT base_price FROM services WHERE id = ?", Double.class, id);
+        Double basePrice = service.getBasePrice();
         double totalPrice;
 
-        if (serviceType != null && serviceType.trim().equalsIgnoreCase("HOURLY")) {
+        Booking booking = new Booking();
+        booking.setUser(userOpt.get());
+        booking.setService(service);
+        booking.setStatus("CREATED");
+
+        if (service.getServiceType() != null && service.getServiceType().trim().equalsIgnoreCase("HOURLY")) {
             LocalTime timeFrom = bookingRequest.getTimeFrom();
             LocalTime timeTo = bookingRequest.getTimeTo();
             if (timeFrom == null || timeTo == null) {
@@ -99,33 +99,19 @@ public class ServicesController {
             double pricePerHour = basePrice != null ? basePrice : 0.0;
             totalPrice = pricePerHour * hours;
 
-            String startValue = start + " " + timeFrom;
-            String endValue = start + " " + timeTo;
-
-            txTemplate.executeWithoutResult(status -> jdbcTemplate.update(
-                    "INSERT INTO bookings (user_id, service_id, start_date, end_date, total_price, status) VALUES (?, ?, ?, ?, ?, ?)",
-                    userId,
-                    id,
-                    startValue,
-                    endValue,
-                    totalPrice,
-                    "CREATED"
-            ));
+            booking.setStartDate(start + " " + timeFrom);
+            booking.setEndDate(start + " " + timeTo);
+            booking.setTotalPrice(totalPrice);
+            bookingRepository.save(booking);
 
             return "redirect:/cabinet?bookingSuccess";
         }
 
         totalPrice = basePrice != null ? basePrice : 0.0;
-
-        txTemplate.executeWithoutResult(status -> jdbcTemplate.update(
-                "INSERT INTO bookings (user_id, service_id, start_date, end_date, total_price, status) VALUES (?, ?, ?, ?, ?, ?)",
-                userId,
-                id,
-                start.toString(),
-                end.toString(),
-                totalPrice,
-                "CREATED"
-        ));
+        booking.setStartDate(start.toString());
+        booking.setEndDate(end.toString());
+        booking.setTotalPrice(totalPrice);
+        bookingRepository.save(booking);
 
         return "redirect:/cabinet?bookingSuccess";
     }

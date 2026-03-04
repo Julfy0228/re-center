@@ -1,56 +1,37 @@
 package com.recenter.controllers;
 
+import com.recenter.entity.Booking;
+import com.recenter.repository.BookingRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/manager/bookings")
 public class ManagerBookingsController {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    private final TransactionTemplate txTemplate;
-
-    @Autowired
-    public ManagerBookingsController(PlatformTransactionManager transactionManager) {
-        this.txTemplate = new TransactionTemplate(transactionManager);
-    }
+    private BookingRepository bookingRepository;
 
     @GetMapping
     public String list(@RequestParam(value = "status", required = false) String status,
                        Model model) {
 
-        List<Map<String, Object>> bookings;
+        List<Booking> bookings;
 
         if (status != null && !status.isBlank()) {
-            bookings = jdbcTemplate.queryForList(
-                    "SELECT b.id, b.user_id, u.email AS user_email, b.service_id, s.title AS service_title, " +
-                            "b.start_date, b.end_date, b.total_price, b.status " +
-                            "FROM bookings b " +
-                            "LEFT JOIN users u ON u.id = b.user_id " +
-                            "LEFT JOIN services s ON s.id = b.service_id " +
-                            "WHERE b.status = ? " +
-                            "ORDER BY b.id DESC",
-                    status.trim().toUpperCase()
-            );
+            String normalizedStatus = status.trim().toUpperCase();
+            bookings = bookingRepository.findAll().stream()
+                    .filter(b -> normalizedStatus.equals(b.getStatus()))
+                    .collect(Collectors.toList());
         } else {
-            bookings = jdbcTemplate.queryForList(
-                    "SELECT b.id, b.user_id, u.email AS user_email, b.service_id, s.title AS service_title, " +
-                            "b.start_date, b.end_date, b.total_price, b.status " +
-                            "FROM bookings b " +
-                            "LEFT JOIN users u ON u.id = b.user_id " +
-                            "LEFT JOIN services s ON s.id = b.service_id " +
-                            "ORDER BY b.id DESC"
-            );
+            bookings = bookingRepository.findAll();
         }
 
         model.addAttribute("status", status);
@@ -70,7 +51,12 @@ public class ManagerBookingsController {
             return "redirect:/manager/bookings";
         }
 
-        txTemplate.executeWithoutResult(tx -> jdbcTemplate.update("UPDATE bookings SET status = ? WHERE id = ?", normalized, id));
+        Optional<Booking> bookingOpt = bookingRepository.findById(id);
+        if (bookingOpt.isPresent()) {
+            Booking booking = bookingOpt.get();
+            booking.setStatus(normalized);
+            bookingRepository.save(booking);
+        }
         return "redirect:/manager/bookings";
     }
 }

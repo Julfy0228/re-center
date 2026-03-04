@@ -2,9 +2,12 @@ package com.recenter.controllers;
 
 import com.recenter.dto.BookingViewDto;
 import com.recenter.dto.UserResponseDto;
+import com.recenter.entity.Booking;
+import com.recenter.entity.User;
+import com.recenter.repository.BookingRepository;
+import com.recenter.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.recenter.service.UserService;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/cabinet")
 public class CabinetController {
@@ -22,26 +29,23 @@ public class CabinetController {
     private UserService userService;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private UserRepository userRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @GetMapping
     public String index(Authentication authentication, Model model) {
         String email = authentication.getName();
-        Long userId = jdbcTemplate.queryForObject("SELECT id FROM users WHERE email = ?", Long.class, email);
+        Optional<User> userOpt = userRepository.findByEmail(email);
 
-        if (userId != null) {
-            model.addAttribute(
-                    "bookings",
-                    jdbcTemplate.query(
-                            "SELECT b.id AS id, b.service_id AS serviceId, s.title AS serviceTitle, b.start_date AS startDate, b.end_date AS endDate, b.total_price AS totalPrice, b.status AS status " +
-                                    "FROM bookings b " +
-                                    "LEFT JOIN services s ON s.id = b.service_id " +
-                                    "WHERE b.user_id = ? " +
-                                    "ORDER BY b.id DESC",
-                            new BeanPropertyRowMapper<>(BookingViewDto.class),
-                            userId
-                    )
-            );
+        if (userOpt.isPresent()) {
+            Long userId = userOpt.get().getId();
+            List<Booking> bookings = bookingRepository.findByUserId(userId);
+            List<BookingViewDto> bookingDtos = bookings.stream()
+                    .map(this::convertToDto)
+                    .collect(Collectors.toList());
+            model.addAttribute("bookings", bookingDtos);
         }
 
         return "user/cabinet";
@@ -71,21 +75,27 @@ public class CabinetController {
     @GetMapping("/history")
     public String history(Authentication authentication, Model model) {
         String email = authentication.getName();
-        Long userId = jdbcTemplate.queryForObject("SELECT id FROM users WHERE email = ?", Long.class, email);
-        if (userId != null) {
-            model.addAttribute(
-                    "bookings",
-                    jdbcTemplate.query(
-                            "SELECT b.id AS id, b.service_id AS serviceId, s.title AS serviceTitle, b.start_date AS startDate, b.end_date AS endDate, b.total_price AS totalPrice, b.status AS status " +
-                                    "FROM bookings b " +
-                                    "LEFT JOIN services s ON s.id = b.service_id " +
-                                    "WHERE b.user_id = ? " +
-                                    "ORDER BY b.id DESC",
-                            new BeanPropertyRowMapper<>(BookingViewDto.class),
-                            userId
-                    )
-            );
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
+            Long userId = userOpt.get().getId();
+            List<Booking> bookings = bookingRepository.findByUserId(userId);
+            List<BookingViewDto> bookingDtos = bookings.stream()
+                    .map(this::convertToDto)
+                    .collect(Collectors.toList());
+            model.addAttribute("bookings", bookingDtos);
         }
         return "user/history";
+    }
+
+    private BookingViewDto convertToDto(Booking booking) {
+        BookingViewDto dto = new BookingViewDto();
+        dto.setId(booking.getId());
+        dto.setServiceId(booking.getService() != null ? booking.getService().getId() : null);
+        dto.setServiceTitle(booking.getService() != null ? booking.getService().getTitle() : "");
+        dto.setStartDate(booking.getStartDate());
+        dto.setEndDate(booking.getEndDate());
+        dto.setTotalPrice(booking.getTotalPrice());
+        dto.setStatus(booking.getStatus());
+        return dto;
     }
 }

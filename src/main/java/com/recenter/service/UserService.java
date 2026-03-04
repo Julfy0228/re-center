@@ -3,12 +3,15 @@ package com.recenter.service;
 import com.recenter.dto.RegistrationRequestDto;
 import com.recenter.dto.UserResponseDto;
 import com.recenter.entity.User;
+import com.recenter.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * Service for User operations
@@ -19,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -31,8 +34,11 @@ public class UserService {
      */
     public UserResponseDto findByEmail(String email) {
         try {
-            String sql = "SELECT id, email, first_name, last_name, phone, role FROM users WHERE email = ?";
-            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(UserResponseDto.class), email);
+            Optional<User> userOpt = userRepository.findByEmail(email);
+            if (userOpt.isPresent()) {
+                return entityToDto(userOpt.get());
+            }
+            return null;
         } catch (Exception e) {
             return null;
         }
@@ -45,21 +51,20 @@ public class UserService {
      */
     @Transactional
     public void register(RegistrationRequestDto req) throws Exception {
-        Integer exists = jdbcTemplate.queryForObject("SELECT count(*) FROM users WHERE email = ?", Integer.class, req.getEmail());
-        if (exists != null && exists > 0) {
+        if (userRepository.existsByEmail(req.getEmail())) {
             throw new Exception("Пользователь с таким email уже существует");
         }
 
-        jdbcTemplate.update(
-                "INSERT INTO users (email, password, first_name, last_name, phone, role, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        User user = new User(
                 req.getEmail(),
                 passwordEncoder.encode(req.getPassword()),
                 req.getFirstName(),
                 req.getLastName(),
-                req.getPhone(),
-                "CLIENT",
-                java.time.LocalDateTime.now()
+                "CLIENT"
         );
+        user.setPhone(req.getPhone());
+        user.setCreatedAt(LocalDateTime.now());
+        userRepository.save(user);
     }
 
     /**
@@ -71,8 +76,11 @@ public class UserService {
     @Transactional(readOnly = true)
     public boolean checkPassword(String email, String rawPassword) {
         try {
-            String hash = jdbcTemplate.queryForObject("SELECT password FROM users WHERE email = ?", String.class, email);
-            return hash != null && passwordEncoder.matches(rawPassword, hash);
+            Optional<User> userOpt = userRepository.findByEmail(email);
+            if (userOpt.isPresent()) {
+                return passwordEncoder.matches(rawPassword, userOpt.get().getPassword());
+            }
+            return false;
         } catch (Exception e) {
             return false;
         }
@@ -84,13 +92,14 @@ public class UserService {
      */
     @Transactional
     public void updateUser(UserResponseDto dto) {
-        jdbcTemplate.update(
-                "UPDATE users SET first_name=?, last_name=?, phone=? WHERE email=?",
-                dto.getFirstName(),
-                dto.getLastName(),
-                dto.getPhone(),
-                dto.getEmail()
-        );
+        Optional<User> userOpt = userRepository.findByEmail(dto.getEmail());
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setFirstName(dto.getFirstName());
+            user.setLastName(dto.getLastName());
+            user.setPhone(dto.getPhone());
+            userRepository.save(user);
+        }
     }
 
     /**

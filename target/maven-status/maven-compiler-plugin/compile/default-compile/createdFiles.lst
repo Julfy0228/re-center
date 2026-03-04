@@ -41,11 +41,14 @@ com\recenter\dto\PromotionDto.class
 com\recenter\controllers\ReportsController.class
 com\recenter\model\enums\NotificationType.class
 com\recenter\entity\News.class
+com\recenter\repository\ServiceRepository.class
+com\recenter\repository\UserRepository.class
 com\recenter\config\AppInitializer.class
 com\recenter\security\SecurityConfig.class
 com\recenter\controllers\MainController.class
 com\recenter\model\Service.class
 com\recenter\controllers\NewsController.class
+com\recenter\repository\NewsRepository.class
 com\recenter\controllers\ManagerBookingsController.class
 com\recenter\dto\LoginRequestDto.class
 com\recenter\model\enums\DiscountType.class
@@ -54,6 +57,7 @@ com\recenter\security\CustomUserDetailsService.class
 com\recenter\model\PromotionService.class
 com\recenter\dto\ServicePriceDto.class
 com\recenter\entity\Service.class
+com\recenter\repository\BookingRepository.class
 com\recenter\model\Category.class
 com\recenter\model\enums\Role.class
 com\recenter\model\PromotionCategory.class
