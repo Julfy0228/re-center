@@ -40,10 +40,24 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/auth/login", "/auth/register", "/", "/styles.css", "/images/**", "/js/**").permitAll()
+                .requestMatchers(
+                        "/",
+                        "/contacts",
+                        "/auth/login",
+                        "/auth/register",
+                        "/services",
+                        "/services/*",
+                        "/news",
+                        "/styles.css",
+                        "/images/**",
+                        "/js/**"
+                ).permitAll()
                 .requestMatchers("/api/users/register", "/api/users/login").permitAll()
-                .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/services/*/book").authenticated()
                 .requestMatchers("/cabinet/**", "/api/users/**").authenticated()
+                .requestMatchers("/admin/**", "/api/admin/**").hasRole("ADMIN")
+                .requestMatchers("/manager/**").hasAnyRole("MANAGER", "ADMIN")
+                .requestMatchers("/reports/**").hasAnyRole("MANAGER", "ADMIN")
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

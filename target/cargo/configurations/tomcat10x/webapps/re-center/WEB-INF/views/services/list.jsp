@@ -12,17 +12,18 @@
 
     <main>
         <h1>Наши услуги</h1>
-        <div style="margin-bottom: 15px;">
-            <sec:authorize access="hasRole('ADMIN')">
-                <a href="${pageContext.request.contextPath}/admin/services/add" class="btn-small" style="background: var(--primary); color: white;">+ Добавить услугу</a>
-            </sec:authorize>
-        </div>
         <div class="grid">
             <c:forEach var="service" items="${services}">
                 <div class="card">
                     <h3>${service.title}</h3>
                     <p style="min-height: 40px;">${service.description}</p>
-                    <div class="price">${service.basePrice} ₽ / ${service.serviceType == 'DAILY' ? 'Сутки' : 'Час'}</div>
+                    <div class="price">
+                        ${service.basePrice} ₽ /
+                        <c:choose>
+                            <c:when test="${service.serviceType == 'DAILY'}">Сутки</c:when>
+                            <c:otherwise>Час</c:otherwise>
+                        </c:choose>
+                    </div>
                     <a href="${pageContext.request.contextPath}/services/${service.id}" class="btn-small">Подробнее</a>
                 </div>
             </c:forEach>

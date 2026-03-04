@@ -31,6 +31,7 @@
         <div style="display: flex; gap: 20px; margin-bottom: 20px;">
             <a href="${pageContext.request.contextPath}/admin/services/add" class="btn-small" style="background: var(--primary); color: white;">+ Добавить услугу</a>
             <a href="${pageContext.request.contextPath}/admin/news/add" class="btn-small" style="background: var(--primary); color: white;">+ Создать новость</a>
+            <a href="${pageContext.request.contextPath}/admin/users" class="btn-small" style="background: var(--primary); color: white;">Пользователи</a>
         </div>
 
         <h2>Последние бронирования</h2>

@@ -25,21 +25,35 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Дата</th>
-                            <th>Операция</th>
-                            <th>Метод</th>
+                            <th>ID брони</th>
+                            <th>Услуга</th>
+                            <th>Даты</th>
                             <th>Сумма</th>
                             <th>Статус</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>20.05.2025</td>
-                            <td>Оплата бронирования</td>
-                            <td>Банковская карта</td>
-                            <td>5 000 ₽</td>
-                            <td class="status-paid">Успешно</td>
-                        </tr>
+                        <c:forEach var="b" items="${bookings}">
+                            <tr>
+                                <td>${b.id}</td>
+                                <td>${b.serviceTitle} (ID: ${b.serviceId})</td>
+                                <td>${b.startDate} — ${b.endDate}</td>
+                                <td>${b.totalPrice} ₽</td>
+                                <c:choose>
+                                    <c:when test="${b.status == 'PAID'}">
+                                        <td class="status-paid">${b.status}</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td class="status-pending">${b.status}</td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </tr>
+                        </c:forEach>
+                        <c:if test="${empty bookings}">
+                            <tr>
+                                <td colspan="5">Пока нет данных.</td>
+                            </tr>
+                        </c:if>
                     </tbody>
                 </table>
             </div>

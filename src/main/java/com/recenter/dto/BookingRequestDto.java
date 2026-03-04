@@ -1,11 +1,14 @@
 package com.recenter.dto;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class BookingRequestDto {
     private Long serviceId;
     private LocalDate startDate;
     private LocalDate endDate;
+    private LocalTime timeFrom;
+    private LocalTime timeTo;
     private int numberOfGuests;
     private String discountCode;
 
@@ -17,6 +20,12 @@ public class BookingRequestDto {
 
     public LocalDate getEndDate() { return endDate; }
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
+
+    public LocalTime getTimeFrom() { return timeFrom; }
+    public void setTimeFrom(LocalTime timeFrom) { this.timeFrom = timeFrom; }
+
+    public LocalTime getTimeTo() { return timeTo; }
+    public void setTimeTo(LocalTime timeTo) { this.timeTo = timeTo; }
 
     public int getNumberOfGuests() { return numberOfGuests; }
     public void setNumberOfGuests(int numberOfGuests) { this.numberOfGuests = numberOfGuests; }

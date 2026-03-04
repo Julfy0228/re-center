@@ -13,9 +13,9 @@
         <div class="form-container">
             <h2 style="text-align: center">Вход</h2>
 
-            <c:if test="${not empty error}">
+            <c:if test="${param.error != null}">
                 <div style="color: #721c24; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center;">
-                    ${error}
+                    Неверный логин или пароль
                 </div>
             </c:if>
 

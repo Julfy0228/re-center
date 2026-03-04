@@ -1,21 +1,33 @@
 package com.recenter.controllers;
 
-import com.recenter.repository.NewsRepository;
-import com.recenter.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MainController {
-    @Autowired private NewsRepository newsRepository;
-    @Autowired private ServiceRepository serviceRepository;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("newsList", newsRepository.findAll());
-        model.addAttribute("popServices", serviceRepository.findAll());
+        model.addAttribute(
+                "newsList",
+                jdbcTemplate.query(
+                        "SELECT * FROM news ORDER BY publication_date DESC",
+                        new BeanPropertyRowMapper<>(com.recenter.entity.News.class)
+                )
+        );
+        model.addAttribute(
+                "popServices",
+                jdbcTemplate.query(
+                        "SELECT * FROM services",
+                        new BeanPropertyRowMapper<>(com.recenter.entity.Service.class)
+                )
+        );
         return "index";
     }
 

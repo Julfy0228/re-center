@@ -22,7 +22,15 @@
                 <h2>Описание</h2>
                 <p>${service.description}</p>
                 <p><strong>Вместимость:</strong> ${service.minCapacity} - ${service.maxCapacity} чел.</p>
-                <div class="price">Цена: ${service.basePrice} ₽ <small style="color: #666; font-size: 0.6em; font-weight: normal;">(${service.serviceType == 'DAILY' ? 'за сутки' : 'за час'})</small></div>
+                <div class="price">
+                    Цена: ${service.basePrice} ₽
+                    <small style="color: #666; font-size: 0.6em; font-weight: normal;">
+                        (<c:choose>
+                            <c:when test="${service.serviceType == 'DAILY'}">за сутки</c:when>
+                            <c:otherwise>за час</c:otherwise>
+                        </c:choose>)
+                    </small>
+                </div>
 
                 <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
 
@@ -35,14 +43,32 @@
 
                 <sec:authorize access="isAuthenticated()">
                     <form action="${pageContext.request.contextPath}/services/${service.id}/book" method="post">
-                        <div class="form-group">
-                            <label>Дата заезда</label>
-                            <input type="date" name="startDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Дата выезда</label>
-                            <input type="date" name="endDate" required>
-                        </div>
+                        <c:choose>
+                            <c:when test="${service.serviceType == 'HOURLY'}">
+                                <div class="form-group">
+                                    <label>Дата</label>
+                                    <input type="date" name="startDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>С</label>
+                                    <input type="time" name="timeFrom" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>До</label>
+                                    <input type="time" name="timeTo" required>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="form-group">
+                                    <label>Дата заезда</label>
+                                    <input type="date" name="startDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Дата выезда</label>
+                                    <input type="date" name="endDate" required>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                         <div class="form-group">
                             <label>Количество гостей</label>
                             <input type="number" name="numberOfGuests" min="1" max="${service.maxCapacity}" value="1">

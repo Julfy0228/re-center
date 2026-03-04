@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <header>
     <a href="${pageContext.request.contextPath}/" class="logo">
@@ -13,6 +13,12 @@
         <a href="${pageContext.request.contextPath}/services">Услуги</a>
         <a href="${pageContext.request.contextPath}/news">Новости</a>
         <a href="${pageContext.request.contextPath}/contacts">Контакты</a>
+        <sec:authorize access="hasAnyRole('MANAGER','ADMIN')">
+            <a href="${pageContext.request.contextPath}/manager/bookings">Бронирования</a>
+        </sec:authorize>
+        <sec:authorize access="hasAnyRole('MANAGER','ADMIN')">
+            <a href="${pageContext.request.contextPath}/reports">Отчёты</a>
+        </sec:authorize>
 
         <sec:authorize access="isAnonymous()">
             <a href="${pageContext.request.contextPath}/auth/login" class="btn-small">Войти</a>

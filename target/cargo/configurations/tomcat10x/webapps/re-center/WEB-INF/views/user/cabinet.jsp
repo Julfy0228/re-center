@@ -22,6 +22,11 @@
             </aside>
 
             <div style="flex: 1;">
+                <c:if test="${param.bookingSuccess != null}">
+                    <div style="color: #155724; background-color: #d4edda; border-color: #c3e6cb; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                        Бронирование успешно создано.
+                    </div>
+                </c:if>
                 <h2>Активные бронирования</h2>
                 <table>
                     <thead>
@@ -35,13 +40,18 @@
                     <tbody>
                         <c:forEach var="b" items="${bookings}">
                             <tr>
-                                <td>ID услуги: ${b.serviceId}</td>
+                                <td>${b.serviceTitle} (ID: ${b.serviceId})</td>
                                 <td>${b.startDate} — ${b.endDate}</td>
                                 <td>${b.totalPrice} ₽</td>
                                 <td>
-                                    <span class="${b.status == 'PAID' ? 'status-paid' : 'status-pending'}">
-                                        ${b.status}
-                                    </span>
+                                    <c:choose>
+                                        <c:when test="${b.status == 'PAID'}">
+                                            <span class="status-paid">${b.status}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="status-pending">${b.status}</span>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </td>
                             </tr>
                         </c:forEach>
