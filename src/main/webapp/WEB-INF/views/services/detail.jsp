@@ -21,7 +21,7 @@
             <div class="detail-info card">
                 <h2>Описание</h2>
                 <p>${service.description}</p>
-                <p><strong>Вместимость:</strong> ${service.minCapacity} - ${service.maxCapacity} чел.</p>
+                <p><strong>Вместимость:</strong> ${service.minPeople} - ${service.maxPeople} чел.</p>
                 <div class="price">
                     Цена: ${service.basePrice} ₽
                     <small style="color: #666; font-size: 0.6em; font-weight: normal;">
@@ -71,7 +71,7 @@
                         </c:choose>
                         <div class="form-group">
                             <label>Количество гостей</label>
-                            <input type="number" name="numberOfGuests" min="1" max="${service.maxCapacity}" value="1">
+                            <input type="number" name="numberOfGuests" min="1" max="${service.maxPeople}" value="1">
                         </div>
 
                         <button type="submit">Подтвердить бронирование</button>

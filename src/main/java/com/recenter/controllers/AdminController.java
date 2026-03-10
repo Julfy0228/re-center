@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.security.Principal;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 
@@ -40,11 +41,11 @@ public class AdminController {
 
     @GetMapping
     public String dashboard(Model model) {
-        long newBookingsCount = bookingRepository.countPendingBookings();
-        Double revenue = bookingRepository.sumConfirmedBookingsRevenue();
+        long newBookingsCount = bookingRepository.count();
+        Double revenue = 0.0;
 
         model.addAttribute("newBookingsCount", newBookingsCount);
-        model.addAttribute("revenue", revenue != null ? revenue : 0);
+        model.addAttribute("revenue", revenue);
         model.addAttribute("freeRooms", 0);
         return "admin/dashboard";
     }
@@ -85,7 +86,7 @@ public class AdminController {
         try {
             User user = new User(email.trim(), passwordEncoder.encode(password), firstName, lastName, normalizedRole);
             user.setPhone(phone);
-            user.setCreatedAt(LocalDateTime.now());
+            user.setRegistrationDate(LocalDateTime.now());
             userRepository.save(user);
         } catch (DataIntegrityViolationException ex) {
             return "redirect:/admin/users?error=duplicate";
@@ -95,7 +96,7 @@ public class AdminController {
     }
 
     @PostMapping("/users/{id}/role")
-    public String updateUserRole(@PathVariable("id") Long id, @RequestParam("role") String role) {
+    public String updateUserRole(@PathVariable("id") Integer id, @RequestParam("role") String role) {
         if (role == null) {
             return "redirect:/admin/users";
         }
@@ -115,12 +116,12 @@ public class AdminController {
     }
 
     @PostMapping("/users/{id}/delete")
-    public String deleteUser(@PathVariable("id") Long id, Authentication authentication) {
+    public String deleteUser(@PathVariable("id") Integer id, Authentication authentication) {
         if (id == null) {
             return "redirect:/admin/users";
         }
 
-        Long currentUserId = null;
+        Integer currentUserId = null;
         if (authentication != null && authentication.getName() != null) {
             Optional<User> currentUser = userRepository.findByEmail(authentication.getName());
             if (currentUser.isPresent()) {
@@ -151,8 +152,9 @@ public class AdminController {
         Service service = new Service(
                 serviceDto.getTitle(),
                 serviceDto.getDescription(),
-                serviceDto.getBasePrice() != null ? serviceDto.getBasePrice().doubleValue() : null,
                 serviceDto.getServiceType(),
+                null,
+                serviceDto.getBasePrice() != null ? serviceDto.getBasePrice().doubleValue() : 0.0,
                 serviceDto.getMinCapacity(),
                 serviceDto.getMaxCapacity()
         );
@@ -166,11 +168,21 @@ public class AdminController {
     }
 
     @PostMapping("/news/add")
-    public String processAddNews(@ModelAttribute NewsDto newsDto) {
+    public String processAddNews(@ModelAttribute NewsDto newsDto, Principal principal) {
         News news = new News();
         news.setTitle(newsDto.getTitle());
         news.setContent(newsDto.getContent());
-        news.setPublicationDate(LocalDateTime.now());
+        news.setDate(LocalDateTime.now());
+        news.setStatus("PUBLISHED");
+        
+        // Получаем текущего авторизованного пользователя и устанавливаем его как автора
+        if (principal != null) {
+            Optional<User> currentUser = userRepository.findByEmail(principal.getName());
+            if (currentUser.isPresent()) {
+                news.setAuthor(currentUser.get());
+            }
+        }
+        
         newsRepository.save(news);
         return "redirect:/news";
     }

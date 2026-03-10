@@ -30,10 +30,10 @@
       <input name="basePrice" type="number" value="1500" />
     </label>
     <label>Min capacity
-      <input name="minCapacity" type="number" value="1" />
+      <input name="minPeople" type="number" value="1" />
     </label>
     <label>Max capacity
-      <input name="maxCapacity" type="number" value="4" />
+      <input name="maxPeople" type="number" value="4" />
     </label>
     <label>Active
       <select name="active"><option value="true">true</option><option value="false">false</option></select>

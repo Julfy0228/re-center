@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-/**
- * Spring Security UserDetailsService implementation
- * Загружает пользователей из БД через JPA Repository
- */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -34,7 +30,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         User user = userOpt.get();
         
-        if (user.getPassword() == null || user.getPassword().isBlank()) {
+        if (user.getPasswordHash() == null || user.getPasswordHash().isBlank()) {
             throw new UsernameNotFoundException("Пользователь не найден: " + username);
         }
 
@@ -43,7 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return org.springframework.security.core.userdetails.User.builder()
             .username(user.getEmail())
-            .password(user.getPassword())
+            .password(user.getPasswordHash())
             .authorities(authorities)
             .accountExpired(false)
             .accountLocked(false)

@@ -40,7 +40,7 @@ public class CabinetController {
         Optional<User> userOpt = userRepository.findByEmail(email);
 
         if (userOpt.isPresent()) {
-            Long userId = userOpt.get().getId();
+            Integer userId = userOpt.get().getId();
             List<Booking> bookings = bookingRepository.findByUserId(userId);
             List<BookingViewDto> bookingDtos = bookings.stream()
                     .map(this::convertToDto)
@@ -77,7 +77,7 @@ public class CabinetController {
         String email = authentication.getName();
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isPresent()) {
-            Long userId = userOpt.get().getId();
+            Integer userId = userOpt.get().getId();
             List<Booking> bookings = bookingRepository.findByUserId(userId);
             List<BookingViewDto> bookingDtos = bookings.stream()
                     .map(this::convertToDto)
@@ -89,11 +89,11 @@ public class CabinetController {
 
     private BookingViewDto convertToDto(Booking booking) {
         BookingViewDto dto = new BookingViewDto();
-        dto.setId(booking.getId());
-        dto.setServiceId(booking.getService() != null ? booking.getService().getId() : null);
+        dto.setId(booking.getId() != null ? booking.getId().longValue() : null);
+        dto.setServiceId(booking.getService() != null ? booking.getService().getId().longValue() : null);
         dto.setServiceTitle(booking.getService() != null ? booking.getService().getTitle() : "");
-        dto.setStartDate(booking.getStartDate());
-        dto.setEndDate(booking.getEndDate());
+        dto.setStartDate(booking.getStartDate() != null ? booking.getStartDate().toString() : "");
+        dto.setEndDate(booking.getEndDate() != null ? booking.getEndDate().toString() : "");
         dto.setTotalPrice(booking.getTotalPrice());
         dto.setStatus(booking.getStatus());
         return dto;

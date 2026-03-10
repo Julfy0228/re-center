@@ -1,12 +1,12 @@
 package com.recenter.repository;
 
-import com.recenter.entity.Service;
+import com.recenter.entity.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ServiceRepository extends JpaRepository<Service, Integer> {
-    List<Service> findByCategoryId(Integer categoryId);
+public interface PaymentRepository extends JpaRepository<Payment, Integer> {
+    List<Payment> findByBookingId(Integer bookingId);
 }

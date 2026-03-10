@@ -35,11 +35,11 @@
                 <div style="display: flex; gap: 10px;">
                     <div class="form-group" style="flex: 1;">
                         <label>Мин. чел.</label>
-                        <input type="number" name="minCapacity" value="1">
+                        <input type="number" name="minPeople" value="1">
                     </div>
                     <div class="form-group" style="flex: 1;">
                         <label>Макс. чел.</label>
-                        <input type="number" name="maxCapacity" value="4">
+                        <input type="number" name="maxPeople" value="4">
                     </div>
                 </div>
                 <button type="submit">Сохранить</button>

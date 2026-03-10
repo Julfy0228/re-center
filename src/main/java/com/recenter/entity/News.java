@@ -9,64 +9,60 @@ public class News {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String title;
 
-    @Column(length = 4000)
+    @Column(nullable = false)
     private String content;
 
-    @Column(name = "publication_date")
-    private LocalDateTime publicationDate;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "author_id", nullable = false, foreignKey = @ForeignKey(name = "fk_news_author"))
+    private User author;
+
+    @Column(nullable = false)
+    private LocalDateTime date;
+
+    @Column(nullable = false)
+    private String status;
 
     public News() {
     }
 
-    public News(String title, String content, LocalDateTime publicationDate) {
+    public News(String title, String content, User author, String status) {
         this.title = title;
         this.content = content;
-        this.publicationDate = publicationDate;
+        this.author = author;
+        this.date = LocalDateTime.now();
+        this.status = status;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public User getAuthor() { return author; }
+    public void setAuthor(User author) { this.author = author; }
 
-    public String getContent() {
-        return content;
-    }
+    public LocalDateTime getDate() { return date; }
+    public void setDate(LocalDateTime date) { this.date = date; }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getPublicationDate() {
-        return publicationDate;
-    }
-
-    public void setPublicationDate(LocalDateTime publicationDate) {
-        this.publicationDate = publicationDate;
-    }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
 
     @Override
     public String toString() {
         return "News{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", publicationDate=" + publicationDate +
+                ", date=" + date +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

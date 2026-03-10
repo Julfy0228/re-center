@@ -40,7 +40,7 @@ public class ManagerBookingsController {
     }
 
     @PostMapping("/{id}/status")
-    public String updateStatus(@PathVariable("id") Long id,
+    public String updateStatus(@PathVariable("id") Integer id,
                                @RequestParam("status") String status) {
         if (status == null) {
             return "redirect:/manager/bookings";

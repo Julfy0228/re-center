@@ -49,8 +49,8 @@
                     <tr>
                         <td>${u.id}</td>
                         <td>${u.email}</td>
-                        <td>${u.first_name}</td>
-                        <td>${u.last_name}</td>
+                        <td>${u.firstName}</td>
+                        <td>${u.lastName}</td>
                         <td>${u.phone}</td>
                         <td>${u.role}</td>
                         <td>

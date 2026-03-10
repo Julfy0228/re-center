@@ -15,7 +15,7 @@
             <c:forEach var="n" items="${newsList}">
                 <div class="card">
                     <h3>${n.title}</h3>
-                    <small style="color: #888">${n.publicationDate}</small>
+                    <small style="color: #888">${n.date}</small>
                     <p>${n.content}</p>
                 </div>
             </c:forEach>

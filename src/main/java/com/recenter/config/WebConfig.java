@@ -34,7 +34,7 @@ public class WebConfig implements WebMvcConfigurer {
     public DataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("org.sqlite.JDBC");
-        ds.setUrl("jdbc:sqlite:recenter.db");
+        ds.setUrl("jdbc:sqlite:recenter.db?foreign_keys=on");
         ds.setMaxTotal(5);
         ds.setDefaultAutoCommit(false);
         return ds;
@@ -59,6 +59,7 @@ public class WebConfig implements WebMvcConfigurer {
         hibernateProperties.setProperty("hibernate.format_sql", "true");
         hibernateProperties.setProperty("hibernate.jdbc.batch_size", "10");
         hibernateProperties.setProperty("hibernate.enable_lazy_load_no_trans", "true");
+        hibernateProperties.setProperty("hibernate.jdbc.foreign_keys", "true");
         em.setJpaProperties(hibernateProperties);
         
         return em;

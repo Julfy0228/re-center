@@ -1,4 +1,4 @@
-package com.recenter.model.enums;
+package com.recenter.entity.enums;
 
 public enum PaymentStatus {
     PENDING("pending"),

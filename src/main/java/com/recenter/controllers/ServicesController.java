@@ -15,8 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +41,7 @@ public class ServicesController {
 
     @GetMapping("/{id}")
     @SuppressWarnings("null")
-    public String detail(@PathVariable("id") Long id, Model model) {
+    public String detail(@PathVariable("id") Integer id, Model model) {
         Optional<Service> serviceOpt = serviceRepository.findById(id);
         if (serviceOpt.isEmpty()) {
             return "errors/404";
@@ -52,7 +52,7 @@ public class ServicesController {
     }
 
     @PostMapping("/{id}/book")
-    public String book(@PathVariable("id") Long id,
+    public String book(@PathVariable("id") Integer id,
                        @ModelAttribute BookingRequestDto bookingRequest,
                        Authentication authentication) {
 
@@ -82,7 +82,6 @@ public class ServicesController {
         Booking booking = new Booking();
         booking.setUser(userOpt.get());
         booking.setService(service);
-        booking.setStatus("CREATED");
 
         if (service.getServiceType() != null && service.getServiceType().trim().equalsIgnoreCase("HOURLY")) {
             LocalTime timeFrom = bookingRequest.getTimeFrom();
@@ -91,7 +90,7 @@ public class ServicesController {
                 return "redirect:/services/" + id;
             }
 
-            long hours = ChronoUnit.HOURS.between(timeFrom, timeTo);
+            long hours = java.time.temporal.ChronoUnit.HOURS.between(timeFrom, timeTo);
             if (hours <= 0) {
                 return "redirect:/services/" + id;
             }
@@ -99,8 +98,10 @@ public class ServicesController {
             double pricePerHour = basePrice != null ? basePrice : 0.0;
             totalPrice = pricePerHour * hours;
 
-            booking.setStartDate(start + " " + timeFrom);
-            booking.setEndDate(start + " " + timeTo);
+            LocalDateTime startDt = start.atTime(timeFrom);
+            LocalDateTime endDt = start.atTime(timeTo);
+            booking.setStartDate(startDt);
+            booking.setEndDate(endDt);
             booking.setTotalPrice(totalPrice);
             bookingRepository.save(booking);
 
@@ -108,8 +109,8 @@ public class ServicesController {
         }
 
         totalPrice = basePrice != null ? basePrice : 0.0;
-        booking.setStartDate(start.toString());
-        booking.setEndDate(end.toString());
+        booking.setStartDate(start.atStartOfDay());
+        booking.setEndDate(end.atStartOfDay());
         booking.setTotalPrice(totalPrice);
         bookingRepository.save(booking);
 

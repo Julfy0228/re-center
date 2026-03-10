@@ -13,11 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-/**
- * Service for User operations
- * Работает с User Entity через JPA Repository
- * Преобразует между Entity и DTO для контроллеров и представлений
- */
 @Service
 public class UserService {
 
@@ -27,11 +22,6 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * Найти пользователя по email и вернуть DTO
-     * @param email адрес пользователя
-     * @return DTO пользователя или null
-     */
     public UserResponseDto findByEmail(String email) {
         try {
             Optional<User> userOpt = userRepository.findByEmail(email);
@@ -44,11 +34,6 @@ public class UserService {
         }
     }
 
-    /**
-     * Регистрация нового пользователя
-     * @param req данные регистрации
-     * @throws Exception если пользователь уже существует
-     */
     @Transactional
     public void register(RegistrationRequestDto req) throws Exception {
         if (userRepository.existsByEmail(req.getEmail())) {
@@ -63,22 +48,16 @@ public class UserService {
                 "CLIENT"
         );
         user.setPhone(req.getPhone());
-        user.setCreatedAt(LocalDateTime.now());
+        user.setRegistrationDate(LocalDateTime.now());
         userRepository.save(user);
     }
 
-    /**
-     * Проверка пароля пользователя
-     * @param email адрес пользователя
-     * @param rawPassword введённый пароль в открытом виде
-     * @return true если пароль верный
-     */
     @Transactional(readOnly = true)
     public boolean checkPassword(String email, String rawPassword) {
         try {
             Optional<User> userOpt = userRepository.findByEmail(email);
             if (userOpt.isPresent()) {
-                return passwordEncoder.matches(rawPassword, userOpt.get().getPassword());
+                return passwordEncoder.matches(rawPassword, userOpt.get().getPasswordHash());
             }
             return false;
         } catch (Exception e) {
@@ -86,10 +65,6 @@ public class UserService {
         }
     }
 
-    /**
-     * Обновить данные пользователя
-     * @param dto DTO с новыми данными
-     */
     @Transactional
     public void updateUser(UserResponseDto dto) {
         Optional<User> userOpt = userRepository.findByEmail(dto.getEmail());
@@ -102,12 +77,9 @@ public class UserService {
         }
     }
 
-    /**
-     * Преобразование User Entity в UserResponseDto
-     */
     private UserResponseDto entityToDto(User user) {
         UserResponseDto dto = new UserResponseDto();
-        dto.setId(user.getId());
+        dto.setId(user.getId() != null ? user.getId().longValue() : null);
         dto.setEmail(user.getEmail());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());

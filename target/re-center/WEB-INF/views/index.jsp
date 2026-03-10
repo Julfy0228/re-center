@@ -17,7 +17,7 @@
                     <div class="card">
                         <h3>${news.title}</h3>
                         <p>${news.content}</p>
-                        <small style="color:#888;">${news.publicationDate}</small>
+                        <small style="color:#888;">${news.date}</small>
                     </div>
                 </c:forEach>
                 <c:if test="${empty newsList}">
