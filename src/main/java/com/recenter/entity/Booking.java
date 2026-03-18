@@ -8,7 +8,6 @@ import java.util.List;
 @Entity
 @Table(name = "booking")
 public class Booking {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
