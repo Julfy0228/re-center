@@ -63,7 +63,7 @@
                         <phase>prepare-package</phase>
                         <goals><goal>copy-resources</goal></goals>
                         <configuration>
-                            <outputDirectory>${project.parent.basedir}/backend/src/main/webapp/static</outputDirectory>
+                            <outputDirectory>${project.parent.basedir}/backend/src/main/webapp</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/build</directory>
