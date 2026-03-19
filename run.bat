@@ -1,1 +1,1 @@
-mvn clean package && mvn -pl backend cargo:run
+mvn clean && mvn package && mvn -pl backend cargo:run

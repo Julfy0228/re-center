@@ -12,14 +12,12 @@
     <artifactId>backend</artifactId>
     <packaging>war</packaging>
 
-    <!-- Все ваши properties остаются здесь (можно оставить, можно вынести часть в родитель) -->
     <properties>
         <spring.version>7.0.6</spring.version>
         <spring-security.version>7.0.4</spring-security.version>
     </properties>
 
     <dependencies>
-        <!-- всё как у вас, ничего не меняем -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -103,6 +101,22 @@
     <build>
         <finalName>re-center</finalName>
         <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <webResources>
+                        <resource>
+                            <directory>target/frontend-build</directory>
+                            <targetPath></targetPath>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.cargo</groupId>
                 <artifactId>cargo-maven3-plugin</artifactId>
