@@ -42,17 +42,9 @@ public class Promotion {
 
     private LocalDateTime endDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId")
-    private PromotionCategory category;
-
     @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<PromotionService> promotionServices = new ArrayList<>();
-
-    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<PromotionCategory> promotionCategories = new ArrayList<>();
 
     public void addPromotionService(Service service, BigDecimal discountPercent) {
         PromotionService ps = PromotionService.builder()
@@ -61,14 +53,5 @@ public class Promotion {
                 .discountPercent(discountPercent)
                 .build();
         promotionServices.add(ps);
-    }
-
-    public void addPromotionServiceCategory(Category category, BigDecimal discountPercent) {
-        PromotionCategory psc = PromotionCategory.builder()
-                .promotion(this)
-                .serviceCategory(category)
-                .discountPercent(discountPercent)
-                .build();
-        promotionCategories.add(psc);
     }
 }

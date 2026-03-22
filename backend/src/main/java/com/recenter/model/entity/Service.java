@@ -34,8 +34,6 @@ public class Service {
 
     private String description;
 
-    private String serviceType;
-
     private Integer duration;
 
     private BigDecimal price;

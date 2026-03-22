@@ -151,7 +151,7 @@
                             <artifactId>backend</artifactId>
                             <type>war</type>
                             <properties>
-                                <context>/</context>
+                                <context></context>
                             </properties>
                         </deployable>
                     </deployables>
