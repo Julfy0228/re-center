@@ -6,6 +6,16 @@ import jakarta.persistence.*;
 import lombok.*;
 import com.recenter.model.enums.DiscountType;
 
+/**
+ * Скидка, которая может быть применена к услугам.
+ * <p>
+ * Может быть процентной (PERCENT) или фиксированной (AMOUNT).
+ * Действует в указанный период.
+ * </p>
+ *
+ * @see DiscountType
+ * @see UserDiscount
+ */
 @Entity
 @Table(name = "Discounts")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder

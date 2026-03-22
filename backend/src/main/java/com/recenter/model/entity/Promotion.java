@@ -8,6 +8,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Маркетинговая акция.
+ * <p>
+ * Может применяться к конкретным услугам или целым категориям услуг.
+ * Для каждой услуги/категории можно задать индивидуальный процент скидки.
+ * </p>
+ *
+ * @see PromotionCategory
+ * @see PromotionService
+ * @see Category
+ * @see Service
+ */
 @Entity
 @Table(name = "Promotions")
 @Getter

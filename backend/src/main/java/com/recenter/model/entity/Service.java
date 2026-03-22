@@ -5,6 +5,17 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+/**
+ * Услуга, предоставляемая компанией.
+ * <p>
+ * Содержит описание, длительность, стоимость, максимальное количество участников
+ * и ссылку на категорию.
+ * </p>
+ *
+ * @see Category
+ * @see Booking
+ * @see PromotionService
+ */
 @Entity
 @Table(name = "Services")
 @Getter

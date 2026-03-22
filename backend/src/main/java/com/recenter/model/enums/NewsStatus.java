@@ -1,6 +1,9 @@
 package com.recenter.model.enums;
 
+/**
+ * Статус новости.
+ */
 public enum NewsStatus {
-    DRAFT,
-    PUBLISHED
+    DRAFT,      // черновик
+    PUBLISHED   // опубликована
 }

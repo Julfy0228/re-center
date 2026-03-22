@@ -5,6 +5,15 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+/**
+ * Связующая сущность между акцией и конкретной услугой.
+ * <p>
+ * Позволяет задать для услуги в рамках акции индивидуальную скидку.
+ * </p>
+ *
+ * @see Promotion
+ * @see Service
+ */
 @Entity
 @Table(name = "PromotionServices")
 @Getter

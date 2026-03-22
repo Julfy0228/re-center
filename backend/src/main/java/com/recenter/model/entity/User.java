@@ -12,6 +12,21 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Пользователь системы.
+ * <p>
+ * Реализует интерфейс {@link org.springframework.security.core.userdetails.UserDetails}
+ * для интеграции со Spring Security.
+ * Аутентификация выполняется по email (поле {@code email}).
+ * </p>
+ *
+ * @see UserRole
+ * @see Activity
+ * @see Booking
+ * @see Notification
+ * @see News
+ * @see UserDiscount
+ */
 @Entity
 @Table(name = "Users")
 @Getter

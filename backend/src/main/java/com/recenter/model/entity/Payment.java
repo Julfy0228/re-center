@@ -7,6 +7,14 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Платёж за бронирование.
+ * <p>
+ * Связан с конкретным бронированием и содержит сумму, статус и способ оплаты.
+ * </p>
+ *
+ * @see Booking
+ */
 @Entity
 @Table(name = "Payments")
 @Getter

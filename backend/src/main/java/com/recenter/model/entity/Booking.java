@@ -7,6 +7,18 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Бронирование (заказ) услуги пользователем.
+ * <p>
+ * Содержит информацию о выбранной услуге, дате, количестве участников,
+ * финальной цене и статусе бронирования.
+ * </p>
+ *
+ * @see User
+ * @see Service
+ * @see Payment
+ * @see Review
+ */
 @Entity
 @Table(name = "Bookings")
 @Getter

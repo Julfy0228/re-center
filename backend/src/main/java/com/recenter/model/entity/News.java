@@ -8,6 +8,16 @@ import lombok.*;
 import com.recenter.model.enums.NewsStatus;
 import java.time.LocalDateTime;
 
+/**
+ * Новость или объявление.
+ * <p>
+ * Создаётся автором (обычно администратором или менеджером).
+ * Имеет статус черновика или опубликована.
+ * </p>
+ *
+ * @see User
+ * @see NewsStatus
+ */
 @Entity
 @Table(name = "News")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder

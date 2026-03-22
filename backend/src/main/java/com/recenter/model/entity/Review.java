@@ -9,6 +9,16 @@ import lombok.*;
 import com.recenter.model.enums.ReviewStatus;
 import java.time.LocalDateTime;
 
+/**
+ * Отзыв на услугу.
+ * <p>
+ * Оставляется после завершённого бронирования.
+ * Проходит модерацию перед публикацией.
+ * </p>
+ *
+ * @see Booking
+ * @see ReviewStatus
+ */
 @Entity
 @Table(name = "Reviews")
 @Getter

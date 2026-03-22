@@ -7,6 +7,15 @@ import lombok.*;
 import com.recenter.model.enums.NotificationType;
 import java.time.LocalDateTime;
 
+/**
+ * Уведомление для пользователя.
+ * <p>
+ * Может быть информационным, предупреждением, сообщением об успехе или ошибке.
+ * </p>
+ *
+ * @see User
+ * @see NotificationType
+ */
 @Entity
 @Table(name = "Notifications")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder

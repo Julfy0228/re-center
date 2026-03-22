@@ -1,11 +1,14 @@
 package com.recenter.model.enums;
 
+/**
+ * Типы действий для аудита.
+ */
 public enum ActivityType {
-    LOGIN,
-    LOGOUT,
-    VIEW_PAGE,
-    UPDATE_PROFILE,
-    BOOK_SERVICE,
-    CANCEL_BOOKING,
-    APPLY_DISCOUNT
+    LOGIN,                // вход в систему
+    LOGOUT,               // выход из системы
+    VIEW_PAGE,            // просмотр страницы
+    UPDATE_PROFILE,       // обновление профиля
+    BOOK_SERVICE,         // бронирование услуги
+    CANCEL_BOOKING,       // отмена бронирования
+    APPLY_DISCOUNT        // применение скидки
 }

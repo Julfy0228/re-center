@@ -1,8 +1,11 @@
 package com.recenter.model.enums;
 
+/**
+ * Тип уведомления.
+ */
 public enum NotificationType {
-    INFO,
-    WARNING,
-    SUCCESS,
-    ERROR
+    INFO,      // информационное
+    WARNING,   // предупреждение
+    SUCCESS,   // успешное действие
+    ERROR      // ошибка
 }

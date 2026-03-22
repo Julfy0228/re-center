@@ -5,6 +5,14 @@ import com.recenter.model.enums.ActivityType;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * Запись о действии пользователя (аудит).
+ * <p>
+ * Фиксирует, кто, когда и какое действие совершил в системе.
+ * </p>
+ *
+ * @see ActivityType
+ */
 @Entity
 @Table(name = "Activities")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder

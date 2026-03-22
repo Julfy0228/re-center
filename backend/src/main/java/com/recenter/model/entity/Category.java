@@ -6,6 +6,15 @@ import java.util.List;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * Категория услуг (например, «Массаж», «Косметология»).
+ * <p>
+ * Используется для группировки услуг и для применения акций на целые категории.
+ * </p>
+ *
+ * @see Service
+ * @see PromotionCategory
+ */
 @Entity
 @Table(name = "Categories")
 @Getter

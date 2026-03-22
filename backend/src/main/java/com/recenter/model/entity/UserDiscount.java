@@ -4,6 +4,16 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
 
+/**
+ * Связь пользователя со скидкой.
+ * <p>
+ * Фиксирует, какая скидка была выдана пользователю, использована ли она,
+ * и срок её действия.
+ * </p>
+ *
+ * @see User
+ * @see Discount
+ */
 @Entity
 @Table(name = "UserDiscounts")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
