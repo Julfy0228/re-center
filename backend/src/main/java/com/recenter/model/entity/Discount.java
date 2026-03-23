@@ -38,5 +38,5 @@ public class Discount {
     private DiscountType type;
 
     @Column(precision = 10, scale = 2)
-    private BigDecimal value;
+    private BigDecimal amount;
 }
