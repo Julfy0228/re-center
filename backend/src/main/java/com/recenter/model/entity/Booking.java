@@ -44,6 +44,8 @@ public class Booking {
 
     private LocalDateTime startDate;
 
+    private LocalDateTime endDate;
+
     private Integer peopleCount;
 
     @Column(precision = 10, scale = 2)

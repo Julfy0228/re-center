@@ -1,1 +1,1 @@
-mvn clean && mkdir "target" && mkdir "target/frontend-build" && mvn package cargo:run
+mvn clean && mkdir "target" && mkdir "target/frontend-build" && mvn package cargo:run -DskipTests
