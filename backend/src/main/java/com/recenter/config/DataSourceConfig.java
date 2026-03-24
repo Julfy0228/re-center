@@ -4,10 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
-import java.sql.Connection;
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -21,19 +20,10 @@ public class DataSourceConfig {
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
-        dataSource.setUrl(env.getProperty("spring.datasource.url"));
-
-        initializeDatabase(dataSource);
-
-        return dataSource;
-    }
-
-    private void initializeDatabase(DataSource dataSource) {
-        try (Connection connection = dataSource.getConnection()) {
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to initialize database", e);
-        }
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(env.getProperty("spring.datasource.url"));
+        config.setDriverClassName(env.getProperty("spring.datasource.driver-class-name"));
+        config.setMaximumPoolSize(10);
+        return new HikariDataSource(config);
     }
 }

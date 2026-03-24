@@ -35,7 +35,6 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        System.out.println("Creating JwtAuthenticationFilter bean");
         return new JwtAuthenticationFilter();
     }
 
