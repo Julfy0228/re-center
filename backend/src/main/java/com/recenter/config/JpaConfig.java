@@ -34,6 +34,7 @@ public class JpaConfig {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.format_sql", "true");
         em.setJpaProperties(properties);
 
         return em;

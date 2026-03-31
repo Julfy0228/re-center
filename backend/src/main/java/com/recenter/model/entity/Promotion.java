@@ -42,7 +42,7 @@ public class Promotion {
 
     private LocalDateTime endDate;
 
-    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @Builder.Default
     private List<PromotionService> promotionServices = new ArrayList<>();
 

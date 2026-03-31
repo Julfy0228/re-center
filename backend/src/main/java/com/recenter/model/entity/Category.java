@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 /**
- * Категория услуг (например, «Массаж», «Косметология»).
+ * Категория услуг (например, «Прокат квадрациклов», «Рыбалка»).
  * <p>
  * Используется для группировки услуг и для применения акций на целые категории.
  * </p>
@@ -32,7 +32,7 @@ public class Category {
     private String name;
 
     @Builder.Default
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Service> services = new ArrayList<>();
 
     private String description;

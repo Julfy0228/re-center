@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Связующая сущность между акцией и конкретной услугой.
  * <p>
@@ -29,6 +31,7 @@ public class PromotionService {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "promotionId", nullable = false)
+    @JsonIgnore
     private Promotion promotion;
 
     @ManyToOne(fetch = FetchType.LAZY)
