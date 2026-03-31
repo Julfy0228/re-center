@@ -2,7 +2,6 @@ package com.recenter.service;
 
 import com.recenter.model.entity.Activity;
 import com.recenter.model.entity.User;
-import com.recenter.model.enums.ActivityType;
 import com.recenter.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

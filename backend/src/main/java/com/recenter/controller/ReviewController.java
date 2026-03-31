@@ -4,7 +4,7 @@ import com.recenter.model.dto.ReviewRequest;
 import com.recenter.model.entity.Booking;
 import com.recenter.model.entity.Review;
 import com.recenter.model.enums.ReviewStatus;
-import com.recenter.repository.BookingRepository;
+import com.recenter.service.BookingService;
 import com.recenter.service.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class ReviewController {
     private ReviewService reviewService;
 
     @Autowired
-    private BookingRepository bookingRepository;
+    private BookingService bookingService;
 
     /**
      * Создаёт новый отзыв для бронирования.
@@ -39,7 +39,7 @@ public class ReviewController {
      */
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody ReviewRequest request) {
-        Booking booking = bookingRepository.findById(request.getBookingId())
+        Booking booking = bookingService.getById(request.getBookingId())
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
         Review review = Review.builder()

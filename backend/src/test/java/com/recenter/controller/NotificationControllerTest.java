@@ -7,8 +7,8 @@ import com.recenter.model.entity.Notification;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.NotificationType;
 import com.recenter.model.enums.UserRole;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.NotificationService;
+import com.recenter.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,7 +40,7 @@ class NotificationControllerTest {
     private NotificationService notificationService;
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     @InjectMocks
     private NotificationController notificationController;
@@ -89,7 +89,7 @@ class NotificationControllerTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        lenient().when(userRepository.findByEmail(user.getEmail()))
+        lenient().when(userService.getByEmail(user.getEmail()))
                 .thenReturn(Optional.of(user));
     }
 

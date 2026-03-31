@@ -14,12 +14,6 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ServiceRepository serviceRepository;
-
     public Booking create(Booking booking) {
         return bookingRepository.save(booking);
     }

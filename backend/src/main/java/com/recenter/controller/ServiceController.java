@@ -3,7 +3,7 @@ package com.recenter.controller;
 import com.recenter.model.dto.ServiceRequest;
 import com.recenter.model.entity.Category;
 import com.recenter.model.entity.Service;
-import com.recenter.repository.CategoryRepository;
+import com.recenter.service.CategoryService;
 import com.recenter.service.ServiceService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ServiceController {
     private ServiceService serviceService;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     /**
      * Создаёт новую услугу (требует ADMIN или MANAGER).
@@ -38,7 +38,7 @@ public class ServiceController {
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<?> create(@Valid @RequestBody ServiceRequest request) {
-        Category category = categoryRepository.findById(request.getCategoryId())
+        Category category = categoryService.getById(request.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         Service service = Service.builder()
@@ -85,7 +85,7 @@ public class ServiceController {
      */
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<?> getByCategory(@PathVariable("categoryId") Long categoryId) {
-        Category category = categoryRepository.findById(categoryId)
+        Category category = categoryService.getById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         List<Service> services = serviceService.getByCategory(category);
@@ -102,7 +102,7 @@ public class ServiceController {
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody ServiceRequest request) {
-        Category category = categoryRepository.findById(request.getCategoryId())
+        Category category = categoryService.getById(request.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
         Service serviceDetails = Service.builder()

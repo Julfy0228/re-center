@@ -2,8 +2,8 @@ package com.recenter.controller;
 
 import com.recenter.model.entity.Notification;
 import com.recenter.model.entity.User;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.NotificationService;
+import com.recenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +26,7 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     /**
      * Создаёт новое уведомление.
@@ -71,7 +71,7 @@ public class NotificationController {
     @GetMapping("/my")
     public ResponseEntity<?> getMyNotifications() {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userRepository.findByEmail(email)
+        User user = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<Notification> notifications = notificationService.getByUser(user);
@@ -86,7 +86,7 @@ public class NotificationController {
     @GetMapping("/my/unread")
     public ResponseEntity<?> getMyUnreadNotifications() {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userRepository.findByEmail(email)
+        User user = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<Notification> notifications = notificationService.getUnreadByUser(user);
@@ -101,7 +101,7 @@ public class NotificationController {
     @GetMapping("/my/unread/count")
     public ResponseEntity<?> getUnreadCount() {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userRepository.findByEmail(email)
+        User user = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         int count = notificationService.getUnreadCount(user);

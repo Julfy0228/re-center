@@ -5,7 +5,6 @@ import com.recenter.model.dto.AuthRequest;
 import com.recenter.model.dto.RegisterRequest;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.UserRole;
-import com.recenter.repository.UserRepository;
 import com.recenter.security.JwtUtils;
 import com.recenter.security.UserDetailsImpl;
 import com.recenter.service.UserService;

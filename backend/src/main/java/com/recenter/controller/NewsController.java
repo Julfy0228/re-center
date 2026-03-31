@@ -4,8 +4,8 @@ import com.recenter.model.dto.NewsRequest;
 import com.recenter.model.entity.News;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.NewsStatus;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.NewsService;
+import com.recenter.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class NewsController {
     private NewsService newsService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     /**
      * Создаёт новую новость (требует ADMIN или MANAGER).
@@ -43,7 +43,7 @@ public class NewsController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<?> create(@Valid @RequestBody NewsRequest request) {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User author = userRepository.findByEmail(email)
+        User author = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         News news = News.builder()

@@ -6,9 +6,9 @@ import com.recenter.model.entity.Booking;
 import com.recenter.model.entity.Service;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.BookingStatus;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.BookingService;
 import com.recenter.service.ServiceService;
+import com.recenter.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,7 @@ public class BookingController {
     private ServiceService serviceService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     /**
      * Создаёт новое бронирование для текущего пользователя.
@@ -78,7 +78,7 @@ public class BookingController {
         String email = ((UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername();
 
-        User user = userRepository.findByEmail(email)
+        User user = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         Booking booking = new Booking();
@@ -109,7 +109,7 @@ public class BookingController {
         String email = ((UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername();
 
-        User user = userRepository.findByEmail(email)
+        User user = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<Booking> bookings = bookingService.getByUser(user);

@@ -1,7 +1,6 @@
 package com.recenter.model.dto;
 
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import com.recenter.model.enums.BookingStatus;
 import java.time.LocalDateTime;

@@ -3,7 +3,7 @@ package com.recenter.controller;
 import com.recenter.model.dto.PaymentRequest;
 import com.recenter.model.entity.Booking;
 import com.recenter.model.entity.Payment;
-import com.recenter.repository.BookingRepository;
+import com.recenter.service.BookingService;
 import com.recenter.service.PaymentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @Autowired
-    private BookingRepository bookingRepository;
+    private BookingService bookingService;
 
     /**
      * Создаёт новый платёж.
@@ -39,7 +39,7 @@ public class PaymentController {
      */
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody PaymentRequest request) {
-        Booking booking = bookingRepository.findById(request.getBookingId())
+        Booking booking = bookingService.getById(request.getBookingId())
                 .orElseThrow(() -> new RuntimeException("Booking not found"));
 
         Payment payment = Payment.builder()

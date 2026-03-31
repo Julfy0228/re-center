@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recenter.model.entity.Activity;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.ActivityType;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.ActivityService;
+import com.recenter.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +36,7 @@ class ActivityControllerTest {
     private ActivityService activityService;
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     @InjectMocks
     private ActivityController activityController;
@@ -118,7 +118,7 @@ class ActivityControllerTest {
 
         User user = activity.getUser();
 
-        when(userRepository.findByEmail("test@example.com"))
+        when(userService.getByEmail("test@example.com"))
                 .thenReturn(Optional.of(user));
 
         when(activityService.getByUser(user))

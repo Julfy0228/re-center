@@ -2,7 +2,6 @@ package com.recenter.controller;
 
 import com.recenter.model.dto.UserResponse;
 import com.recenter.model.entity.User;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +25,6 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private UserRepository userRepository;
 
     /**
      * Получает пользователя по идентификатору.
@@ -67,7 +63,7 @@ public class UserController {
     @GetMapping("/my/profile")
     public ResponseEntity<?> getMyProfile() {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userRepository.findByEmail(email)
+        User user = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         UserResponse response = mapToUserResponse(user);

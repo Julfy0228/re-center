@@ -7,8 +7,8 @@ import com.recenter.model.entity.News;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.NewsStatus;
 import com.recenter.model.enums.UserRole;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.NewsService;
+import com.recenter.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +39,7 @@ class NewsControllerTest {
     private NewsService newsService;
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     @InjectMocks
     private NewsController newsController;
@@ -98,7 +98,7 @@ class NewsControllerTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        when(userRepository.findByEmail(admin.getEmail())).thenReturn(Optional.of(admin));
+        when(userService.getByEmail(admin.getEmail())).thenReturn(Optional.of(admin));
         when(newsService.create(any(News.class))).thenReturn(news);
 
         mockMvc.perform(post("/api/news")

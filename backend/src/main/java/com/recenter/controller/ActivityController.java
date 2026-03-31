@@ -2,8 +2,8 @@ package com.recenter.controller;
 
 import com.recenter.model.entity.Activity;
 import com.recenter.model.entity.User;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.ActivityService;
+import com.recenter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +26,7 @@ public class ActivityController {
     private ActivityService activityService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     /**
      * Создаёт новую запись о действии.
@@ -71,7 +71,7 @@ public class ActivityController {
     @GetMapping("/my")
     public ResponseEntity<?> getMyActivities() {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User user = userRepository.findByEmail(email)
+        User user = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         List<Activity> activities = activityService.getByUser(user);

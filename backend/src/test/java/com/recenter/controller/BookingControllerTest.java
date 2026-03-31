@@ -6,9 +6,9 @@ import com.recenter.model.dto.BookingRequest;
 import com.recenter.model.entity.*;
 import com.recenter.model.enums.BookingStatus;
 import com.recenter.model.enums.UserRole;
-import com.recenter.repository.UserRepository;
 import com.recenter.service.BookingService;
 import com.recenter.service.ServiceService;
+import com.recenter.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class BookingControllerTest {
     private BookingService bookingService;
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Mock
     private ServiceService serviceService;
@@ -103,7 +103,7 @@ class BookingControllerTest {
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        lenient().when(userRepository.findByEmail(user.getEmail()))
+        lenient().when(userService.getByEmail(user.getEmail()))
                 .thenReturn(Optional.of(user));
     }
 
