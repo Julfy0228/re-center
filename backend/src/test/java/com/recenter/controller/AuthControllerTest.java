@@ -8,6 +8,8 @@ import com.recenter.model.enums.UserRole;
 import com.recenter.repository.UserRepository;
 import com.recenter.security.JwtUtils;
 import com.recenter.security.UserDetailsImpl;
+import com.recenter.service.UserService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +43,7 @@ class AuthControllerTest {
     private AuthenticationManager authenticationManager;
 
     @Mock
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Mock
     private PasswordEncoder encoder;
@@ -110,7 +112,7 @@ class AuthControllerTest {
         request.setEmail("new@example.com");
         request.setPassword("123456");
 
-        when(userRepository.existsByEmail("new@example.com")).thenReturn(false);
+        when(userService.existsByEmail("new@example.com")).thenReturn(false);
         when(encoder.encode("123456")).thenReturn("encoded-pass");
 
         mockMvc.perform(post("/api/auth/register")
@@ -119,7 +121,7 @@ class AuthControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("User registered successfully"));
 
-        verify(userRepository).save(any(User.class));
+        verify(userService).create(any(User.class));
     }
 
     @Test
@@ -128,7 +130,7 @@ class AuthControllerTest {
         request.setEmail("test@example.com");
         request.setPassword("123456");
 
-        when(userRepository.existsByEmail("test@example.com")).thenReturn(true);
+        when(userService.existsByEmail("test@example.com")).thenReturn(true);
 
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -144,7 +146,7 @@ class AuthControllerTest {
     void getCurrentUser_ReturnsUserInfo() throws Exception {
         Authentication auth = new TestingAuthenticationToken(userDetails, null);
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(userService.getById(1L)).thenReturn(Optional.of(user));
 
         mockMvc.perform(get("/api/auth/me")
                         .principal(auth))

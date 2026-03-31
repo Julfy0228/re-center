@@ -1,11 +1,15 @@
 package com.recenter.controller;
 
-import com.recenter.model.dto.*;
+import com.recenter.model.dto.AuthRequest;
+import com.recenter.model.dto.AuthResponse;
+import com.recenter.model.dto.RegisterRequest;
+import com.recenter.model.dto.UserResponse;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.UserRole;
-import com.recenter.repository.UserRepository;
 import com.recenter.security.JwtUtils;
 import com.recenter.security.UserDetailsImpl;
+import com.recenter.service.UserService;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +35,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder encoder;
@@ -51,13 +55,19 @@ public class AuthController {
      */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthRequest loginRequest) {
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getEmail(),
+                        loginRequest.getPassword()
+                )
+        );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
 
+        String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
         AuthResponse response = new AuthResponse(
                 jwt,
                 userDetails.getId(),
@@ -80,7 +90,8 @@ public class AuthController {
      */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+
+        if (userService.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity.badRequest().body("Email already in use");
         }
 
@@ -94,7 +105,7 @@ public class AuthController {
                 .role(UserRole.CLIENT)
                 .build();
 
-        userRepository.save(user);
+        userService.create(user);
 
         return ResponseEntity.ok("User registered successfully");
     }
@@ -110,23 +121,26 @@ public class AuthController {
      */
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+
         if (authentication == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
         }
+
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        User user = userRepository.findById(userDetails.getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        UserResponse response = new UserResponse();
-        response.setId(user.getId());
-        response.setEmail(user.getEmail());
-        response.setFirstName(user.getFirstName());
-        response.setLastName(user.getLastName());
-        response.setMiddleName(user.getMiddleName());
-        response.setPhoneNumber(user.getPhoneNumber());
-        response.setRole(user.getRole());
-        response.setCreatedAt(user.getCreatedAt());
-
-        return ResponseEntity.ok(response);
+        return userService.getById(userDetails.getId())
+            .<ResponseEntity<?>>map(user -> {
+                UserResponse response = new UserResponse(
+                        user.getId(),
+                        user.getEmail(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getMiddleName(),
+                        user.getPhoneNumber(),
+                        user.getRole(),
+                        user.getCreatedAt()
+                );
+                return ResponseEntity.ok(response);
+            }).orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized"));
     }
 }
