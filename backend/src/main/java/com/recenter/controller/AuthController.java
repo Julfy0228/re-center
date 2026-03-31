@@ -17,6 +17,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Контроллер аутентификации и авторизации для системы бронирования базы отдыха.
+ * <p>
+ * Предоставляет endpoints для входа, регистрации новых пользователей и получения
+ * информации о текущем авторизованном пользователе.
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -33,6 +39,16 @@ public class AuthController {
     @Autowired
     private JwtUtils jwtUtils;
 
+    /**
+     * Аутентифицирует пользователя по email и паролю.
+     * <p>
+     * При успешной аутентификации генерируется JWT-токен, который возвращается вместе
+     * с идентификатором пользователя, именем и ролью. Токен должен передаваться в
+     * заголовке {@code Authorization} для доступа к защищённым ресурсам.
+     *
+     * @param loginRequest объект с email и паролем пользователя
+     * @return {@link AuthResponse} с токеном и данными пользователя
+     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -52,6 +68,16 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Регистрирует нового пользователя в системе.
+     * <p>
+     * Проверяет уникальность email. Пароль сохраняется в зашифрованном виде.
+     * Новым пользователям автоматически присваивается роль {@link UserRole#CLIENT}.
+     * После успешной регистрации пользователь может войти в систему через {@code /login}.
+     *
+     * @param registerRequest объект с данными для регистрации (email, пароль, имя, фамилия, телефон и т.д.)
+     * @return сообщение об успешной регистрации или ошибка, если email уже используется
+     */
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
@@ -73,6 +99,15 @@ public class AuthController {
         return ResponseEntity.ok("User registered successfully");
     }
 
+    /**
+     * Возвращает информацию о текущем авторизованном пользователе.
+     * <p>
+     * Эндпоинт доступен только для аутентифицированных пользователей. Данные извлекаются
+     * из контекста безопасности и базы данных.
+     *
+     * @param authentication объект аутентификации, автоматически подставляемый Spring Security
+     * @return {@link UserResponse} с полными данными пользователя или статус 401, если пользователь не авторизован
+     */
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {
         if (authentication == null) {

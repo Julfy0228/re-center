@@ -15,6 +15,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/services")
+/**
+ * REST контроллер для управления услугами базы отдыха.
+ * 
+ * Предоставляет API endpoints для создания, чтения и удаления услуг и их категорий.
+ * Услуги группируются по категориям и имеют информацию о названии, описании и цене.
+ */
 public class ServiceController {
 
     @Autowired
@@ -23,6 +29,12 @@ public class ServiceController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    /**
+     * Создает новую категорию услуг (требует ADMIN).
+     * 
+     * @param request DTO с данными категории
+     * @return сообщение об успешном создании
+     */
     @PostMapping("/categories")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequest request) {
@@ -34,11 +46,27 @@ public class ServiceController {
         return ResponseEntity.ok("Категория '" + category.getName() + "' успешно создана");
     }
 
+    /**
+     * Получает все категории услуг.
+     * 
+     * @return список всех категорий
+     */
+    /**
+     * Получает все услуги.
+     * 
+     * @return список всех услуг
+     */
     @GetMapping("/categories")
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
+    /**
+     * Создает новую услугу (требует ADMIN или MANAGER).
+     * 
+     * @param request DTO с данными услуги
+     * @return сообщение об успешном создании
+     */
     @GetMapping
     public List<Service> getAllServices() {
         return serviceRepository.findAll();
@@ -56,10 +84,22 @@ public class ServiceController {
         
         service.setPrice(request.getPrice());
         
+    /**
+     * Удаляет услугу (требует ADMIN).
+     * 
+     * @param id идентификатор услуги
+     * @return сообщение об успешном удалении
+     */
         service.setCategory(category);
 
         serviceRepository.save(service);
         return ResponseEntity.ok("Услуга '" + service.getTitle() + "' добавлена в категорию '" + category.getName() + "'");
+    /**
+     * Получает услуги по категории.
+     * 
+     * @param categoryId идентификатор категории
+     * @return список услуг в категории
+     */
     }
 
     @DeleteMapping("/{id}")

@@ -13,8 +13,12 @@ public class ServiceRequest {
 
     private String description;
 
+    private Integer duration;
+
     @Positive
     private BigDecimal price;
+
+    private Integer maxPeople;
 
     private Long categoryId;
 }
