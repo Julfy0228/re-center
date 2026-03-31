@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.recenter.model.enums.BookingStatus;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,7 +28,7 @@ public class BookingResponse {
     private LocalDateTime startDate; // Из Booking.startDate [cite: 87]
     private LocalDateTime endDate;   // Твое новое поле
     private Integer peopleCount;     // Из Booking.peopleCount [cite: 87]
-    private BigDecimal totalPrice;   // Из Booking.initialPrice [cite: 87]
-    private String status;           // Из Booking.status [cite: 88]
+    private BigDecimal initialPrice;   // Из Booking.initialPrice [cite: 87]
+    private BookingStatus status;           // Из Booking.status [cite: 88]
     private LocalDateTime createdAt; // Из Booking.createdAt [cite: 88]
 }

@@ -18,7 +18,7 @@ import com.recenter.model.enums.DiscountType;
  */
 @Entity
 @Table(name = "Discounts")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder(toBuilder = true)
 public class Discount {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

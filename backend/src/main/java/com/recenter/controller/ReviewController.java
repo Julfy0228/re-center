@@ -11,17 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/reviews")
 /**
  * REST контроллер для управления отзывами о услугах.
- * 
+ * <p>
  * Предоставляет API endpoints для создания, чтения, обновления и удаления отзывов.
  * Включает процесс модерации отзывов (статусы: PENDING, APPROVED, REJECTED).
  */
+@RestController
+@RequestMapping("/api/reviews")
 public class ReviewController {
 
     @Autowired
@@ -31,8 +32,8 @@ public class ReviewController {
     private BookingRepository bookingRepository;
 
     /**
-     * Создает новый отзыв для бронирования.
-     * 
+     * Создаёт новый отзыв для бронирования.
+     *
      * @param request DTO с данными отзыва
      * @return созданный отзыв
      */
@@ -54,19 +55,19 @@ public class ReviewController {
 
     /**
      * Получает отзыв по идентификатору.
-     * 
+     *
      * @param id идентификатор отзыва
-     * @return отзыв или 404
+     * @return отзыв или 404, если не найден
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         Optional<Review> review = reviewService.getById(id);
         return review.isPresent() ? ResponseEntity.ok(review.get()) : ResponseEntity.notFound().build();
     }
 
     /**
-     * Получает все отзывы.
-     * 
+     * Получает список всех отзывов.
+     *
      * @return список всех отзывов
      */
     @GetMapping
@@ -77,8 +78,8 @@ public class ReviewController {
 
     /**
      * Получает одобренные отзывы (статус APPROVED).
-     * 
-     * @return список отзывов одобренных модератором
+     *
+     * @return список отзывов, одобренных модератором
      */
     @GetMapping("/published")
     public ResponseEntity<?> getPublished() {
@@ -88,51 +89,45 @@ public class ReviewController {
 
     /**
      * Получает отзывы на модерации (требует ADMIN).
-     * 
+     *
      * @return список отзывов со статусом PENDING
      */
     @GetMapping("/pending")
     @PreAuthorize("hasRole('ADMIN')")
-    /**
-     * Обновляет отзыв (может только автор отзыва).
-     * 
-     * @param id идентификатор отзыва
-     * @param request новые данные отзыва
-     * @return обновленный отзыв или 404
-     */
     public ResponseEntity<?> getPending() {
         List<Review> reviews = reviewService.getPending();
         return ResponseEntity.ok(reviews);
     }
 
+    /**
+     * Обновляет существующий отзыв (требует ADMIN или MANAGER).
+     *
+     * @param id      идентификатор отзыва
+     * @param request новые данные отзыва
+     * @return обновлённый отзыв или 404, если не найден
+     */
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
-    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody ReviewRequest request) {
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody ReviewRequest request) {
         Review reviewDetails = Review.builder()
                 .content(request.getContent())
                 .rating(request.getRating())
-    /**
-     * Одобряет отзыв и изменяет статус на APPROVED (требует ADMIN).
-     * 
-     * @param id идентификатор отзыва
-     * @return одобренный отзыв или 404
-     */
                 .status(request.getStatus())
                 .build();
 
         Review updated = reviewService.update(id, reviewDetails);
-    /**
-     * Отклоняет отзыв и изменяет статус на REJECTED (требует ADMIN).
-     * 
-     * @param id идентификатор отзыва
-     * @return отклоненный отзыв или 404
-     */
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Одобряет отзыв, изменяя его статус на APPROVED (требует ADMIN или MANAGER).
+     *
+     * @param id идентификатор отзыва
+     * @return одобренный отзыв или 404, если не найден
+     */
     @PutMapping("/{id}/approve")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
-    public ResponseEntity<?> approve(@PathVariable Long id) {
+    public ResponseEntity<?> approve(@PathVariable("id") Long id) {
         Review reviewDetails = new Review();
         reviewDetails.setStatus(ReviewStatus.APPROVED);
 
@@ -140,9 +135,15 @@ public class ReviewController {
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Отклоняет отзыв, изменяя его статус на REJECTED (требует ADMIN или MANAGER).
+     *
+     * @param id идентификатор отзыва
+     * @return отклонённый отзыв или 404, если не найден
+     */
     @PutMapping("/{id}/reject")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
-    public ResponseEntity<?> reject(@PathVariable Long id) {
+    public ResponseEntity<?> reject(@PathVariable("id") Long id) {
         Review reviewDetails = new Review();
         reviewDetails.setStatus(ReviewStatus.REJECTED);
 
@@ -151,14 +152,14 @@ public class ReviewController {
     }
 
     /**
-     * Удаляет отзыв (требует ADMIN).
-     * 
+     * Удаляет отзыв по идентификатору (требует ADMIN).
+     *
      * @param id идентификатор отзыва
      * @return сообщение об успешном удалении
      */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         reviewService.delete(id);
         return ResponseEntity.ok("Review deleted successfully");
     }

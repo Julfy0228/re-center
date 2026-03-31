@@ -9,16 +9,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/notifications")
 /**
  * REST контроллер для управления уведомлениями пользователей.
- * 
+ * <p>
  * Предоставляет API endpoints для просмотра и управления уведомлениями.
  */
+@RestController
+@RequestMapping("/api/notifications")
 public class NotificationController {
 
     @Autowired
@@ -28,8 +29,8 @@ public class NotificationController {
     private UserRepository userRepository;
 
     /**
-     * Создает новое уведомление.
-     * 
+     * Создаёт новое уведомление.
+     *
      * @param notification данные уведомления
      * @return созданное уведомление
      */
@@ -41,36 +42,31 @@ public class NotificationController {
 
     /**
      * Получает уведомление по идентификатору.
-     * 
+     *
      * @param id идентификатор уведомления
-     * @return уведомление или 404
-     */
-    /**
-     * Получает все уведомления.
-     * 
-     * @return список всех уведомлений
+     * @return уведомление или 404, если не найдено
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         Optional<Notification> notification = notificationService.getById(id);
         return notification.isPresent() ? ResponseEntity.ok(notification.get()) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping
     /**
-     * Получает уведомления текущего пользователя.
-     * 
-     * @return список уведомлений в обратном хронологическом порядке
+     * Получает список всех уведомлений.
+     *
+     * @return список всех уведомлений
      */
+    @GetMapping
     public ResponseEntity<?> getAll() {
         List<Notification> notifications = notificationService.getAll();
         return ResponseEntity.ok(notifications);
     }
 
     /**
-     * Получает непрочитанные уведомления текущего пользователя.
-     * 
-     * @return список непрочитанных уведомлений
+     * Получает уведомления текущего авторизованного пользователя.
+     *
+     * @return список уведомлений пользователя в обратном хронологическом порядке
      */
     @GetMapping("/my")
     public ResponseEntity<?> getMyNotifications() {
@@ -83,9 +79,9 @@ public class NotificationController {
     }
 
     /**
-     * Получает количество непрочитанных уведомлений текущего пользователя.
-     * 
-     * @return количество непрочитанных уведомлений
+     * Получает список непрочитанных уведомлений текущего пользователя.
+     *
+     * @return список непрочитанных уведомлений
      */
     @GetMapping("/my/unread")
     public ResponseEntity<?> getMyUnreadNotifications() {
@@ -98,16 +94,9 @@ public class NotificationController {
     }
 
     /**
-     * Отмечает уведомление как прочитанное.
-     * 
-     * @param id идентификатор уведомления
-     * @return обновленное уведомление или 404
-     */
-    /**
-     * Удаляет уведомление.
-     * 
-     * @param id идентификатор уведомления
-     * @return сообщение об успешном удалении
+     * Возвращает количество непрочитанных уведомлений текущего пользователя.
+     *
+     * @return количество непрочитанных уведомлений
      */
     @GetMapping("/my/unread/count")
     public ResponseEntity<?> getUnreadCount() {
@@ -119,14 +108,26 @@ public class NotificationController {
         return ResponseEntity.ok(count);
     }
 
+    /**
+     * Отмечает уведомление как прочитанное.
+     *
+     * @param id идентификатор уведомления
+     * @return обновлённое уведомление или 404, если не найдено
+     */
     @PutMapping("/{id}/mark-read")
-    public ResponseEntity<?> markAsRead(@PathVariable Long id) {
+    public ResponseEntity<?> markAsRead(@PathVariable("id") Long id) {
         Notification updated = notificationService.markAsRead(id);
         return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Удаляет уведомление по идентификатору.
+     *
+     * @param id идентификатор уведомления
+     * @return сообщение об успешном удалении
+     */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         notificationService.delete(id);
         return ResponseEntity.ok("Notification deleted successfully");
     }

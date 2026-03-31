@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "Notifications")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder(toBuilder = true)
 public class Notification {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

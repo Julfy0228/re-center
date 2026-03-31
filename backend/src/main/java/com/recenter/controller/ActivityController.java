@@ -47,7 +47,7 @@ public class ActivityController {
      * @return запись о действии или 404
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         Optional<Activity> activity = activityService.getById(id);
         return activity.isPresent() ? ResponseEntity.ok(activity.get()) : ResponseEntity.notFound().build();
     }
@@ -85,7 +85,7 @@ public class ActivityController {
      * @return сообщение об успешном удалении
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         activityService.delete(id);
         return ResponseEntity.ok("Activity deleted successfully");
     }

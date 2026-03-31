@@ -1,119 +1,133 @@
 package com.recenter.controller;
 
-import com.recenter.model.dto.CategoryRequest;
 import com.recenter.model.dto.ServiceRequest;
 import com.recenter.model.entity.Category;
 import com.recenter.model.entity.Service;
 import com.recenter.repository.CategoryRepository;
-import com.recenter.repository.ServiceRepository;
+import com.recenter.service.ServiceService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/services")
 /**
  * REST контроллер для управления услугами базы отдыха.
- * 
- * Предоставляет API endpoints для создания, чтения и удаления услуг и их категорий.
- * Услуги группируются по категориям и имеют информацию о названии, описании и цене.
+ * <p>
+ * Предоставляет API endpoints для создания, чтения, обновления и удаления услуг.
+ * Услуги группируются по категориям и содержат информацию о названии, описании, цене и максимальном количестве участников.
  */
+@RestController
+@RequestMapping("/api/services")
 public class ServiceController {
 
     @Autowired
-    private ServiceRepository serviceRepository;
+    private ServiceService serviceService;
 
     @Autowired
     private CategoryRepository categoryRepository;
 
     /**
-     * Создает новую категорию услуг (требует ADMIN).
-     * 
-     * @param request DTO с данными категории
-     * @return сообщение об успешном создании
+     * Создаёт новую услугу (требует ADMIN или MANAGER).
+     *
+     * @param request DTO с данными услуги (название, описание, цена, категория, длительность, макс. люди)
+     * @return созданная услуга
      */
-    @PostMapping("/categories")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequest request) {
-        Category category = new Category();
-        category.setName(request.getName());
-        category.setDescription(request.getDescription());
-        
-        categoryRepository.save(category);
-        return ResponseEntity.ok("Категория '" + category.getName() + "' успешно создана");
-    }
-
-    /**
-     * Получает все категории услуг.
-     * 
-     * @return список всех категорий
-     */
-    /**
-     * Получает все услуги.
-     * 
-     * @return список всех услуг
-     */
-    @GetMapping("/categories")
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-    /**
-     * Создает новую услугу (требует ADMIN или MANAGER).
-     * 
-     * @param request DTO с данными услуги
-     * @return сообщение об успешном создании
-     */
-    @GetMapping
-    public List<Service> getAllServices() {
-        return serviceRepository.findAll();
-    }
-
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
-    public ResponseEntity<?> createService(@Valid @RequestBody ServiceRequest request) {
+    public ResponseEntity<?> create(@Valid @RequestBody ServiceRequest request) {
         Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new RuntimeException("Ошибка: Категория с ID " + request.getCategoryId() + " не найдена"));
+                .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        Service service = new Service();
-        service.setTitle(request.getTitle());
-        service.setDescription(request.getDescription());
-        
-        service.setPrice(request.getPrice());
-        
+        Service service = Service.builder()
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .duration(request.getDuration())
+                .price(request.getPrice())
+                .maxPeople(request.getMaxPeople())
+                .category(category)
+                .build();
+
+        Service created = serviceService.create(service);
+        return ResponseEntity.ok(created);
+    }
+
     /**
-     * Удаляет услугу (требует ADMIN).
-     * 
+     * Получает услугу по идентификатору.
+     *
+     * @param id идентификатор услуги
+     * @return услуга или 404, если не найдена
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        Optional<Service> service = serviceService.getById(id);
+        return service.isPresent() ? ResponseEntity.ok(service.get()) : ResponseEntity.notFound().build();
+    }
+
+    /**
+     * Получает список всех услуг.
+     *
+     * @return список всех услуг
+     */
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        List<Service> services = serviceService.getAll();
+        return ResponseEntity.ok(services);
+    }
+
+    /**
+     * Получает список услуг по идентификатору категории.
+     *
+     * @param categoryId идентификатор категории
+     * @return список услуг в указанной категории
+     */
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<?> getByCategory(@PathVariable("categoryId") Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        List<Service> services = serviceService.getByCategory(category);
+        return ResponseEntity.ok(services);
+    }
+
+    /**
+     * Обновляет существующую услугу (требует ADMIN или MANAGER).
+     *
+     * @param id идентификатор услуги
+     * @param request DTO с обновленными данными
+     * @return обновленная услуга или 404, если не найдена
+     */
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @Valid @RequestBody ServiceRequest request) {
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+
+        Service serviceDetails = Service.builder()
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .duration(request.getDuration())
+                .price(request.getPrice())
+                .maxPeople(request.getMaxPeople())
+                .category(category)
+                .build();
+
+        Service updated = serviceService.update(id, serviceDetails);
+        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+    }
+
+    /**
+     * Удаляет услугу (требует ADMIN или MANAGER).
+     *
      * @param id идентификатор услуги
      * @return сообщение об успешном удалении
      */
-        service.setCategory(category);
-
-        serviceRepository.save(service);
-        return ResponseEntity.ok("Услуга '" + service.getTitle() + "' добавлена в категорию '" + category.getName() + "'");
-    /**
-     * Получает услуги по категории.
-     * 
-     * @param categoryId идентификатор категории
-     * @return список услуг в категории
-     */
-    }
-
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteService(@PathVariable Long id) {
-        if (!serviceRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        serviceRepository.deleteById(id);
-        return ResponseEntity.ok("Услуга удалена");
-    }
-
-    @GetMapping("/categories/{categoryId}")
-    public List<Service> getServicesByCategory(@PathVariable Long categoryId) {
-        return serviceRepository.findByCategoryId(categoryId);
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        serviceService.delete(id);
+        return ResponseEntity.ok("Service deleted successfully");
     }
 }

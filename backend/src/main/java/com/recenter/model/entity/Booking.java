@@ -7,6 +7,8 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.recenter.model.enums.BookingStatus;
+
 /**
  * Бронирование (заказ) услуги пользователем.
  * <p>
@@ -25,7 +27,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Booking {
 
     @Id
@@ -51,7 +53,7 @@ public class Booking {
     @Column(precision = 10, scale = 2)
     private BigDecimal initialPrice;
 
-    private String status;
+    private BookingStatus status;
 
     @Column(updatable = false)
     private LocalDateTime createdAt;

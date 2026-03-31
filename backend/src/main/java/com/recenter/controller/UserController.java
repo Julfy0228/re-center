@@ -10,17 +10,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/users")
 /**
  * REST контроллер для управления пользователями системы.
- * 
+ * <p>
  * Предоставляет API endpoints для получения информации о пользователях, управления профилем,
- * обновления данных и удаления учетных записей (требует разные уровни доступа).
+ * обновления данных и удаления учётных записей (требует разные уровни доступа).
  */
+@RestController
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -31,12 +32,12 @@ public class UserController {
 
     /**
      * Получает пользователя по идентификатору.
-     * 
+     *
      * @param id идентификатор пользователя
-     * @return профиль пользователя или 404
+     * @return профиль пользователя или 404, если не найден
      */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Long id) {
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
         Optional<User> user = userService.getById(id);
         if (user.isPresent()) {
             UserResponse response = mapToUserResponse(user.get());
@@ -46,43 +47,43 @@ public class UserController {
     }
 
     /**
-     * Получает всех пользователей системы (требует ADMIN).
-     * 
+     * Получает список всех пользователей системы (требует ADMIN).
+     *
      * @return список всех пользователей
      */
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAll() {
-    /**
-     * Получает профиль текущего авторизованного пользователя.
-     * 
-     * @return профиль аутентифицированного пользователя
-     */
         List<User> users = userService.getAll();
         List<UserResponse> responses = users.stream().map(this::mapToUserResponse).toList();
         return ResponseEntity.ok(responses);
     }
 
+    /**
+     * Получает профиль текущего авторизованного пользователя.
+     *
+     * @return профиль аутентифицированного пользователя
+     */
     @GetMapping("/my/profile")
     public ResponseEntity<?> getMyProfile() {
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-/**
-     * Обновляет данные пользователя (может ADMIN или сам пользователь).
-     * 
-     * @param id идентификатор пользователя
-     * @param request новые данные пользователя
-     * @return обновленный профиль или 404
-     */
-    
+
         UserResponse response = mapToUserResponse(user);
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Обновляет данные пользователя (может ADMIN или сам пользователь).
+     *
+     * @param id      идентификатор пользователя
+     * @param request новые данные пользователя
+     * @return обновлённый профиль или 404, если не найден
+     */
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or (#id == authentication.principal.id)")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody UserRequest request) {
+    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody UserRequest request) {
         User userDetails = new User();
         userDetails.setFirstName(request.getFirstName());
         userDetails.setLastName(request.getLastName());
@@ -90,36 +91,33 @@ public class UserController {
         userDetails.setPhoneNumber(request.getPhoneNumber());
 
         User updated = userService.update(id, userDetails);
-    /**
-     * Удаляет учетную запись пользователя (требует ADMIN).
-     * 
-     * @param id идентификатор пользователя
-     * @return сообщение об успешном удалении
-     */
         if (updated != null) {
-    /**
-     * Вспомогательный метод для преобразования Entity User в DTO UserResponse.
-     * 
-     * @param user сущность User
-     * @return DTO с информацией пользователя
-     */
             UserResponse response = mapToUserResponse(updated);
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.notFound().build();
     }
 
+    /**
+     * Удаляет учётную запись пользователя (требует ADMIN).
+     *
+     * @param id идентификатор пользователя
+     * @return сообщение об успешном удалении
+     */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return ResponseEntity.ok("User deleted successfully");
     }
 
-    private UserResponse mapToUserResponse(User user) {
     /**
-     * Класс для передачи в PUT запросе данных обновления пользователя.
+     * Вспомогательный метод для преобразования сущности User в DTO UserResponse.
+     *
+     * @param user сущность User
+     * @return DTO с информацией пользователя
      */
+    private UserResponse mapToUserResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
@@ -132,6 +130,9 @@ public class UserController {
                 .build();
     }
 
+    /**
+     * Класс для передачи в PUT-запросе данных обновления пользователя.
+     */
     public static class UserRequest {
         private String firstName;
         private String lastName;

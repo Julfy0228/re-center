@@ -1,42 +1,45 @@
 package com.recenter.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.recenter.config.AppConfig;
-import com.recenter.config.WebConfig;
+import com.recenter.model.dto.AuthRequest;
 import com.recenter.model.dto.RegisterRequest;
+import com.recenter.model.entity.User;
+import com.recenter.model.enums.UserRole;
 import com.recenter.repository.UserRepository;
 import com.recenter.security.JwtUtils;
-
+import com.recenter.security.UserDetailsImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.TestingAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.mockito.ArgumentMatchers.anyString;
+import java.util.List;
+import java.util.Optional;
 
-@ExtendWith(SpringExtension.class)
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 @ExtendWith(MockitoExtension.class)
-@ContextConfiguration(classes = {AppConfig.class, WebConfig.class})
-@WebAppConfiguration
-public class AuthControllerTest {
+class AuthControllerTest {
 
     private MockMvc mockMvc;
-    private ObjectMapper objectMapper = new ObjectMapper();
 
-    // 1. Создаем моки для ВСЕХ зависимостей, которые есть в AuthController
+    @Mock
+    private AuthenticationManager authenticationManager;
+
     @Mock
     private UserRepository userRepository;
 
@@ -44,33 +47,116 @@ public class AuthControllerTest {
     private PasswordEncoder encoder;
 
     @Mock
-    private AuthenticationManager authenticationManager;
-
-    @Mock
     private JwtUtils jwtUtils;
 
     @InjectMocks
     private AuthController authController;
 
+    private ObjectMapper objectMapper = new ObjectMapper();
+
+    private User user;
+    private UserDetailsImpl userDetails;
+
     @BeforeEach
     void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
+
+        user = User.builder()
+                .id(1L)
+                .email("test@example.com")
+                .passwordHash("encoded")
+                .role(UserRole.CLIENT)
+                .build();
+
+        userDetails = new UserDetailsImpl(
+            user.getId(),
+            user.getEmail(),
+            user.getPasswordHash(),
+            List.of(new SimpleGrantedAuthority(user.getRole().name()))
+        );
+    }
+
+    // -----------------------------
+    // POST /api/auth/login
+    // -----------------------------
+    @Test
+    void login_ReturnsJwtToken() throws Exception {
+        AuthRequest request = new AuthRequest();
+        request.setEmail("test@example.com");
+        request.setPassword("123456");
+
+        Authentication auth = new TestingAuthenticationToken(userDetails, null);
+
+        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
+                .thenReturn(auth);
+
+        when(jwtUtils.generateJwtToken(auth)).thenReturn("jwt-token");
+
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token").value("jwt-token"))
+                .andExpect(jsonPath("$.email").value("test@example.com"))
+                .andExpect(jsonPath("$.role").value("CLIENT"));
+    }
+
+    // -----------------------------
+    // POST /api/auth/register
+    // -----------------------------
+    @Test
+    void register_Success() throws Exception {
+        RegisterRequest request = new RegisterRequest();
+        request.setEmail("new@example.com");
+        request.setPassword("123456");
+
+        when(userRepository.existsByEmail("new@example.com")).thenReturn(false);
+        when(encoder.encode("123456")).thenReturn("encoded-pass");
+
+        mockMvc.perform(post("/api/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("User registered successfully"));
+
+        verify(userRepository).save(any(User.class));
     }
 
     @Test
-    void registerUser_ShouldReturnOk() throws Exception {
+    void register_EmailAlreadyUsed() throws Exception {
         RegisterRequest request = new RegisterRequest();
-        request.setEmail("test@test.com");
-        request.setPassword("12345678");
-        request.setFirstName("Ivan");
-        request.setLastName("Ivanov");
+        request.setEmail("test@example.com");
+        request.setPassword("123456");
 
-        Mockito.when(userRepository.existsByEmail("test@test.com")).thenReturn(false);
-        Mockito.when(encoder.encode(anyString())).thenReturn("hashed_password");
+        when(userRepository.existsByEmail("test@example.com")).thenReturn(true);
 
         mockMvc.perform(post("/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isOk());
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("Email already in use"));
+    }
+
+    // -----------------------------
+    // GET /api/auth/me
+    // -----------------------------
+    @Test
+    void getCurrentUser_ReturnsUserInfo() throws Exception {
+        Authentication auth = new TestingAuthenticationToken(userDetails, null);
+
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+        mockMvc.perform(get("/api/auth/me")
+                        .principal(auth))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value("test@example.com"))
+                .andExpect(jsonPath("$.role").value("CLIENT"));
+    }
+
+    @Test
+    void getCurrentUser_Unauthorized() throws Exception {
+        mockMvc.perform(get("/api/auth/me"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(content().string("Unauthorized"));
     }
 }
