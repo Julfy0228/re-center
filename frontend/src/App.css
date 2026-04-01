@@ -1,38 +1,172 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-shell {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 32px 16px;
 }
 
-.App-link {
-  color: #61dafb;
+.card {
+  width: min(100%, 560px);
+  background: rgba(255, 250, 245, 0.92);
+  border: 1px solid rgba(123, 74, 47, 0.14);
+  border-radius: 28px;
+  box-shadow: 0 24px 80px rgba(71, 43, 27, 0.14);
+  backdrop-filter: blur(16px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.auth-card {
+  padding: 32px;
+}
+
+.dashboard-card {
+  width: min(100%, 960px);
+  padding: 32px;
+}
+
+.auth-header,
+.dashboard-header {
+  margin-bottom: 24px;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8b5e3c;
+}
+
+.muted {
+  color: #6c625b;
+}
+
+.auth-form {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 8px;
+  color: #3f3027;
+  font-weight: 600;
+}
+
+.auth-form input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #dbc8b8;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font: inherit;
+  color: #2f241d;
+  background: #fffdfa;
+}
+
+.auth-form input:focus {
+  outline: 2px solid rgba(191, 114, 66, 0.25);
+  border-color: #bf7242;
+}
+
+button {
+  border: 0;
+  border-radius: 14px;
+  padding: 14px 18px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  color: #fffaf5;
+  background: linear-gradient(135deg, #bf7242, #8f4e25);
+}
+
+button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.secondary-button {
+  color: #4c372b;
+  background: #efe1d3;
+}
+
+.alert {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+}
+
+.alert-error {
+  color: #7a1f1f;
+  background: #fdeaea;
+}
+
+.alert-success {
+  color: #1f6a3a;
+  background: #e8f7ed;
+}
+
+.auth-footer {
+  margin: 20px 0 0;
+}
+
+.auth-footer a {
+  color: #8f4e25;
+  font-weight: 700;
+}
+
+.booking-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin-top: 24px;
+}
+
+.booking-card {
+  padding: 20px;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid #ecd9ca;
+}
+
+.booking-card h2 {
+  margin: 8px 0 12px;
+  font-size: 1.15rem;
+}
+
+.booking-card p {
+  margin: 6px 0;
+}
+
+.booking-label {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #8b5e3c;
+}
+
+.empty-state {
+  padding: 20px 0 8px;
+}
+
+@media (max-width: 720px) {
+  .auth-card,
+  .dashboard-card {
+    padding: 24px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .dashboard-header {
+    flex-direction: column;
+  }
+
+  .secondary-button {
+    width: 100%;
   }
 }
