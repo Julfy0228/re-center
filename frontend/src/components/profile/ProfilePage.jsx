@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { createActivity, getMyActivities } from "../../api/activities";
 import { getMyProfile, updateUser } from "../../api/users";
 import { formatApiDateTime } from "../../utils/date";
+import ActivityTimeline from "./ActivityTimeline";
 import DashboardLayout from "../layout/DashboardLayout";
 import AlertMessage from "../ui/AlertMessage";
 
@@ -19,20 +21,31 @@ function mapUserToForm(profile) {
 export default function ProfilePage({ user, onLogout, onUserUpdate }) {
   const [profileId, setProfileId] = useState(user?.id || null);
   const [form, setForm] = useState(() => mapUserToForm(user));
+  const [activities, setActivities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [activityError, setActivityError] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    getMyProfile()
-      .then((response) => {
-        setProfileId(response.data.id);
-        setForm(mapUserToForm(response.data));
-        onUserUpdate?.(response.data);
-      })
-      .catch(() => setError("Не удалось загрузить профиль."))
-      .finally(() => setLoading(false));
+    Promise.allSettled([getMyProfile(), getMyActivities()]).then(([profileRes, activitiesRes]) => {
+      if (profileRes.status === "fulfilled") {
+        setProfileId(profileRes.value.data.id);
+        setForm(mapUserToForm(profileRes.value.data));
+        onUserUpdate?.(profileRes.value.data);
+      } else {
+        setError("Не удалось загрузить профиль.");
+      }
+
+      if (activitiesRes.status === "fulfilled") {
+        setActivities(activitiesRes.value.data);
+      } else {
+        setActivityError("Не удалось загрузить историю действий.");
+      }
+
+      setLoading(false);
+    });
   }, [onUserUpdate]);
 
   const handleChange = (key, value) => {
@@ -57,6 +70,18 @@ export default function ProfilePage({ user, onLogout, onUserUpdate }) {
       setForm(mapUserToForm(response.data));
       onUserUpdate?.(response.data);
       setMessage("Профиль обновлён.");
+
+      try {
+        const activityResponse = await createActivity({
+          userId: response.data.id,
+          type: "UPDATE_PROFILE",
+          details: "Обновлены контактные данные в профиле",
+        });
+
+        setActivities((current) => [activityResponse.data, ...current]);
+      } catch (activityErr) {
+        setActivityError("Профиль обновлён, но не удалось записать событие в историю.");
+      }
     } catch (err) {
       setError("Не удалось сохранить изменения профиля.");
     } finally {
@@ -69,7 +94,7 @@ export default function ProfilePage({ user, onLogout, onUserUpdate }) {
       user={user}
       onLogout={onLogout}
       title="Профиль"
-      subtitle="Здесь можно обновить контактные данные, чтобы менеджеру было проще связаться с вами."
+      subtitle="Здесь можно обновить контактные данные и посмотреть недавнюю активность."
     >
       <div className="profile-grid">
         <section className="card-like profile-summary">
@@ -148,6 +173,9 @@ export default function ProfilePage({ user, onLogout, onUserUpdate }) {
           </form>
         </section>
       </div>
+
+      <AlertMessage type="error">{activityError}</AlertMessage>
+      <ActivityTimeline items={activities} />
     </DashboardLayout>
   );
 }

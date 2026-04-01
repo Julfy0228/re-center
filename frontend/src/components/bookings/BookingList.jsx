@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { getMyBookings } from "../../api/bookings";
-import { formatApiDateTime } from "../../utils/date";
+import BookingCard from "./BookingCard";
 import DashboardLayout from "../layout/DashboardLayout";
 import AlertMessage from "../ui/AlertMessage";
 import EmptyState from "../ui/EmptyState";
-
-function formatPrice(value) {
-  return new Intl.NumberFormat("ru-RU").format(value || 0);
-}
 
 export default function BookingList({ user, onLogout }) {
   const [bookings, setBookings] = useState([]);
@@ -28,7 +24,7 @@ export default function BookingList({ user, onLogout }) {
       user={user}
       onLogout={onLogout}
       title="Мои бронирования"
-      subtitle="Здесь собраны все ваши оформленные брони по услугам базы отдыха."
+      subtitle="Здесь собраны все ваши оформленные брони, быстрые действия по оплате и форма отзыва."
     >
       {loading ? <p className="muted">Загружаем бронирования...</p> : null}
       <AlertMessage type="error">{error}</AlertMessage>
@@ -40,17 +36,9 @@ export default function BookingList({ user, onLogout }) {
         />
       ) : null}
 
-      <section className="booking-grid">
+      <section className="booking-grid booking-grid-extended">
         {bookings.map((booking) => (
-          <article key={booking.id} className="booking-card">
-            <p className="booking-label">Бронь #{booking.id}</p>
-            <h3>{booking.serviceTitle}</h3>
-            <p>Заезд: {formatApiDateTime(booking.startDate)}</p>
-            <p>Выезд: {formatApiDateTime(booking.endDate)}</p>
-            <p>Статус: {booking.status}</p>
-            <p>Гостей: {booking.peopleCount}</p>
-            <p>Стоимость: {formatPrice(booking.initialPrice)} ₽</p>
-          </article>
+          <BookingCard key={booking.id} booking={booking} />
         ))}
       </section>
     </DashboardLayout>

@@ -53,6 +53,12 @@
   margin: 0;
 }
 
+.booking-card h4,
+.review-card h3,
+.activity-item h4 {
+  margin: 0;
+}
+
 .sidebar-copy {
   margin-top: 12px;
 }
@@ -254,6 +260,10 @@ button:disabled {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.booking-grid-extended {
+  grid-template-columns: 1fr;
+}
+
 .news-grid {
   display: grid;
   gap: 18px;
@@ -452,6 +462,40 @@ button:disabled {
 .service-card-active {
   border-color: #bf7242;
   box-shadow: inset 0 0 0 1px #bf7242;
+}
+
+.booking-card-extended {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  gap: 20px;
+}
+
+.booking-card-main,
+.booking-card-stack,
+.booking-card-section {
+  display: grid;
+  gap: 14px;
+}
+
+.booking-card-stack {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.booking-card-section {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid #ecd9ca;
+  background: #fffdfa;
+}
+
+.booking-summary-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.booking-summary-grid p,
+.booking-inline-summary p {
+  margin: 0;
 }
 
 .service-meta {
@@ -659,6 +703,53 @@ button:disabled {
   grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
 }
 
+.review-showcase {
+  margin-top: 28px;
+  display: grid;
+  gap: 18px;
+}
+
+.review-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.review-card {
+  padding: 18px;
+  border-radius: 20px;
+  border: 1px solid #ecd9ca;
+  background: #fff;
+  display: grid;
+  gap: 14px;
+}
+
+.review-topline,
+.activity-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.profile-activity {
+  margin-top: 24px;
+}
+
+.activity-list {
+  display: grid;
+  gap: 14px;
+}
+
+.activity-item {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid #ecd9ca;
+  background: #fffdfa;
+  display: grid;
+  gap: 10px;
+}
+
 @media (max-width: 980px) {
   .dashboard-shell {
     grid-template-columns: 1fr;
@@ -683,6 +774,11 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 
+  .booking-card-extended,
+  .booking-card-stack {
+    grid-template-columns: 1fr;
+  }
+
   .news-actions {
     flex-direction: column;
     align-items: flex-start;
@@ -692,7 +788,9 @@ button:disabled {
   .offer-topline,
   .notification-head,
   .notification-actions,
-  .section-heading {
+  .section-heading,
+  .review-topline,
+  .activity-head {
     flex-direction: column;
     align-items: flex-start;
   }

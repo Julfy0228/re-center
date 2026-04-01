@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { createBooking } from "../../api/bookings";
 import { getCategories, getServices, getServicesByCategory } from "../../api/catalog";
+import { createActivity } from "../../api/activities";
+import { getPublishedReviews } from "../../api/reviews";
+import ReviewHighlights from "../reviews/ReviewHighlights";
 import DashboardLayout from "../layout/DashboardLayout";
 import AlertMessage from "../ui/AlertMessage";
 import EmptyState from "../ui/EmptyState";
@@ -16,6 +19,7 @@ function formatPrice(value) {
 export default function ServiceCatalog({ user, onLogout }) {
   const [categories, setCategories] = useState([]);
   const [services, setServices] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedServiceId, setSelectedServiceId] = useState("");
   const [form, setForm] = useState({
@@ -26,27 +30,41 @@ export default function ServiceCatalog({ user, onLogout }) {
   const [loading, setLoading] = useState(true);
   const [bookingLoading, setBookingLoading] = useState(false);
   const [error, setError] = useState("");
+  const [reviewError, setReviewError] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    Promise.all([getCategories(), getServices()])
-      .then(([categoriesRes, servicesRes]) => {
-        setCategories(categoriesRes.data);
-        setServices(servicesRes.data);
-      })
-      .catch(() => setError("Не удалось загрузить каталог. Проверьте, что backend запущен."))
-      .finally(() => setLoading(false));
+    Promise.allSettled([getCategories(), getServices(), getPublishedReviews()]).then(
+      ([categoriesRes, servicesRes, reviewsRes]) => {
+        if (categoriesRes.status === "fulfilled") {
+          setCategories(categoriesRes.value.data);
+        }
+
+        if (servicesRes.status === "fulfilled") {
+          setServices(servicesRes.value.data);
+        } else {
+          setError("Не удалось загрузить каталог. Проверьте, что backend запущен.");
+        }
+
+        if (reviewsRes.status === "fulfilled") {
+          setReviews(reviewsRes.value.data.slice(0, 4));
+        } else {
+          setReviewError("Не удалось загрузить отзывы гостей.");
+        }
+
+        setLoading(false);
+      }
+    );
   }, []);
 
   useEffect(() => {
+    if (selectedCategory === "all") {
+      return;
+    }
+
     setError("");
 
-    const request =
-      selectedCategory === "all"
-        ? getServices()
-        : getServicesByCategory(selectedCategory);
-
-    request
+    getServicesByCategory(selectedCategory)
       .then((response) => setServices(response.data))
       .catch(() => setError("Не удалось обновить список услуг."));
   }, [selectedCategory]);
@@ -55,6 +73,21 @@ export default function ServiceCatalog({ user, onLogout }) {
     () => services.find((service) => String(service.id) === String(selectedServiceId)),
     [services, selectedServiceId]
   );
+
+  const handleCategoryChange = async (event) => {
+    const nextCategory = event.target.value;
+    setSelectedCategory(nextCategory);
+    setError("");
+
+    if (nextCategory === "all") {
+      try {
+        const response = await getServices();
+        setServices(response.data);
+      } catch (err) {
+        setError("Не удалось обновить список услуг.");
+      }
+    }
+  };
 
   const submitBooking = async (event) => {
     event.preventDefault();
@@ -87,6 +120,14 @@ export default function ServiceCatalog({ user, onLogout }) {
         endDate: "",
         peopleCount: 1,
       });
+
+      if (user?.id) {
+        createActivity({
+          userId: user.id,
+          type: "BOOK_SERVICE",
+          details: `Создана бронь на услугу "${selectedService?.title || selectedServiceId}"`,
+        }).catch(() => {});
+      }
     } catch (err) {
       setError(
         typeof err.response?.data === "string"
@@ -108,16 +149,14 @@ export default function ServiceCatalog({ user, onLogout }) {
       {loading ? <p className="muted">Загружаем каталог...</p> : null}
       <AlertMessage type="error">{error}</AlertMessage>
       <AlertMessage type="success">{message}</AlertMessage>
+      <AlertMessage type="error">{reviewError}</AlertMessage>
 
       {!loading ? (
         <>
           <section className="toolbar">
             <label className="filter-field">
               <span>Категория</span>
-              <select
-                value={selectedCategory}
-                onChange={(event) => setSelectedCategory(event.target.value)}
-              >
+              <select value={selectedCategory} onChange={handleCategoryChange}>
                 <option value="all">Все категории</option>
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -148,7 +187,9 @@ export default function ServiceCatalog({ user, onLogout }) {
 
                 <p className="booking-label">Услуга #{service.id}</p>
                 <h3>{service.title}</h3>
-                <p className="muted">{service.description || "Описание пока не добавлено."}</p>
+                <p className="muted">
+                  {service.description || "Описание пока не добавлено."}
+                </p>
                 <div className="service-meta">
                   <span>{formatPrice(service.price)} ₽</span>
                   <span>До {service.maxPeople || 1} гостей</span>
@@ -221,6 +262,8 @@ export default function ServiceCatalog({ user, onLogout }) {
               </button>
             </form>
           </section>
+
+          <ReviewHighlights reviews={reviews} />
         </>
       ) : null}
     </DashboardLayout>

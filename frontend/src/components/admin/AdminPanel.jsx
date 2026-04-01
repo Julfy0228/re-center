@@ -1,8 +1,11 @@
 import DashboardLayout from "../layout/DashboardLayout";
 import DiscountManager from "./DiscountManager";
 import NewsManager from "./NewsManager";
+import PaymentManager from "./PaymentManager";
 import PromotionManager from "./PromotionManager";
+import ReviewManager from "./ReviewManager";
 import ServiceManager from "./ServiceManager";
+import { isAdmin } from "../../utils/permissions";
 
 export default function AdminPanel({ user, onLogout }) {
   return (
@@ -10,15 +13,15 @@ export default function AdminPanel({ user, onLogout }) {
       user={user}
       onLogout={onLogout}
       title="Управление контентом"
-      subtitle="Создавайте, редактируйте и удаляйте услуги, новости, акции и скидки."
+      subtitle="Создавайте, редактируйте и модерируйте всё, что видят пользователи."
     >
       <section className="admin-intro">
         <div className="card-like admin-banner">
           <p className="eyebrow">Панель менеджера</p>
-          <h3>Контент и предложения под полным контролем</h3>
+          <h3>Контент, отзывы и предложения под контролем</h3>
           <p className="muted">
-            Здесь можно управлять карточками услуг, новостями и маркетинговыми предложениями,
-            не заходя в базу данных вручную.
+            Здесь можно управлять услугами, новостями, акциями, скидками и следить за
+            пользовательскими отзывами.
           </p>
         </div>
       </section>
@@ -28,6 +31,8 @@ export default function AdminPanel({ user, onLogout }) {
         <NewsManager />
         <PromotionManager user={user} />
         <DiscountManager />
+        <ReviewManager user={user} />
+        {isAdmin(user) ? <PaymentManager /> : null}
       </section>
     </DashboardLayout>
   );
