@@ -93,6 +93,9 @@ class NotificationControllerTest {
                 .thenReturn(Optional.of(user));
     }
 
+    // -----------------------------
+    // POST /api/notifications
+    // -----------------------------
     @Test
     void create_ReturnsCreatedNotification() throws Exception {
         NotificationRequest request = new NotificationRequest();
@@ -109,6 +112,9 @@ class NotificationControllerTest {
                 .andExpect(jsonPath("$.title").value("Бронирование подтверждено"));
     }
 
+    // -----------------------------
+    // GET /api/notifications/{id}
+    // -----------------------------
     @Test
     void getById_Found_ReturnsNotification() throws Exception {
         when(notificationService.getById(1L)).thenReturn(Optional.of(notification));
@@ -126,6 +132,9 @@ class NotificationControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    // -----------------------------
+    // GET /api/notifications
+    // -----------------------------
     @Test
     void getAll_ReturnsList() throws Exception {
         when(notificationService.getAll()).thenReturn(List.of(notification));
@@ -135,6 +144,9 @@ class NotificationControllerTest {
                 .andExpect(jsonPath("$[0].title").value("Бронирование подтверждено"));
     }
 
+    // -----------------------------
+    // GET /api/notifications/my
+    // -----------------------------
     @Test
     void getMyNotifications_ReturnsUserNotifications() throws Exception {
         authenticateUser();
@@ -146,6 +158,9 @@ class NotificationControllerTest {
                 .andExpect(jsonPath("$[0].message").value("Ваш домик успешно забронирован"));
     }
 
+    // -----------------------------
+    // GET /api/notifications/my/unread
+    // -----------------------------
     @Test
     void getUnread_ReturnsUnreadNotifications() throws Exception {
         authenticateUser();
@@ -157,6 +172,9 @@ class NotificationControllerTest {
                 .andExpect(jsonPath("$[0].read").value(false));
     }
 
+    // -----------------------------
+    // GET /api/notifications/my/unread/count
+    // -----------------------------
     @Test
     void getUnreadCount_ReturnsCount() throws Exception {
         authenticateUser();
@@ -168,6 +186,9 @@ class NotificationControllerTest {
                 .andExpect(content().string("3"));
     }
 
+    // -----------------------------
+    // PUT /api/notifications/{id}/mark-read
+    // -----------------------------
     @Test
     void markRead_ReturnsUpdatedNotification() throws Exception {
         authenticateUser();
@@ -189,6 +210,9 @@ class NotificationControllerTest {
                 .andExpect(jsonPath("$.read").value(true));
     }
 
+    // -----------------------------
+    // DELETE /api/notifications/{id}
+    // -----------------------------
     @Test
     void delete_ReturnsSuccessMessage() throws Exception {
         doNothing().when(notificationService).delete(1L);

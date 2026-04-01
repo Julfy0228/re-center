@@ -63,6 +63,9 @@ class PaymentControllerTest {
                 .build();
     }
 
+    // -----------------------------
+    // POST /api/payments
+    // -----------------------------
     @Test
     void create_ReturnsCreatedPayment() throws Exception {
         PaymentRequest request = new PaymentRequest();
@@ -81,6 +84,9 @@ class PaymentControllerTest {
                 .andExpect(jsonPath("$.status").value("SUCCESS"));
     }
 
+    // -----------------------------
+    // GET /api/payments/{id}
+    // -----------------------------
     @Test
     void getById_Found_ReturnsPayment() throws Exception {
         when(paymentService.getById(10L)).thenReturn(Optional.of(payment));
@@ -98,6 +104,9 @@ class PaymentControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    // -----------------------------
+    // GET /api/payments
+    // -----------------------------
     @Test
     void getAll_ReturnsList() throws Exception {
         when(paymentService.getAll()).thenReturn(List.of(payment));
@@ -107,6 +116,9 @@ class PaymentControllerTest {
                 .andExpect(jsonPath("$[0].status").value("SUCCESS"));
     }
 
+    // -----------------------------
+    // DELETE /api/payments/{id}
+    // -----------------------------
     @Test
     void delete_ReturnsSuccessMessage() throws Exception {
         doNothing().when(paymentService).delete(10L);

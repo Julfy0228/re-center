@@ -56,6 +56,9 @@ class PromotionControllerTest {
                 .build();
     }
 
+    // -----------------------------
+    // POST /api/promotions
+    // -----------------------------
     @Test
     void create_ReturnsCreatedPromotion() throws Exception {
         when(promotionService.create(any(Promotion.class))).thenReturn(promotion);
@@ -76,6 +79,9 @@ class PromotionControllerTest {
                 .andExpect(jsonPath("$.title").value("Весенняя акция"));
     }
 
+    // -----------------------------
+    // GET /api/promotions/{id}
+    // -----------------------------
     @Test
     void getById_Found_ReturnsPromotion() throws Exception {
         when(promotionService.getById(1L)).thenReturn(Optional.of(promotion));
@@ -93,6 +99,9 @@ class PromotionControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    // -----------------------------
+    // GET /api/promotions
+    // -----------------------------
     @Test
     void getAll_ReturnsList() throws Exception {
         when(promotionService.getAll()).thenReturn(List.of(promotion));
@@ -102,6 +111,9 @@ class PromotionControllerTest {
                 .andExpect(jsonPath("$[0].title").value("Весенняя акция"));
     }
 
+    // -----------------------------
+    // DELETE /api/promotions/{id}
+    // -----------------------------
     @Test
     void delete_ReturnsSuccessMessage() throws Exception {
         doNothing().when(promotionService).delete(1L);

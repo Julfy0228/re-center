@@ -61,6 +61,9 @@ class ActivityControllerTest {
                 .build();
     }
 
+    // -----------------------------
+    // POST /api/activities
+    // -----------------------------
     @Test
     void create_ReturnsCreatedActivity() throws Exception {
         when(activityService.create(any(Activity.class))).thenReturn(activity);
@@ -76,6 +79,9 @@ class ActivityControllerTest {
         verify(activityService).create(any(Activity.class));
     }
 
+    // -----------------------------
+    // GET /api/activities/{id}
+    // -----------------------------
     @Test
     void getById_Found_ReturnsActivity() throws Exception {
         when(activityService.getById(1L)).thenReturn(Optional.of(activity));
@@ -94,6 +100,9 @@ class ActivityControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    // -----------------------------
+    // GET /api/activities
+    // -----------------------------
     @Test
     void getAll_ReturnsList() throws Exception {
         when(activityService.getAll()).thenReturn(List.of(activity));
@@ -103,6 +112,9 @@ class ActivityControllerTest {
                 .andExpect(jsonPath("$[0].type").value("LOGIN"));
     }
 
+    // -----------------------------
+    // GET /api/activities/my
+    // -----------------------------
     @Test
     void getMyActivities_ReturnsUserActivities() throws Exception {
         UserDetails userDetails = org.springframework.security.core.userdetails.User
@@ -129,6 +141,9 @@ class ActivityControllerTest {
                 .andExpect(jsonPath("$[0].type").value("LOGIN"));
     }
 
+    // -----------------------------
+    // DELETE /api/activities/{id}
+    // -----------------------------
     @Test
     void delete_ReturnsSuccessMessage() throws Exception {
         doNothing().when(activityService).delete(1L);

@@ -58,6 +58,9 @@ class ReviewControllerTest {
                 .build();
     }
 
+    // -----------------------------
+    // POST /api/reviews
+    // -----------------------------
     @Test
     void create_ReturnsCreatedReview() throws Exception {
         ReviewRequest request = new ReviewRequest();
@@ -75,6 +78,9 @@ class ReviewControllerTest {
                 .andExpect(jsonPath("$.rating").value(5));
     }
 
+    // -----------------------------
+    // GET /api/reviews/{id}
+    // -----------------------------
     @Test
     void getById_Found_ReturnsReview() throws Exception {
         when(reviewService.getById(1L)).thenReturn(Optional.of(review));
@@ -92,6 +98,9 @@ class ReviewControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    // -----------------------------
+    // GET /api/reviews
+    // -----------------------------
     @Test
     void getAll_ReturnsList() throws Exception {
         when(reviewService.getAll()).thenReturn(List.of(review));
@@ -101,6 +110,9 @@ class ReviewControllerTest {
                 .andExpect(jsonPath("$[0].rating").value(5));
     }
 
+    // -----------------------------
+    // DELETE /api/reviews/{id}
+    // -----------------------------
     @Test
     void delete_ReturnsSuccessMessage() throws Exception {
         doNothing().when(reviewService).delete(1L);
