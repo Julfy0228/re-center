@@ -4,20 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NewsResponse {
+public class PromotionResponse {
     private Long id;
     private String title;
-    private String content;
-    private String imageUrl;
-    private Long authorId;
-    private String authorEmail;
-    private String status;
-    private LocalDateTime publishedAt;
-    private LocalDateTime createdAt;
+    private String description;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 }

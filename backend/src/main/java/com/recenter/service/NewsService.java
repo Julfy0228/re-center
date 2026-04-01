@@ -48,6 +48,9 @@ public class NewsService {
             if (newsDetails.getContent() != null) {
                 news.setContent(newsDetails.getContent());
             }
+            if (newsDetails.getImageUrl() != null) {
+                news.setImageUrl(newsDetails.getImageUrl());
+            }
             if (newsDetails.getStatus() != null) {
                 news.setStatus(newsDetails.getStatus());
                 if (newsDetails.getStatus() == NewsStatus.PUBLISHED) {

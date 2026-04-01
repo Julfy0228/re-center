@@ -1,6 +1,7 @@
 package com.recenter.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.recenter.model.dto.UserRequest;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.UserRole;
 import com.recenter.service.UserService;
@@ -23,9 +24,15 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerTest {
@@ -38,7 +45,7 @@ class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private User user;
 
@@ -49,9 +56,9 @@ class UserControllerTest {
         user = User.builder()
                 .id(10L)
                 .email("user@example.com")
-                .firstName("Иван")
-                .lastName("Петров")
-                .middleName("Сергеевич")
+                .firstName("РРІР°РЅ")
+                .lastName("РџРµС‚СЂРѕРІ")
+                .middleName("РЎРµСЂРіРµРµРІРёС‡")
                 .phoneNumber("+7-999-123-45-67")
                 .role(UserRole.CLIENT)
                 .createdAt(LocalDateTime.now())
@@ -65,36 +72,31 @@ class UserControllerTest {
                 .roles("ADMIN")
                 .build();
 
-        TestingAuthenticationToken auth =
-                new TestingAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+        TestingAuthenticationToken auth = new TestingAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities()
+        );
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
-    private void authenticateAsUser(User user) {
+    private void authenticateAsUser(User currentUser) {
         UserDetails userDetails = org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
+                .withUsername(currentUser.getEmail())
                 .password("pass")
                 .roles("CLIENT")
                 .build();
 
-        TestingAuthenticationToken auth =
-                new TestingAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+        TestingAuthenticationToken auth = new TestingAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities()
+        );
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }
 
-    // -----------------------------
-    // GET /api/users/{id}
-    // -----------------------------
     @Test
     void getById_Found_ReturnsUser() throws Exception {
         when(userService.getById(10L)).thenReturn(Optional.of(user));
@@ -102,7 +104,7 @@ class UserControllerTest {
         mockMvc.perform(get("/api/users/10"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("user@example.com"))
-                .andExpect(jsonPath("$.firstName").value("Иван"));
+                .andExpect(jsonPath("$.firstName").value("РРІР°РЅ"));
     }
 
     @Test
@@ -113,55 +115,44 @@ class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // -----------------------------
-    // GET /api/users
-    // -----------------------------
     @Test
     void getAll_ReturnsUserList() throws Exception {
         authenticateAsAdmin();
-
         when(userService.getAll()).thenReturn(List.of(user));
 
         mockMvc.perform(get("/api/users"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].email").value("user@example.com"))
-                .andExpect(jsonPath("$[0].firstName").value("Иван"));
+                .andExpect(jsonPath("$[0].firstName").value("РРІР°РЅ"));
     }
 
-    // -----------------------------
-    // GET /api/users/my/profile
-    // -----------------------------
     @Test
     void getMyProfile_ReturnsCurrentUserProfile() throws Exception {
         authenticateAsUser(user);
-
         when(userService.getByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
         mockMvc.perform(get("/api/users/my/profile"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("user@example.com"))
-                .andExpect(jsonPath("$.firstName").value("Иван"));
+                .andExpect(jsonPath("$.firstName").value("РРІР°РЅ"));
     }
 
-    // -----------------------------
-    // PUT /api/users/{id}
-    // -----------------------------
     @Test
     void update_Found_ReturnsUpdatedUser() throws Exception {
         authenticateAsAdmin();
 
-        UserController.UserRequest request = new UserController.UserRequest();
-        request.setFirstName("Петр");
-        request.setLastName("Сидоров");
-        request.setMiddleName("Иванович");
+        UserRequest request = new UserRequest();
+        request.setFirstName("РџРµС‚СЂ");
+        request.setLastName("РЎРёРґРѕСЂРѕРІ");
+        request.setMiddleName("РРІР°РЅРѕРІРёС‡");
         request.setPhoneNumber("+7-999-987-65-43");
 
         User updated = User.builder()
                 .id(10L)
                 .email("user@example.com")
-                .firstName("Петр")
-                .lastName("Сидоров")
-                .middleName("Иванович")
+                .firstName("РџРµС‚СЂ")
+                .lastName("РЎРёРґРѕСЂРѕРІ")
+                .middleName("РРІР°РЅРѕРІРёС‡")
                 .phoneNumber("+7-999-987-65-43")
                 .role(UserRole.CLIENT)
                 .createdAt(user.getCreatedAt())
@@ -173,17 +164,17 @@ class UserControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.firstName").value("Петр"))
-                .andExpect(jsonPath("$.lastName").value("Сидоров"));
+                .andExpect(jsonPath("$.firstName").value("РџРµС‚СЂ"))
+                .andExpect(jsonPath("$.lastName").value("РЎРёРґРѕСЂРѕРІ"));
     }
 
     @Test
     void update_NotFound_Returns404() throws Exception {
         authenticateAsAdmin();
 
-        UserController.UserRequest request = new UserController.UserRequest();
-        request.setFirstName("Петр");
-        request.setLastName("Сидоров");
+        UserRequest request = new UserRequest();
+        request.setFirstName("РџРµС‚СЂ");
+        request.setLastName("РЎРёРґРѕСЂРѕРІ");
 
         when(userService.update(eq(10L), any(User.class))).thenReturn(null);
 
@@ -193,13 +184,9 @@ class UserControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // -----------------------------
-    // DELETE /api/users/{id} (ADMIN only)
-    // -----------------------------
     @Test
     void delete_ReturnsSuccessMessage() throws Exception {
         authenticateAsAdmin();
-
         doNothing().when(userService).delete(10L);
 
         mockMvc.perform(delete("/api/users/10"))

@@ -4,20 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class NewsResponse {
+public class ServiceResponse {
     private Long id;
     private String title;
-    private String content;
+    private String description;
     private String imageUrl;
-    private Long authorId;
-    private String authorEmail;
-    private String status;
-    private LocalDateTime publishedAt;
-    private LocalDateTime createdAt;
+    private Integer duration;
+    private BigDecimal price;
+    private Integer maxPeople;
 }

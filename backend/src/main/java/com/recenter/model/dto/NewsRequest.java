@@ -14,5 +14,7 @@ public class NewsRequest {
     @NotBlank
     private String content;
 
+    private String imageUrl;
+
     private NewsStatus status;
 }

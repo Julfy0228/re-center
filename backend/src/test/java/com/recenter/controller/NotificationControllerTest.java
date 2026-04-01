@@ -17,8 +17,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -26,10 +26,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class NotificationControllerTest {
@@ -45,7 +53,7 @@ class NotificationControllerTest {
     @InjectMocks
     private NotificationController notificationController;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private User user;
     private Notification notification;
@@ -53,7 +61,6 @@ class NotificationControllerTest {
     @BeforeEach
     void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(notificationController).build();
-
         objectMapper.registerModule(new JavaTimeModule());
 
         user = User.builder()
@@ -66,8 +73,8 @@ class NotificationControllerTest {
                 .id(1L)
                 .user(user)
                 .type(NotificationType.INFO)
-                .title("Бронирование подтверждено")
-                .message("Ваш домик успешно забронирован")
+                .title("Р‘СЂРѕРЅРёСЂРѕРІР°РЅРёРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ")
+                .message("Р’Р°С€ РґРѕРјРёРє СѓСЃРїРµС€РЅРѕ Р·Р°Р±СЂРѕРЅРёСЂРѕРІР°РЅ")
                 .read(false)
                 .createdAt(LocalDateTime.now())
                 .build();
@@ -80,48 +87,42 @@ class NotificationControllerTest {
                 .roles("CLIENT")
                 .build();
 
-        TestingAuthenticationToken auth =
-                new TestingAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+        TestingAuthenticationToken auth = new TestingAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities()
+        );
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        lenient().when(userService.getByEmail(user.getEmail()))
-                .thenReturn(Optional.of(user));
+        lenient().when(userService.getByEmail(user.getEmail())).thenReturn(Optional.of(user));
     }
 
-    // -----------------------------
-    // POST /api/notifications
-    // -----------------------------
     @Test
     void create_ReturnsCreatedNotification() throws Exception {
         NotificationRequest request = new NotificationRequest();
-        request.setTitle("Бронирование подтверждено");
-        request.setMessage("Ваш домик успешно забронирован");
+        request.setUserId(user.getId());
+        request.setTitle("Р‘СЂРѕРЅРёСЂРѕРІР°РЅРёРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ");
+        request.setMessage("Р’Р°С€ РґРѕРјРёРє СѓСЃРїРµС€РЅРѕ Р·Р°Р±СЂРѕРЅРёСЂРѕРІР°РЅ");
         request.setType(NotificationType.INFO);
 
+        when(userService.getById(user.getId())).thenReturn(Optional.of(user));
         when(notificationService.create(any(Notification.class))).thenReturn(notification);
 
         mockMvc.perform(post("/api/notifications")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Бронирование подтверждено"));
+                .andExpect(jsonPath("$.title").value("Р‘СЂРѕРЅРёСЂРѕРІР°РЅРёРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ"));
     }
 
-    // -----------------------------
-    // GET /api/notifications/{id}
-    // -----------------------------
     @Test
     void getById_Found_ReturnsNotification() throws Exception {
         when(notificationService.getById(1L)).thenReturn(Optional.of(notification));
 
         mockMvc.perform(get("/api/notifications/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("Бронирование подтверждено"));
+                .andExpect(jsonPath("$.title").value("Р‘СЂРѕРЅРёСЂРѕРІР°РЅРёРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ"));
     }
 
     @Test
@@ -132,39 +133,28 @@ class NotificationControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // -----------------------------
-    // GET /api/notifications
-    // -----------------------------
     @Test
     void getAll_ReturnsList() throws Exception {
         when(notificationService.getAll()).thenReturn(List.of(notification));
 
         mockMvc.perform(get("/api/notifications"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("Бронирование подтверждено"));
+                .andExpect(jsonPath("$[0].title").value("Р‘СЂРѕРЅРёСЂРѕРІР°РЅРёРµ РїРѕРґС‚РІРµСЂР¶РґРµРЅРѕ"));
     }
 
-    // -----------------------------
-    // GET /api/notifications/my
-    // -----------------------------
     @Test
     void getMyNotifications_ReturnsUserNotifications() throws Exception {
         authenticateUser();
-
         when(notificationService.getByUser(user)).thenReturn(List.of(notification));
 
         mockMvc.perform(get("/api/notifications/my"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].message").value("Ваш домик успешно забронирован"));
+                .andExpect(jsonPath("$[0].message").value("Р’Р°С€ РґРѕРјРёРє СѓСЃРїРµС€РЅРѕ Р·Р°Р±СЂРѕРЅРёСЂРѕРІР°РЅ"));
     }
 
-    // -----------------------------
-    // GET /api/notifications/my/unread
-    // -----------------------------
     @Test
     void getUnread_ReturnsUnreadNotifications() throws Exception {
         authenticateUser();
-
         when(notificationService.getUnreadByUser(user)).thenReturn(List.of(notification));
 
         mockMvc.perform(get("/api/notifications/my/unread"))
@@ -172,13 +162,9 @@ class NotificationControllerTest {
                 .andExpect(jsonPath("$[0].read").value(false));
     }
 
-    // -----------------------------
-    // GET /api/notifications/my/unread/count
-    // -----------------------------
     @Test
     void getUnreadCount_ReturnsCount() throws Exception {
         authenticateUser();
-
         when(notificationService.getUnreadCount(user)).thenReturn(3);
 
         mockMvc.perform(get("/api/notifications/my/unread/count"))
@@ -186,9 +172,6 @@ class NotificationControllerTest {
                 .andExpect(content().string("3"));
     }
 
-    // -----------------------------
-    // PUT /api/notifications/{id}/mark-read
-    // -----------------------------
     @Test
     void markRead_ReturnsUpdatedNotification() throws Exception {
         authenticateUser();
@@ -210,9 +193,6 @@ class NotificationControllerTest {
                 .andExpect(jsonPath("$.read").value(true));
     }
 
-    // -----------------------------
-    // DELETE /api/notifications/{id}
-    // -----------------------------
     @Test
     void delete_ReturnsSuccessMessage() throws Exception {
         doNothing().when(notificationService).delete(1L);

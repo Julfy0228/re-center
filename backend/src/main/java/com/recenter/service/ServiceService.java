@@ -41,6 +41,9 @@ public class ServiceService {
             if (serviceDetails.getDescription() != null) {
                 service.setDescription(serviceDetails.getDescription());
             }
+            if (serviceDetails.getImageUrl() != null) {
+                service.setImageUrl(serviceDetails.getImageUrl());
+            }
             if (serviceDetails.getDuration() != null) {
                 service.setDuration(serviceDetails.getDuration());
             }

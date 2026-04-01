@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import api from "../../api/axios";
+import DashboardLayout from "../layout/DashboardLayout";
+import { getMyBookings } from "../../api/bookings";
+import { formatApiDateTime } from "../../utils/date";
+
+function formatPrice(value) {
+  return new Intl.NumberFormat("ru-RU").format(value || 0);
+}
 
 export default function BookingList({ user, onLogout }) {
   const [bookings, setBookings] = useState([]);
@@ -7,57 +13,44 @@ export default function BookingList({ user, onLogout }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api
-      .get("/bookings/my")
+    getMyBookings()
       .then((res) => setBookings(res.data))
-      .catch(() => setError("Не удалось загрузить бронирования."))
+      .catch(() =>
+        setError("Не удалось загрузить бронирования. Проверьте backend и авторизацию.")
+      )
       .finally(() => setLoading(false));
   }, []);
 
   return (
-    <div className="app-shell">
-      <div className="card dashboard-card">
-        <div className="dashboard-header">
-          <div>
-            <p className="eyebrow">Личный кабинет</p>
-            <h1>Мои бронирования</h1>
-            <p className="muted">
-              {user
-                ? `Вы вошли как ${user.email}.`
-                : "Авторизация прошла успешно."}
-            </p>
-          </div>
+    <DashboardLayout
+      user={user}
+      onLogout={onLogout}
+      title="Мои бронирования"
+      subtitle="Здесь собраны все ваши оформленные брони по услугам базы отдыха."
+    >
+      {loading && <p className="muted">Загружаем бронирования...</p>}
+      {error && <p className="alert alert-error">{error}</p>}
 
-          <button type="button" className="secondary-button" onClick={onLogout}>
-            Выйти
-          </button>
+      {!loading && !error && bookings.length === 0 && (
+        <div className="empty-state">
+          <h3>Пока бронирований нет</h3>
+          <p className="muted">Перейдите в каталог и создайте первую бронь.</p>
         </div>
+      )}
 
-        {loading && <p className="muted">Загружаем бронирования...</p>}
-        {error && <p className="alert alert-error">{error}</p>}
-
-        {!loading && !error && bookings.length === 0 && (
-          <div className="empty-state">
-            <h2>Пока бронирований нет</h2>
-            <p className="muted">После создания брони она появится здесь.</p>
-          </div>
-        )}
-
-        <div className="booking-grid">
-          {bookings.map((booking) => (
-            <article key={booking.id} className="booking-card">
-              <p className="booking-label">Бронь #{booking.id}</p>
-              <h2>{booking.serviceTitle}</h2>
-              <p>
-                {booking.startDate} - {booking.endDate}
-              </p>
-              <p>Статус: {booking.status}</p>
-              <p>Гостей: {booking.peopleCount}</p>
-              <p>Стоимость: {booking.initialPrice}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </div>
+      <section className="booking-grid">
+        {bookings.map((booking) => (
+          <article key={booking.id} className="booking-card">
+            <p className="booking-label">Бронь #{booking.id}</p>
+            <h3>{booking.serviceTitle}</h3>
+            <p>Заезд: {formatApiDateTime(booking.startDate)}</p>
+            <p>Выезд: {formatApiDateTime(booking.endDate)}</p>
+            <p>Статус: {booking.status}</p>
+            <p>Гостей: {booking.peopleCount}</p>
+            <p>Стоимость: {formatPrice(booking.initialPrice)} ₽</p>
+          </article>
+        ))}
+      </section>
+    </DashboardLayout>
   );
 }

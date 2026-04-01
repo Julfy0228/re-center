@@ -1,21 +1,25 @@
 package com.recenter.controller;
 
+import com.recenter.mapper.EntityDtoMapper;
+import com.recenter.model.dto.PromotionRequest;
+import com.recenter.model.dto.PromotionResponse;
 import com.recenter.model.entity.Promotion;
 import com.recenter.service.PromotionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-/**
- * REST контроллер для управления промоакциями и скидками на услуги.
- * <p>
- * Предоставляет API endpoints для создания, чтения, обновления и удаления промоакций.
- * Промоакции применяются к конкретным услугам с индивидуальным процентом скидки.
- * Требует роль ADMIN или MANAGER для изменения промоакций.
- */
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/promotions")
 public class PromotionController {
@@ -23,65 +27,56 @@ public class PromotionController {
     @Autowired
     private PromotionService promotionService;
 
-    /**
-     * Создаёт новую промоакцию (требует ADMIN или MANAGER).
-     *
-     * @param promotion объект с данными промоакции
-     * @return созданная промоакция
-     */
     @PostMapping
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
-    public ResponseEntity<?> create(@RequestBody Promotion promotion) {
+    public ResponseEntity<PromotionResponse> create(@Valid @RequestBody PromotionRequest request) {
+        Promotion promotion = Promotion.builder()
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
+                .build();
+
         Promotion created = promotionService.create(promotion);
-        return ResponseEntity.ok(created);
+        return ResponseEntity.ok(EntityDtoMapper.toPromotionResponse(created));
     }
 
-    /**
-     * Получает промоакцию по идентификатору.
-     *
-     * @param id идентификатор промоакции
-     * @return промоакция или 404, если не найдена
-     */
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        Optional<Promotion> promotion = promotionService.getById(id);
-        return promotion.isPresent() ? ResponseEntity.ok(promotion.get()) : ResponseEntity.notFound().build();
+    public ResponseEntity<PromotionResponse> getById(@PathVariable("id") Long id) {
+        return promotionService.getById(id)
+                .map(promotion -> ResponseEntity.ok(EntityDtoMapper.toPromotionResponse(promotion)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Получает список всех активных промоакций.
-     *
-     * @return список всех промоакций
-     */
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        List<Promotion> promotions = promotionService.getAll();
-        return ResponseEntity.ok(promotions);
+    public ResponseEntity<List<PromotionResponse>> getAll() {
+        List<PromotionResponse> responses = promotionService.getAll().stream()
+                .map(EntityDtoMapper::toPromotionResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
     }
 
-    /**
-     * Обновляет существующую промоакцию (требует ADMIN или MANAGER).
-     *
-     * @param id идентификатор промоакции
-     * @param promotionDetails объект с обновленными данными
-     * @return обновленная промоакция или 404, если не найдена
-     */
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
-    public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody Promotion promotionDetails) {
+    public ResponseEntity<PromotionResponse> update(@PathVariable("id") Long id, @Valid @RequestBody PromotionRequest request) {
+        Promotion promotionDetails = Promotion.builder()
+                .title(request.getTitle())
+                .description(request.getDescription())
+                .startDate(request.getStartDate())
+                .endDate(request.getEndDate())
+                .build();
+
         Promotion updated = promotionService.update(id, promotionDetails);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+        if (updated == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(EntityDtoMapper.toPromotionResponse(updated));
     }
 
-    /**
-     * Удаляет промоакцию (требует ADMIN).
-     *
-     * @param id идентификатор промоакции
-     * @return сообщение об успешном удалении
-     */
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         promotionService.delete(id);
         return ResponseEntity.ok("Promotion deleted successfully");
     }

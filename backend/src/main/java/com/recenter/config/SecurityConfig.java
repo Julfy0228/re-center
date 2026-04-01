@@ -60,6 +60,7 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/uploads/**").permitAll()
                 .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/services/**").permitAll()
                 .anyRequest().authenticated()
             )

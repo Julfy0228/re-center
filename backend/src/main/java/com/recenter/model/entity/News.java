@@ -33,6 +33,8 @@ public class News {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    private String imageUrl;
+
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "authorId", nullable = false)

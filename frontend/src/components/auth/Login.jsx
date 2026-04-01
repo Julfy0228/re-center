@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login, getMe } from "../../api/auth";
+import { getMe, login } from "../../api/auth";
 
 export default function Login({ onLogin }) {
   const navigate = useNavigate();
@@ -20,13 +20,13 @@ export default function Login({ onLogin }) {
 
       const me = await getMe();
       onLogin?.(me.data);
-      navigate("/bookings", { replace: true });
+      navigate("/services", { replace: true });
     } catch (err) {
       localStorage.removeItem("token");
       setError(
         err.response?.status === 401
           ? "Неверный email или пароль."
-          : "Не удалось войти. Проверь, что backend запущен на порту 8080."
+          : "Не удалось войти. Проверьте, что backend запущен на порту 8080."
       );
     } finally {
       setLoading(false);
@@ -39,7 +39,9 @@ export default function Login({ onLogin }) {
         <div className="auth-header">
           <p className="eyebrow">База отдыха</p>
           <h1>Вход в личный кабинет</h1>
-          <p className="muted">Войдите, чтобы смотреть свои бронирования и управлять ими.</p>
+          <p className="muted">
+            Войдите, чтобы смотреть свои бронирования, новости и доступные услуги.
+          </p>
         </div>
 
         {error && <p className="alert alert-error">{error}</p>}

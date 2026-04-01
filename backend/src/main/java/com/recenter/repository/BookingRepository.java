@@ -3,6 +3,7 @@ package com.recenter.repository;
 import com.recenter.model.entity.Booking;
 import com.recenter.model.entity.User;
 import com.recenter.model.entity.Service;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,7 +18,20 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                             @Param("start") LocalDateTime start, 
                             @Param("end") LocalDateTime end);
     
+    @Override
+    @EntityGraph(attributePaths = {"user", "service"})
+    List<Booking> findAll();
+
+    @Override
+    @EntityGraph(attributePaths = {"user", "service"})
+    java.util.Optional<Booking> findById(Long id);
+
+    @EntityGraph(attributePaths = {"user", "service"})
     List<Booking> findByUser(User user);
+
+    @EntityGraph(attributePaths = {"user", "service"})
     List<Booking> findByUserId(Long userId);
+
+    @EntityGraph(attributePaths = {"user", "service"})
     List<Booking> findByService(Service service);
 }

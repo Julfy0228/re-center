@@ -42,9 +42,11 @@ export default function Register() {
       if (err.response?.data === "Email already in use") {
         setError("Пользователь с таким email уже существует.");
       } else if (err.response?.status === 400) {
-        setError("Проверьте данные. Пароль должен быть не короче 6 символов, телефон в формате +79991234567.");
+        setError(
+          "Проверьте данные. Пароль должен быть не короче 6 символов, телефон в формате +79991234567."
+        );
       } else {
-        setError("Не удалось зарегистрироваться. Проверь, что backend запущен на порту 8080.");
+        setError("Не удалось зарегистрироваться. Проверьте, что backend запущен.");
       }
     } finally {
       setLoading(false);
@@ -57,7 +59,9 @@ export default function Register() {
         <div className="auth-header">
           <p className="eyebrow">Новый гость</p>
           <h1>Создание аккаунта</h1>
-          <p className="muted">Заполните данные, чтобы получить доступ к личному кабинету.</p>
+          <p className="muted">
+            Заполните данные, чтобы получить доступ к личному кабинету.
+          </p>
         </div>
 
         {message && <p className="alert alert-success">{message}</p>}

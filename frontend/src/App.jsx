@@ -2,15 +2,26 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-d
 import { useEffect, useState } from "react";
 
 import "./App.css";
+import { getMe } from "./api/auth";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import AdminPanel from "./components/admin/AdminPanel";
 import BookingList from "./components/bookings/BookingList";
-import { getMe } from "./api/auth";
+import NewsFeed from "./components/news/NewsFeed";
+import ServiceCatalog from "./components/services/ServiceCatalog";
+
+function canManageContent(user) {
+  return user?.role === "ADMIN" || user?.role === "MANAGER";
+}
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
 
   return token ? children : <Navigate to="/login" replace />;
+}
+
+function RoleRoute({ user, children }) {
+  return canManageContent(user) ? children : <Navigate to="/services" replace />;
 }
 
 export default function App() {
@@ -59,17 +70,33 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={<Navigate to={user ? "/bookings" : "/login"} replace />}
+          element={<Navigate to={user ? "/services" : "/login"} replace />}
         />
         <Route
           path="/login"
           element={
-            user ? <Navigate to="/bookings" replace /> : <Login onLogin={handleLogin} />
+            user ? <Navigate to="/services" replace /> : <Login onLogin={handleLogin} />
           }
         />
         <Route
           path="/register"
-          element={user ? <Navigate to="/bookings" replace /> : <Register />}
+          element={user ? <Navigate to="/services" replace /> : <Register />}
+        />
+        <Route
+          path="/services"
+          element={
+            <ProtectedRoute>
+              <ServiceCatalog user={user} onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/news"
+          element={
+            <ProtectedRoute>
+              <NewsFeed user={user} onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/bookings"
@@ -80,12 +107,24 @@ export default function App() {
           }
         />
         <Route
+          path="/manage"
+          element={
+            <ProtectedRoute>
+              <RoleRoute user={user}>
+                <AdminPanel user={user} onLogout={handleLogout} />
+              </RoleRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="*"
           element={
             <div className="app-shell">
               <div className="card auth-card">
                 <h2>Страница не найдена</h2>
-                <p className="muted">Проверь адрес или вернись на страницу входа.</p>
+                <p className="muted">
+                  Проверьте адрес или вернитесь в каталог услуг.
+                </p>
               </div>
             </div>
           }
