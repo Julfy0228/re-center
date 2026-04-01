@@ -18,6 +18,16 @@ function toDateFromParts(parts) {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
+function formatDateValue(value, fallback, options) {
+  const date = parseApiDate(value);
+
+  if (!date) {
+    return fallback;
+  }
+
+  return new Intl.DateTimeFormat("ru-RU", options).format(date);
+}
+
 export function parseApiDate(value) {
   if (!value) {
     return null;
@@ -54,54 +64,54 @@ export function parseApiDate(value) {
       nano = 0,
     } = value;
 
-    const resolvedMonth =
-      monthValue ||
-      (typeof month === "number" ? month : null);
+    const resolvedMonth = monthValue || (typeof month === "number" ? month : null);
 
     if (year && resolvedMonth && dayOfMonth) {
-      return toDateFromParts([
-        year,
-        resolvedMonth,
-        dayOfMonth,
-        hour,
-        minute,
-        second,
-        nano,
-      ]);
+      return toDateFromParts([year, resolvedMonth, dayOfMonth, hour, minute, second, nano]);
     }
   }
 
   return null;
 }
 
+export function formatApiDate(value, fallback = "-") {
+  return formatDateValue(value, fallback, {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+}
+
 export function formatApiDateTime(value, fallback = "-") {
-  const date = parseApiDate(value);
-
-  if (!date) {
-    return fallback;
-  }
-
-  return new Intl.DateTimeFormat("ru-RU", {
+  return formatDateValue(value, fallback, {
     day: "2-digit",
     month: "2-digit",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-  }).format(date);
+  });
 }
 
 export function formatApiLongDateTime(value, fallback = "Скоро на сайте") {
-  const date = parseApiDate(value);
-
-  if (!date) {
-    return fallback;
-  }
-
-  return new Intl.DateTimeFormat("ru-RU", {
+  return formatDateValue(value, fallback, {
     day: "2-digit",
     month: "long",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-  }).format(date);
+  });
+}
+
+export function toDateTimeLocalValue(value) {
+  const date = parseApiDate(value);
+
+  if (!date) {
+    return "";
+  }
+
+  const pad = (part) => String(part).padStart(2, "0");
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(
+    date.getHours()
+  )}:${pad(date.getMinutes())}`;
 }

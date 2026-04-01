@@ -1,3 +1,13 @@
+import { toDateTimeLocalValue } from "../../utils/date";
+
+function toApiDateTime(value) {
+  if (!value) {
+    return null;
+  }
+
+  return value.length === 16 ? `${value}:00` : value;
+}
+
 export const initialServiceForm = {
   title: "",
   description: "",
@@ -13,6 +23,22 @@ export const initialNewsForm = {
   content: "",
   imageUrl: "",
   status: "PUBLISHED",
+};
+
+export const initialPromotionForm = {
+  title: "",
+  description: "",
+  startDate: "",
+  endDate: "",
+};
+
+export const initialDiscountForm = {
+  title: "",
+  description: "",
+  startDate: "",
+  endDate: "",
+  type: "PERCENT",
+  amount: "",
 };
 
 export function normalizeError(err, fallback) {
@@ -44,6 +70,26 @@ export function toNewsForm(item) {
   };
 }
 
+export function toPromotionForm(item) {
+  return {
+    title: item.title || "",
+    description: item.description || "",
+    startDate: toDateTimeLocalValue(item.startDate),
+    endDate: toDateTimeLocalValue(item.endDate),
+  };
+}
+
+export function toDiscountForm(item) {
+  return {
+    title: item.title || "",
+    description: item.description || "",
+    startDate: toDateTimeLocalValue(item.startDate),
+    endDate: toDateTimeLocalValue(item.endDate),
+    type: item.type || "PERCENT",
+    amount: String(item.amount || ""),
+  };
+}
+
 export function buildServicePayload(form) {
   return {
     title: form.title,
@@ -65,6 +111,26 @@ export function buildNewsPayload(form) {
   };
 }
 
+export function buildPromotionPayload(form) {
+  return {
+    title: form.title,
+    description: form.description,
+    startDate: toApiDateTime(form.startDate),
+    endDate: toApiDateTime(form.endDate),
+  };
+}
+
+export function buildDiscountPayload(form) {
+  return {
+    title: form.title,
+    description: form.description,
+    startDate: toApiDateTime(form.startDate),
+    endDate: toApiDateTime(form.endDate),
+    type: form.type,
+    amount: form.amount,
+  };
+}
+
 export function formatNewsStatus(status) {
   if (status === "PUBLISHED") {
     return "Опубликовано";
@@ -75,4 +141,16 @@ export function formatNewsStatus(status) {
   }
 
   return status || "Неизвестно";
+}
+
+export function formatDiscountType(type) {
+  if (type === "PERCENT") {
+    return "Процент";
+  }
+
+  if (type === "AMOUNT") {
+    return "Сумма";
+  }
+
+  return type || "Неизвестно";
 }

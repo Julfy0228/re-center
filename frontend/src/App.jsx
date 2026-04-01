@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
-import { useEffect, useState } from "react";
-
+import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 import { getMe } from "./api/auth";
 import AdminPanel from "./components/admin/AdminPanel";
@@ -8,6 +7,9 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import BookingList from "./components/bookings/BookingList";
 import NewsFeed from "./components/news/NewsFeed";
+import NotificationsPage from "./components/notifications/NotificationsPage";
+import OffersPage from "./components/offers/OffersPage";
+import ProfilePage from "./components/profile/ProfilePage";
 import ServiceCatalog from "./components/services/ServiceCatalog";
 import { canManageContent } from "./utils/permissions";
 
@@ -46,6 +48,10 @@ export default function App() {
     setUser(nextUser);
   };
 
+  const handleUserUpdate = useCallback((nextUser) => {
+    setUser(nextUser);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser(null);
@@ -83,6 +89,14 @@ export default function App() {
           }
         />
         <Route
+          path="/offers"
+          element={
+            <ProtectedRoute>
+              <OffersPage user={user} onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/news"
           element={
             <ProtectedRoute>
@@ -95,6 +109,26 @@ export default function App() {
           element={
             <ProtectedRoute>
               <BookingList user={user} onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <NotificationsPage user={user} onLogout={handleLogout} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage
+                user={user}
+                onLogout={handleLogout}
+                onUserUpdate={handleUserUpdate}
+              />
             </ProtectedRoute>
           }
         />
@@ -115,7 +149,7 @@ export default function App() {
               <div className="card auth-card">
                 <h2>Страница не найдена</h2>
                 <p className="muted">
-                  Проверьте адрес или вернитесь в каталог услуг.
+                  Проверьте адрес или вернитесь в каталог услуг через меню.
                 </p>
               </div>
             </div>
