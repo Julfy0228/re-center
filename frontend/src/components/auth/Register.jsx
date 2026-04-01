@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../api/auth";
+import AuthLayout from "../ui/AuthLayout";
+import AlertMessage from "../ui/AlertMessage";
 
 const initialForm = {
   email: "",
@@ -19,11 +21,11 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
 
   const updateField = (key, value) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
+    setForm((current) => ({ ...current, [key]: value }));
   };
 
-  const submit = async (e) => {
-    e.preventDefault();
+  const submit = async (event) => {
+    event.preventDefault();
     setMessage("");
     setError("");
     setLoading(true);
@@ -54,92 +56,87 @@ export default function Register() {
   };
 
   return (
-    <div className="app-shell">
-      <div className="card auth-card">
-        <div className="auth-header">
-          <p className="eyebrow">Новый гость</p>
-          <h1>Создание аккаунта</h1>
-          <p className="muted">
-            Заполните данные, чтобы получить доступ к личному кабинету.
-          </p>
-        </div>
-
-        {message && <p className="alert alert-success">{message}</p>}
-        {error && <p className="alert alert-error">{error}</p>}
-
-        <form className="auth-form" onSubmit={submit}>
-          <label>
-            <span>Email</span>
-            <input
-              type="email"
-              placeholder="guest@example.com"
-              value={form.email}
-              onChange={(e) => updateField("email", e.target.value)}
-              required
-            />
-          </label>
-
-          <label>
-            <span>Пароль</span>
-            <input
-              type="password"
-              placeholder="Не менее 6 символов"
-              value={form.password}
-              onChange={(e) => updateField("password", e.target.value)}
-              minLength={6}
-              required
-            />
-          </label>
-
-          <label>
-            <span>Имя</span>
-            <input
-              type="text"
-              placeholder="Иван"
-              value={form.firstName}
-              onChange={(e) => updateField("firstName", e.target.value)}
-            />
-          </label>
-
-          <label>
-            <span>Фамилия</span>
-            <input
-              type="text"
-              placeholder="Иванов"
-              value={form.lastName}
-              onChange={(e) => updateField("lastName", e.target.value)}
-            />
-          </label>
-
-          <label>
-            <span>Отчество</span>
-            <input
-              type="text"
-              placeholder="Иванович"
-              value={form.middleName}
-              onChange={(e) => updateField("middleName", e.target.value)}
-            />
-          </label>
-
-          <label>
-            <span>Телефон</span>
-            <input
-              type="tel"
-              placeholder="+79991234567"
-              value={form.phoneNumber}
-              onChange={(e) => updateField("phoneNumber", e.target.value)}
-            />
-          </label>
-
-          <button type="submit" disabled={loading}>
-            {loading ? "Создаём аккаунт..." : "Создать аккаунт"}
-          </button>
-        </form>
-
-        <p className="muted auth-footer">
+    <AuthLayout
+      eyebrow="Новый гость"
+      title="Создание аккаунта"
+      description="Заполните данные, чтобы получить доступ к личному кабинету."
+      footer={
+        <>
           Уже есть аккаунт? <Link to="/login">Войти</Link>
-        </p>
-      </div>
-    </div>
+        </>
+      }
+    >
+      <AlertMessage type="success">{message}</AlertMessage>
+      <AlertMessage type="error">{error}</AlertMessage>
+
+      <form className="auth-form" onSubmit={submit}>
+        <label>
+          <span>Email</span>
+          <input
+            type="email"
+            placeholder="guest@example.com"
+            value={form.email}
+            onChange={(event) => updateField("email", event.target.value)}
+            required
+          />
+        </label>
+
+        <label>
+          <span>Пароль</span>
+          <input
+            type="password"
+            placeholder="Не менее 6 символов"
+            value={form.password}
+            onChange={(event) => updateField("password", event.target.value)}
+            minLength={6}
+            required
+          />
+        </label>
+
+        <label>
+          <span>Имя</span>
+          <input
+            type="text"
+            placeholder="Иван"
+            value={form.firstName}
+            onChange={(event) => updateField("firstName", event.target.value)}
+          />
+        </label>
+
+        <label>
+          <span>Фамилия</span>
+          <input
+            type="text"
+            placeholder="Иванов"
+            value={form.lastName}
+            onChange={(event) => updateField("lastName", event.target.value)}
+          />
+        </label>
+
+        <label>
+          <span>Отчество</span>
+          <input
+            type="text"
+            placeholder="Иванович"
+            value={form.middleName}
+            onChange={(event) => updateField("middleName", event.target.value)}
+          />
+        </label>
+
+        <label>
+          <span>Телефон</span>
+          <input
+            type="tel"
+            placeholder="+79991234567"
+            value={form.phoneNumber}
+            onChange={(event) => updateField("phoneNumber", event.target.value)}
+          />
+        </label>
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Создаём аккаунт..." : "Создать аккаунт"}
+        </button>
+      </form>
+    </AuthLayout>
   );
 }

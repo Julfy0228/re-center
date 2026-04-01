@@ -1,7 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import DashboardLayout from "../layout/DashboardLayout";
 import { getPublishedNews } from "../../api/news";
 import { formatApiLongDateTime } from "../../utils/date";
+import DashboardLayout from "../layout/DashboardLayout";
+import AlertMessage from "../ui/AlertMessage";
+import EmptyState from "../ui/EmptyState";
+import Modal from "../ui/Modal";
 
 function truncateText(value, maxLength = 220) {
   if (!value || value.length <= maxLength) {
@@ -19,7 +22,7 @@ export default function NewsFeed({ user, onLogout }) {
 
   useEffect(() => {
     getPublishedNews()
-      .then((res) => setItems(res.data))
+      .then((response) => setItems(response.data))
       .catch(() =>
         setError("Не удалось загрузить новости. Проверьте backend и опубликованные записи.")
       )
@@ -38,15 +41,15 @@ export default function NewsFeed({ user, onLogout }) {
       title="Новости базы"
       subtitle="Акции, сезонные предложения и свежие объявления для гостей."
     >
-      {loading && <p className="muted">Загружаем новости...</p>}
-      {error && <p className="alert alert-error">{error}</p>}
+      {loading ? <p className="muted">Загружаем новости...</p> : null}
+      <AlertMessage type="error">{error}</AlertMessage>
 
-      {!loading && !error && items.length === 0 && (
-        <div className="empty-state">
-          <h3>Пока новостей нет</h3>
-          <p className="muted">Когда вы добавите опубликованные новости, они появятся здесь.</p>
-        </div>
-      )}
+      {!loading && !error && !items.length ? (
+        <EmptyState
+          title="Пока новостей нет"
+          description="Когда вы добавите опубликованные новости, они появятся здесь."
+        />
+      ) : null}
 
       <section className="news-grid">
         {items.map((item) => (
@@ -80,17 +83,10 @@ export default function NewsFeed({ user, onLogout }) {
         ))}
       </section>
 
-      {selectedItem && (
-        <div className="modal-backdrop" onClick={() => setSelectedId(null)}>
-          <article
-            className="modal-card"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="modal-close"
-              onClick={() => setSelectedId(null)}
-            >
+      <Modal isOpen={Boolean(selectedItem)} onClose={() => setSelectedId(null)}>
+        {selectedItem ? (
+          <>
+            <button type="button" className="modal-close" onClick={() => setSelectedId(null)}>
               Закрыть
             </button>
 
@@ -112,9 +108,9 @@ export default function NewsFeed({ user, onLogout }) {
                 : "Команда Re-Center"}
             </p>
             <p className="news-text modal-text">{selectedItem.content}</p>
-          </article>
-        </div>
-      )}
+          </>
+        ) : null}
+      </Modal>
     </DashboardLayout>
   );
 }

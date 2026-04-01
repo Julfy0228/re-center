@@ -1,8 +1,5 @@
 import { NavLink } from "react-router-dom";
-
-function canManageContent(user) {
-  return user?.role === "ADMIN" || user?.role === "MANAGER";
-}
+import { canManageContent } from "../../utils/permissions";
 
 export default function DashboardLayout({
   title,
@@ -11,8 +8,6 @@ export default function DashboardLayout({
   onLogout,
   children,
 }) {
-  const showAdminLink = canManageContent(user);
-
   return (
     <div className="dashboard-shell">
       <aside className="sidebar card">
@@ -44,20 +39,20 @@ export default function DashboardLayout({
           >
             Мои бронирования
           </NavLink>
-          {showAdminLink && (
+          {canManageContent(user) ? (
             <NavLink
               to="/manage"
               className={({ isActive }) => `nav-link ${isActive ? "nav-link-active" : ""}`}
             >
               Управление
             </NavLink>
-          )}
+          ) : null}
         </nav>
 
         <div className="sidebar-profile">
           <div className="profile-meta">
             <p className="profile-name">{user?.email || "Гость"}</p>
-            {user?.role && <p className="profile-role">{user.role}</p>}
+            {user?.role ? <p className="profile-role">{user.role}</p> : null}
           </div>
           <button type="button" className="secondary-button" onClick={onLogout}>
             Выйти

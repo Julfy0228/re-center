@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import DashboardLayout from "../layout/DashboardLayout";
-import { getCategories, getServices, getServicesByCategory } from "../../api/catalog";
 import { createBooking } from "../../api/bookings";
+import { getCategories, getServices, getServicesByCategory } from "../../api/catalog";
+import DashboardLayout from "../layout/DashboardLayout";
+import AlertMessage from "../ui/AlertMessage";
+import EmptyState from "../ui/EmptyState";
 
 function toApiDateTime(value) {
   return `${value}:00`;
@@ -32,9 +34,7 @@ export default function ServiceCatalog({ user, onLogout }) {
         setCategories(categoriesRes.data);
         setServices(servicesRes.data);
       })
-      .catch(() =>
-        setError("Не удалось загрузить каталог. Проверьте, что backend запущен.")
-      )
+      .catch(() => setError("Не удалось загрузить каталог. Проверьте, что backend запущен."))
       .finally(() => setLoading(false));
   }, []);
 
@@ -47,7 +47,7 @@ export default function ServiceCatalog({ user, onLogout }) {
         : getServicesByCategory(selectedCategory);
 
     request
-      .then((res) => setServices(res.data))
+      .then((response) => setServices(response.data))
       .catch(() => setError("Не удалось обновить список услуг."));
   }, [selectedCategory]);
 
@@ -105,11 +105,11 @@ export default function ServiceCatalog({ user, onLogout }) {
       title="Каталог услуг"
       subtitle="Выберите домик или услугу, а затем сразу оформите бронирование."
     >
-      {loading && <p className="muted">Загружаем каталог...</p>}
-      {error && <p className="alert alert-error">{error}</p>}
-      {message && <p className="alert alert-success">{message}</p>}
+      {loading ? <p className="muted">Загружаем каталог...</p> : null}
+      <AlertMessage type="error">{error}</AlertMessage>
+      <AlertMessage type="success">{message}</AlertMessage>
 
-      {!loading && (
+      {!loading ? (
         <>
           <section className="toolbar">
             <label className="filter-field">
@@ -138,11 +138,7 @@ export default function ServiceCatalog({ user, onLogout }) {
               >
                 <div className="service-image-wrap">
                   {service.imageUrl ? (
-                    <img
-                      className="service-image"
-                      src={service.imageUrl}
-                      alt={service.title}
-                    />
+                    <img className="service-image" src={service.imageUrl} alt={service.title} />
                   ) : (
                     <div className="service-image service-image-fallback">
                       <span>Нет фото</span>
@@ -152,18 +148,13 @@ export default function ServiceCatalog({ user, onLogout }) {
 
                 <p className="booking-label">Услуга #{service.id}</p>
                 <h3>{service.title}</h3>
-                <p className="muted">
-                  {service.description || "Описание пока не добавлено."}
-                </p>
+                <p className="muted">{service.description || "Описание пока не добавлено."}</p>
                 <div className="service-meta">
                   <span>{formatPrice(service.price)} ₽</span>
                   <span>До {service.maxPeople || 1} гостей</span>
                   <span>{service.duration || 1} дней</span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setSelectedServiceId(String(service.id))}
-                >
+                <button type="button" onClick={() => setSelectedServiceId(String(service.id))}>
                   {String(service.id) === String(selectedServiceId)
                     ? "Услуга выбрана"
                     : "Выбрать"}
@@ -172,19 +163,17 @@ export default function ServiceCatalog({ user, onLogout }) {
             ))}
           </section>
 
-          {!services.length && (
-            <div className="empty-state">
-              <h3>Услуги не найдены</h3>
-              <p className="muted">Попробуйте выбрать другую категорию.</p>
-            </div>
-          )}
+          {!services.length ? (
+            <EmptyState
+              title="Услуги не найдены"
+              description="Попробуйте выбрать другую категорию."
+            />
+          ) : null}
 
           <section className="booking-panel">
             <div>
               <p className="eyebrow">Быстрое бронирование</p>
-              <h3>
-                {selectedService ? selectedService.title : "Сначала выберите услугу"}
-              </h3>
+              <h3>{selectedService ? selectedService.title : "Сначала выберите услугу"}</h3>
               <p className="muted">
                 {selectedService
                   ? `Стоимость от ${formatPrice(selectedService.price)} ₽.`
@@ -233,7 +222,7 @@ export default function ServiceCatalog({ user, onLogout }) {
             </form>
           </section>
         </>
-      )}
+      ) : null}
     </DashboardLayout>
   );
 }

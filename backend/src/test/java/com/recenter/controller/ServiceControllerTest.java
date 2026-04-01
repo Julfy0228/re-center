@@ -103,7 +103,8 @@ class ServiceControllerTest {
         mockMvc.perform(get("/api/services/5"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Аренда домика"))
-                .andExpect(jsonPath("$.duration").value(3));
+                .andExpect(jsonPath("$.duration").value(3))
+                .andExpect(jsonPath("$.categoryId").value(1));
     }
     // -----------------------------
     // GET /api/services/{id}

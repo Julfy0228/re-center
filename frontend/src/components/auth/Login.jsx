@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getMe, login } from "../../api/auth";
+import AuthLayout from "../ui/AuthLayout";
+import AlertMessage from "../ui/AlertMessage";
 
 export default function Login({ onLogin }) {
   const navigate = useNavigate();
@@ -9,14 +11,14 @@ export default function Login({ onLogin }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const submit = async (e) => {
-    e.preventDefault();
+  const submit = async (event) => {
+    event.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const res = await login({ email, password });
-      localStorage.setItem("token", res.data.token);
+      const response = await login({ email, password });
+      localStorage.setItem("token", response.data.token);
 
       const me = await getMe();
       onLogin?.(me.data);
@@ -34,50 +36,45 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div className="app-shell">
-      <div className="card auth-card">
-        <div className="auth-header">
-          <p className="eyebrow">База отдыха</p>
-          <h1>Вход в личный кабинет</h1>
-          <p className="muted">
-            Войдите, чтобы смотреть свои бронирования, новости и доступные услуги.
-          </p>
-        </div>
-
-        {error && <p className="alert alert-error">{error}</p>}
-
-        <form className="auth-form" onSubmit={submit}>
-          <label>
-            <span>Email</span>
-            <input
-              type="email"
-              placeholder="guest@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </label>
-
-          <label>
-            <span>Пароль</span>
-            <input
-              type="password"
-              placeholder="Введите пароль"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </label>
-
-          <button type="submit" disabled={loading}>
-            {loading ? "Входим..." : "Войти"}
-          </button>
-        </form>
-
-        <p className="muted auth-footer">
+    <AuthLayout
+      eyebrow="База отдыха"
+      title="Вход в личный кабинет"
+      description="Войдите, чтобы смотреть свои бронирования, новости и доступные услуги."
+      footer={
+        <>
           Нет аккаунта? <Link to="/register">Зарегистрироваться</Link>
-        </p>
-      </div>
-    </div>
+        </>
+      }
+    >
+      <AlertMessage type="error">{error}</AlertMessage>
+
+      <form className="auth-form" onSubmit={submit}>
+        <label>
+          <span>Email</span>
+          <input
+            type="email"
+            placeholder="guest@example.com"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
+        </label>
+
+        <label>
+          <span>Пароль</span>
+          <input
+            type="password"
+            placeholder="Введите пароль"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
+        </label>
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Входим..." : "Войти"}
+        </button>
+      </form>
+    </AuthLayout>
   );
 }

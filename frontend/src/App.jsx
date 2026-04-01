@@ -3,16 +3,13 @@ import { useEffect, useState } from "react";
 
 import "./App.css";
 import { getMe } from "./api/auth";
+import AdminPanel from "./components/admin/AdminPanel";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import AdminPanel from "./components/admin/AdminPanel";
 import BookingList from "./components/bookings/BookingList";
 import NewsFeed from "./components/news/NewsFeed";
 import ServiceCatalog from "./components/services/ServiceCatalog";
-
-function canManageContent(user) {
-  return user?.role === "ADMIN" || user?.role === "MANAGER";
-}
+import { canManageContent } from "./utils/permissions";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -37,7 +34,7 @@ export default function App() {
     }
 
     getMe()
-      .then((res) => setUser(res.data))
+      .then((response) => setUser(response.data))
       .catch(() => {
         localStorage.removeItem("token");
         setUser(null);
@@ -68,15 +65,10 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={<Navigate to={user ? "/services" : "/login"} replace />}
-        />
+        <Route path="/" element={<Navigate to={user ? "/services" : "/login"} replace />} />
         <Route
           path="/login"
-          element={
-            user ? <Navigate to="/services" replace /> : <Login onLogin={handleLogin} />
-          }
+          element={user ? <Navigate to="/services" replace /> : <Login onLogin={handleLogin} />}
         />
         <Route
           path="/register"

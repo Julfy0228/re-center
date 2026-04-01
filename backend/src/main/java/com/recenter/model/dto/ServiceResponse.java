@@ -19,4 +19,5 @@ public class ServiceResponse {
     private Integer duration;
     private BigDecimal price;
     private Integer maxPeople;
+    private Long categoryId;
 }

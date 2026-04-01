@@ -123,6 +123,7 @@ public final class EntityDtoMapper {
                 .duration(service.getDuration())
                 .price(service.getPrice())
                 .maxPeople(service.getMaxPeople())
+                .categoryId(service.getCategory() != null ? service.getCategory().getId() : null)
                 .build();
     }
 

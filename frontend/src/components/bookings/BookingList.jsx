@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import DashboardLayout from "../layout/DashboardLayout";
 import { getMyBookings } from "../../api/bookings";
 import { formatApiDateTime } from "../../utils/date";
+import DashboardLayout from "../layout/DashboardLayout";
+import AlertMessage from "../ui/AlertMessage";
+import EmptyState from "../ui/EmptyState";
 
 function formatPrice(value) {
   return new Intl.NumberFormat("ru-RU").format(value || 0);
@@ -14,7 +16,7 @@ export default function BookingList({ user, onLogout }) {
 
   useEffect(() => {
     getMyBookings()
-      .then((res) => setBookings(res.data))
+      .then((response) => setBookings(response.data))
       .catch(() =>
         setError("Не удалось загрузить бронирования. Проверьте backend и авторизацию.")
       )
@@ -28,15 +30,15 @@ export default function BookingList({ user, onLogout }) {
       title="Мои бронирования"
       subtitle="Здесь собраны все ваши оформленные брони по услугам базы отдыха."
     >
-      {loading && <p className="muted">Загружаем бронирования...</p>}
-      {error && <p className="alert alert-error">{error}</p>}
+      {loading ? <p className="muted">Загружаем бронирования...</p> : null}
+      <AlertMessage type="error">{error}</AlertMessage>
 
-      {!loading && !error && bookings.length === 0 && (
-        <div className="empty-state">
-          <h3>Пока бронирований нет</h3>
-          <p className="muted">Перейдите в каталог и создайте первую бронь.</p>
-        </div>
-      )}
+      {!loading && !error && !bookings.length ? (
+        <EmptyState
+          title="Пока бронирований нет"
+          description="Перейдите в каталог и создайте первую бронь."
+        />
+      ) : null}
 
       <section className="booking-grid">
         {bookings.map((booking) => (
