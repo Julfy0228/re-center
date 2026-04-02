@@ -23,10 +23,13 @@ function formatPeriod(startDate, endDate) {
     return "Сроки уточняются";
   }
 
-  return `${formatApiDate(startDate, "без даты")} - ${formatApiDate(endDate, "без даты")}`;
+  return `${formatApiDate(startDate, "без даты")} - ${formatApiDate(
+    endDate,
+    "без даты"
+  )}`;
 }
 
-export default function OffersPage({ user, onLogout }) {
+export default function OffersPage() {
   const [promotions, setPromotions] = useState([]);
   const [discounts, setDiscounts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -38,7 +41,9 @@ export default function OffersPage({ user, onLogout }) {
         setPromotions(promotionsRes.data);
         setDiscounts(discountsRes.data);
       })
-      .catch(() => setError("Не удалось загрузить акции и скидки. Проверьте backend."))
+      .catch(() =>
+        setError("Не удалось загрузить акции и скидки. Проверьте backend.")
+      )
       .finally(() => setLoading(false));
   }, []);
 
@@ -46,18 +51,35 @@ export default function OffersPage({ user, onLogout }) {
 
   return (
     <DashboardLayout
-      user={user}
-      onLogout={onLogout}
       title="Акции и скидки"
-      subtitle="Здесь собраны актуальные спецпредложения, которые помогут выбрать лучший вариант отдыха."
+      subtitle="Здесь собраны актуальные спецпредложения, чтобы было проще понять, где идея поездки, а где прямая выгода."
     >
       <section className="card-like offers-hero">
         <p className="eyebrow">Спецпредложения</p>
         <h3>Планируйте отдых с выгодой</h3>
         <p className="muted">
-          Следите за сезонными акциями и активными скидками. Мы собрали их в одном разделе,
-          чтобы ничего не потерялось между новостями и каталогом услуг.
+          Мы разделили промоакции и скидки, чтобы их было проще воспринимать:
+          промоакции задают сюжет и формат отдыха, а скидки сразу показывают
+          денежную выгоду.
         </p>
+      </section>
+
+      <section className="offers-insights">
+        <article className="offer-insight-card">
+          <p className="eyebrow">Промоакции</p>
+          <h3>Повод приехать</h3>
+          <p className="muted">
+            Сезонные предложения, тематические недели и специальные сценарии отдыха.
+          </p>
+        </article>
+
+        <article className="offer-insight-card">
+          <p className="eyebrow">Скидки</p>
+          <h3>Прямая экономия</h3>
+          <p className="muted">
+            Процент или фиксированная сумма, которую гость сразу видит при выборе.
+          </p>
+        </article>
       </section>
 
       {loading ? <p className="muted">Загружаем предложения...</p> : null}
@@ -124,7 +146,10 @@ export default function OffersPage({ user, onLogout }) {
                     <h3>{item.title}</h3>
                     <p className="muted">{item.description}</p>
                     <p className="offer-meta">
-                      Формат: {item.type === "PERCENT" ? "процентная скидка" : "фиксированная сумма"}
+                      Формат:{" "}
+                      {item.type === "PERCENT"
+                        ? "процентная скидка"
+                        : "фиксированная сумма"}
                     </p>
                   </article>
                 ))}

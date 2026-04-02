@@ -6,6 +6,8 @@ import com.recenter.model.enums.ReviewStatus;
 import com.recenter.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,8 +17,10 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @Transactional
     public Review create(Review review) {
-        return reviewRepository.save(review);
+        Review savedReview = reviewRepository.save(review);
+        return reviewRepository.findById(savedReview.getId()).orElse(savedReview);
     }
 
     public Optional<Review> getById(Long id) {
@@ -29,6 +33,10 @@ public class ReviewService {
 
     public Optional<Review> getByBooking(Booking booking) {
         return reviewRepository.findByBooking(booking);
+    }
+
+    public List<Review> getByBookingUserId(Long userId) {
+        return reviewRepository.findByBooking_User_IdOrderByCreatedAtDesc(userId);
     }
 
     public List<Review> getByStatus(ReviewStatus status) {
@@ -47,6 +55,7 @@ public class ReviewService {
         return getByStatus(ReviewStatus.REJECTED);
     }
 
+    @Transactional
     public Review update(Long id, Review reviewDetails) {
         return reviewRepository.findById(id).map(review -> {
             if (reviewDetails.getContent() != null) {
@@ -58,10 +67,12 @@ public class ReviewService {
             if (reviewDetails.getStatus() != null) {
                 review.setStatus(reviewDetails.getStatus());
             }
-            return reviewRepository.save(review);
+            Review savedReview = reviewRepository.save(review);
+            return reviewRepository.findById(savedReview.getId()).orElse(savedReview);
         }).orElse(null);
     }
 
+    @Transactional
     public void delete(Long id) {
         reviewRepository.deleteById(id);
     }

@@ -1,6 +1,6 @@
 #FileLock
-#Wed Apr 01 22:02:54 MSK 2026
+#Thu Apr 02 23:18:26 MSK 2026
+server=192.168.230.27\:57542
 hostName=DESKTOP-CHGIGO0
-id=19d4a6d47ea038f41ca653d11faeda6744bd1a3b711
 method=file
-server=192.168.230.27\:62526
+id=19d4fd8c6148f7d662f2db0c77dfd678324ed41ea25

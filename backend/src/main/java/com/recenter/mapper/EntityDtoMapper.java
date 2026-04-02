@@ -107,6 +107,12 @@ public final class EntityDtoMapper {
         return ReviewResponse.builder()
                 .id(review.getId())
                 .bookingId(review.getBooking() != null ? review.getBooking().getId() : null)
+                .serviceId(review.getBooking() != null && review.getBooking().getService() != null
+                        ? review.getBooking().getService().getId()
+                        : null)
+                .serviceTitle(review.getBooking() != null && review.getBooking().getService() != null
+                        ? review.getBooking().getService().getTitle()
+                        : null)
                 .content(review.getContent())
                 .rating(review.getRating())
                 .status(review.getStatus() != null ? review.getStatus().name() : null)

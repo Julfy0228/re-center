@@ -3,15 +3,27 @@ import { createReview } from "../../api/reviews";
 import AlertMessage from "../ui/AlertMessage";
 
 function renderStars(value) {
-  return "★".repeat(value) + "☆".repeat(Math.max(0, 5 - value));
+  const rating = Number(value) || 0;
+  return "★".repeat(rating) + "☆".repeat(Math.max(0, 5 - rating));
 }
 
-export default function BookingReviewForm({ booking }) {
+function formatReviewStatus(status) {
+  if (status === "APPROVED") {
+    return "Опубликован";
+  }
+
+  if (status === "REJECTED") {
+    return "Отклонён";
+  }
+
+  return "На модерации";
+}
+
+export default function BookingReviewForm({ booking, review, onReviewCreated }) {
   const [form, setForm] = useState({
     rating: "5",
     content: "",
   });
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -32,14 +44,18 @@ export default function BookingReviewForm({ booking }) {
     setLoading(true);
 
     try {
-      await createReview({
+      const response = await createReview({
         bookingId: booking.id,
         content: form.content,
         rating: Number(form.rating),
       });
 
-      setSubmitted(true);
+      onReviewCreated?.(response.data);
       setMessage("Отзыв отправлен на модерацию.");
+      setForm({
+        rating: "5",
+        content: "",
+      });
     } catch (err) {
       setError(
         typeof err.response?.data === "string"
@@ -58,16 +74,21 @@ export default function BookingReviewForm({ booking }) {
           <p className="eyebrow">Отзыв</p>
           <h4>Поделитесь впечатлением</h4>
         </div>
-        <span className="detail-chip">{renderStars(Number(form.rating))}</span>
+        <span className="detail-chip">
+          {review ? formatReviewStatus(review.status) : renderStars(Number(form.rating))}
+        </span>
       </div>
 
       <AlertMessage type="success">{message}</AlertMessage>
       <AlertMessage type="error">{error}</AlertMessage>
 
-      {submitted ? (
-        <p className="muted">
-          Спасибо. После проверки отзыв появится в публичной ленте для гостей.
-        </p>
+      {review ? (
+        <div className="booking-inline-summary">
+          <p>
+            Ваш отзыв уже сохранён. Статус: <strong>{formatReviewStatus(review.status)}</strong>.
+          </p>
+          <p>{review.content}</p>
+        </div>
       ) : (
         <form className="admin-form" onSubmit={handleSubmit}>
           <label>

@@ -22,14 +22,28 @@ function formatPaymentMethod(method) {
   return method || "Не указан";
 }
 
-export default function BookingPaymentForm({ booking }) {
+function formatPaymentStatus(status) {
+  if (status === "COMPLETED") {
+    return "Оплачен";
+  }
+
+  return "Ожидает подтверждения";
+}
+
+export default function BookingPaymentForm({ booking, payment, onPaymentCreated }) {
   const [paymentMethod, setPaymentMethod] = useState("CARD");
-  const [payment, setPayment] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  const canPay = booking.status !== "CANCELLED";
+  if (booking.status === "CANCELLED") {
+    return (
+      <div className="booking-card-section">
+        <p className="eyebrow">Оплата</p>
+        <p className="muted">Для отменённой брони оплата недоступна.</p>
+      </div>
+    );
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,8 +58,8 @@ export default function BookingPaymentForm({ booking }) {
         paymentMethod,
       });
 
-      setPayment(response.data);
-      setMessage("Платёж создан. Статус можно уточнить у администратора.");
+      onPaymentCreated?.(response.data);
+      setMessage("Платёж создан и отправлен в обработку.");
     } catch (err) {
       setError(
         typeof err.response?.data === "string"
@@ -56,10 +70,6 @@ export default function BookingPaymentForm({ booking }) {
       setLoading(false);
     }
   };
-
-  if (!canPay) {
-    return <p className="muted">Для отменённой брони оплата недоступна.</p>;
-  }
 
   return (
     <div className="booking-card-section">
@@ -76,10 +86,11 @@ export default function BookingPaymentForm({ booking }) {
 
       {payment ? (
         <div className="booking-inline-summary">
-          <p className="muted">
-            Платёж #{payment.id} создан со статусом <strong>{payment.status}</strong>.
+          <p>
+            Платёж #{payment.id} уже создан. Статус:{" "}
+            <strong>{formatPaymentStatus(payment.status)}</strong>.
           </p>
-          <p className="muted">Способ оплаты: {formatPaymentMethod(payment.paymentMethod)}</p>
+          <p>Способ оплаты: {formatPaymentMethod(payment.paymentMethod)}</p>
         </div>
       ) : (
         <form className="admin-form" onSubmit={handleSubmit}>

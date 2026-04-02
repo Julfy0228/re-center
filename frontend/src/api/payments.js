@@ -1,6 +1,7 @@
 import api from "./axios";
 
 export const createPayment = (data) => api.post("/payments", data);
+export const getMyPayments = () => api.get("/payments/my");
 export const getAllPayments = () => api.get("/payments");
 export const getPendingPayments = () => api.get("/payments/pending");
 export const getCompletedPayments = () => api.get("/payments/completed");

@@ -34,6 +34,7 @@ public class BookingService {
         return bookingRepository.findByService(service);
     }
 
+    @Transactional
     public Booking update(Long id, Booking bookingDetails) {
         return bookingRepository.findById(id).map(booking -> {
             if (bookingDetails.getStartDate() != null) {
@@ -51,7 +52,10 @@ public class BookingService {
             if (bookingDetails.getStatus() != null) {
                 booking.setStatus(bookingDetails.getStatus());
             }
-            return bookingRepository.save(booking);
+
+            Booking savedBooking = bookingRepository.save(booking);
+            
+            return bookingRepository.findById(savedBooking.getId()).orElse(savedBooking);
         }).orElse(null);
     }
 

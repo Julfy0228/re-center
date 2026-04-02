@@ -30,6 +30,10 @@ public class PaymentService {
         return paymentRepository.findByBooking(booking);
     }
 
+    public List<Payment> getByBookingUserId(Long userId) {
+        return paymentRepository.findByBooking_User_IdOrderByPaymentDateDesc(userId);
+    }
+
     public List<Payment> getByStatus(String status) {
         return paymentRepository.findByStatus(status);
     }

@@ -5,13 +5,18 @@ import com.recenter.model.dto.ReviewRequest;
 import com.recenter.model.dto.ReviewResponse;
 import com.recenter.model.entity.Booking;
 import com.recenter.model.entity.Review;
+import com.recenter.model.entity.User;
+import com.recenter.model.enums.BookingStatus;
 import com.recenter.model.enums.ReviewStatus;
 import com.recenter.service.BookingService;
 import com.recenter.service.ReviewService;
+import com.recenter.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,10 +38,28 @@ public class ReviewController {
     @Autowired
     private BookingService bookingService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping
-    public ResponseEntity<ReviewResponse> create(@Valid @RequestBody ReviewRequest request) {
-        Booking booking = bookingService.getById(request.getBookingId())
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+    public ResponseEntity<?> create(@Valid @RequestBody ReviewRequest request) {
+        Booking booking = bookingService.getById(request.getBookingId()).orElse(null);
+        if (booking == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User currentUser = getCurrentUser();
+        if (!booking.getUser().getId().equals(currentUser.getId())) {
+            return ResponseEntity.status(403).body("You can only leave a review for your own booking");
+        }
+
+        if (booking.getStatus() != BookingStatus.CONFIRMED) {
+            return ResponseEntity.badRequest().body("Review is available only for confirmed bookings");
+        }
+
+        if (reviewService.getByBooking(booking).isPresent()) {
+            return ResponseEntity.badRequest().body("Review for this booking already exists");
+        }
 
         Review review = Review.builder()
                 .booking(booking)
@@ -57,8 +80,18 @@ public class ReviewController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<List<ReviewResponse>> getAll() {
         List<ReviewResponse> responses = reviewService.getAll().stream()
+                .map(EntityDtoMapper::toReviewResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<ReviewResponse>> getMyReviews() {
+        User currentUser = getCurrentUser();
+        List<ReviewResponse> responses = reviewService.getByBookingUserId(currentUser.getId()).stream()
                 .map(EntityDtoMapper::toReviewResponse)
                 .toList();
         return ResponseEntity.ok(responses);
@@ -131,5 +164,14 @@ public class ReviewController {
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         reviewService.delete(id);
         return ResponseEntity.ok("Review deleted successfully");
+    }
+
+    private User getCurrentUser() {
+        String email = ((UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()).getUsername();
+
+        return userService.getByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

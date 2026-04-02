@@ -1,6 +1,7 @@
 import api from "./axios";
 
 export const getAllReviews = () => api.get("/reviews");
+export const getMyReviews = () => api.get("/reviews/my");
 export const getPublishedReviews = () => api.get("/reviews/published");
 export const getPendingReviews = () => api.get("/reviews/pending");
 export const createReview = (data) => api.post("/reviews", data);

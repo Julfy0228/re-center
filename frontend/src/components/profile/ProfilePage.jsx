@@ -18,7 +18,19 @@ function mapUserToForm(profile) {
   };
 }
 
-export default function ProfilePage({ user, onLogout, onUserUpdate }) {
+function formatRole(role) {
+  if (role === "ADMIN") {
+    return "Администратор";
+  }
+
+  if (role === "MANAGER") {
+    return "Менеджер";
+  }
+
+  return "Гость";
+}
+
+export default function ProfilePage({ user, onUserUpdate }) {
   const [profileId, setProfileId] = useState(user?.id || null);
   const [form, setForm] = useState(() => mapUserToForm(user));
   const [activities, setActivities] = useState([]);
@@ -29,23 +41,25 @@ export default function ProfilePage({ user, onLogout, onUserUpdate }) {
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    Promise.allSettled([getMyProfile(), getMyActivities()]).then(([profileRes, activitiesRes]) => {
-      if (profileRes.status === "fulfilled") {
-        setProfileId(profileRes.value.data.id);
-        setForm(mapUserToForm(profileRes.value.data));
-        onUserUpdate?.(profileRes.value.data);
-      } else {
-        setError("Не удалось загрузить профиль.");
-      }
+    Promise.allSettled([getMyProfile(), getMyActivities()]).then(
+      ([profileRes, activitiesRes]) => {
+        if (profileRes.status === "fulfilled") {
+          setProfileId(profileRes.value.data.id);
+          setForm(mapUserToForm(profileRes.value.data));
+          onUserUpdate?.(profileRes.value.data);
+        } else {
+          setError("Не удалось загрузить профиль.");
+        }
 
-      if (activitiesRes.status === "fulfilled") {
-        setActivities(activitiesRes.value.data);
-      } else {
-        setActivityError("Не удалось загрузить историю действий.");
-      }
+        if (activitiesRes.status === "fulfilled") {
+          setActivities(activitiesRes.value.data);
+        } else {
+          setActivityError("Не удалось загрузить историю действий.");
+        }
 
-      setLoading(false);
-    });
+        setLoading(false);
+      }
+    );
   }, [onUserUpdate]);
 
   const handleChange = (key, value) => {
@@ -79,10 +93,12 @@ export default function ProfilePage({ user, onLogout, onUserUpdate }) {
         });
 
         setActivities((current) => [activityResponse.data, ...current]);
-      } catch (activityErr) {
-        setActivityError("Профиль обновлён, но не удалось записать событие в историю.");
+      } catch {
+        setActivityError(
+          "Профиль обновлён, но не удалось записать событие в историю."
+        );
       }
-    } catch (err) {
+    } catch {
       setError("Не удалось сохранить изменения профиля.");
     } finally {
       setSaving(false);
@@ -91,23 +107,43 @@ export default function ProfilePage({ user, onLogout, onUserUpdate }) {
 
   return (
     <DashboardLayout
-      user={user}
-      onLogout={onLogout}
       title="Профиль"
       subtitle="Здесь можно обновить контактные данные и посмотреть недавнюю активность."
     >
       <div className="profile-grid">
-        <section className="card-like profile-summary">
-          <p className="eyebrow">Аккаунт</p>
-          <h3>{form.email || "Пользователь"}</h3>
-          <div className="detail-chips">
-            {form.role ? <span className="detail-chip">{form.role}</span> : null}
-            {form.createdAt ? (
-              <span className="detail-chip">С нами с {formatApiDateTime(form.createdAt)}</span>
-            ) : null}
+        <section className="card-like profile-summary profile-summary-card">
+          <div className="profile-summary-head">
+            <div>
+              <p className="eyebrow">Аккаунт</p>
+              <h3>{form.email || "Пользователь"}</h3>
+            </div>
+            {form.role ? <span className="detail-chip">{formatRole(form.role)}</span> : null}
           </div>
+
+          <div className="profile-account-list">
+            <div className="profile-account-item">
+              <span className="profile-account-label">Имя</span>
+              <strong className="profile-account-value">
+                {[form.firstName, form.lastName].filter(Boolean).join(" ") || "Не указано"}
+              </strong>
+            </div>
+            <div className="profile-account-item">
+              <span className="profile-account-label">Телефон</span>
+              <strong className="profile-account-value">
+                {form.phoneNumber || "Не указан"}
+              </strong>
+            </div>
+            <div className="profile-account-item">
+              <span className="profile-account-label">С нами с</span>
+              <strong className="profile-account-value">
+                {form.createdAt ? formatApiDateTime(form.createdAt) : "Недавно"}
+              </strong>
+            </div>
+          </div>
+
           <p className="muted">
-            Данные из этого раздела используются в личном кабинете и при работе с бронированиями.
+            Эти данные используются в личном кабинете, уведомлениях и при работе с
+            бронированиями.
           </p>
         </section>
 

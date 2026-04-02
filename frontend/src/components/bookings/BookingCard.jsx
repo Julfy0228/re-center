@@ -18,7 +18,13 @@ function formatBookingStatus(status) {
   return "Ожидает подтверждения";
 }
 
-export default function BookingCard({ booking }) {
+export default function BookingCard({
+  booking,
+  payment,
+  review,
+  onPaymentCreated,
+  onReviewCreated,
+}) {
   return (
     <article className="booking-card booking-card-extended">
       <div className="booking-card-main">
@@ -35,8 +41,16 @@ export default function BookingCard({ booking }) {
       </div>
 
       <div className="booking-card-stack">
-        <BookingPaymentForm booking={booking} />
-        <BookingReviewForm booking={booking} />
+        <BookingPaymentForm
+          booking={booking}
+          payment={payment}
+          onPaymentCreated={onPaymentCreated}
+        />
+        <BookingReviewForm
+          booking={booking}
+          review={review}
+          onReviewCreated={onReviewCreated}
+        />
       </div>
     </article>
   );

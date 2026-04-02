@@ -5,12 +5,17 @@ import com.recenter.model.dto.PaymentRequest;
 import com.recenter.model.dto.PaymentResponse;
 import com.recenter.model.entity.Booking;
 import com.recenter.model.entity.Payment;
+import com.recenter.model.entity.User;
+import com.recenter.model.enums.BookingStatus;
 import com.recenter.service.BookingService;
 import com.recenter.service.PaymentService;
+import com.recenter.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,10 +38,28 @@ public class PaymentController {
     @Autowired
     private BookingService bookingService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping
-    public ResponseEntity<PaymentResponse> create(@Valid @RequestBody PaymentRequest request) {
-        Booking booking = bookingService.getById(request.getBookingId())
-                .orElseThrow(() -> new RuntimeException("Booking not found"));
+    public ResponseEntity<?> create(@Valid @RequestBody PaymentRequest request) {
+        Booking booking = bookingService.getById(request.getBookingId()).orElse(null);
+        if (booking == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User currentUser = getCurrentUser();
+        if (!booking.getUser().getId().equals(currentUser.getId())) {
+            return ResponseEntity.status(403).body("You can only pay for your own booking");
+        }
+
+        if (booking.getStatus() == BookingStatus.CANCELLED) {
+            return ResponseEntity.badRequest().body("Payment is unavailable for cancelled bookings");
+        }
+
+        if (paymentService.getByBooking(booking).isPresent()) {
+            return ResponseEntity.badRequest().body("Payment for this booking already exists");
+        }
 
         Payment payment = Payment.builder()
                 .booking(booking)
@@ -48,6 +71,15 @@ public class PaymentController {
 
         Payment created = paymentService.create(payment);
         return ResponseEntity.ok(EntityDtoMapper.toPaymentResponse(created));
+    }
+
+    @GetMapping("/my")
+    public ResponseEntity<List<PaymentResponse>> getMyPayments() {
+        User currentUser = getCurrentUser();
+        List<PaymentResponse> responses = paymentService.getByBookingUserId(currentUser.getId()).stream()
+                .map(EntityDtoMapper::toPaymentResponse)
+                .toList();
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/{id}")
@@ -113,5 +145,14 @@ public class PaymentController {
     public ResponseEntity<String> delete(@PathVariable("id") Long id) {
         paymentService.delete(id);
         return ResponseEntity.ok("Payment deleted successfully");
+    }
+
+    private User getCurrentUser() {
+        String email = ((UserDetails) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal()).getUsername();
+
+        return userService.getByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

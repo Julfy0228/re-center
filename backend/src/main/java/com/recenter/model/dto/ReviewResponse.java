@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 public class ReviewResponse {
     private Long id;
     private Long bookingId;
+    private Long serviceId;
+    private String serviceTitle;
     private String content;
     private Integer rating;
     private String status;
