@@ -9,7 +9,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import "./App.css";
-import logo from "./logo.svg";
 import { getMe } from "./api/auth";
 import { getUnreadCount } from "./api/notifications";
 import AdminPanel from "./components/admin/AdminPanel";
@@ -150,6 +149,22 @@ function AppShell({ user, onLogout }) {
   }, [location.pathname]);
 
   useEffect(() => {
+    if (!menuOpen) {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+      return undefined;
+    }
+
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.touchAction = "";
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
     if (!profileOpen) {
       return undefined;
     }
@@ -173,7 +188,7 @@ function AppShell({ user, onLogout }) {
       <header className="dashboard-topbar card">
         <div className="topbar-left">
           <NavLink to="/services" className="topbar-logo topbar-logo-desktop" aria-label="Re-Center">
-            <img src={logo} alt="Re-Center" className="topbar-logo-image" />
+            <img src="/logo-small.svg" alt="Re-Center" className="topbar-logo-image" />
           </NavLink>
 
           <button
@@ -197,7 +212,7 @@ function AppShell({ user, onLogout }) {
           className="topbar-logo topbar-logo-mobile"
           aria-label="Re-Center"
         >
-          <img src={logo} alt="Re-Center" className="topbar-logo-image" />
+          <img src="/logo-small.svg" alt="Re-Center" className="topbar-logo-image" />
         </NavLink>
 
         <div className="topbar-actions">
@@ -236,7 +251,7 @@ function AppShell({ user, onLogout }) {
         >
           <div className="mobile-drawer-header">
             <div>
-              <img src={logo} alt="Re-Center" className="mobile-drawer-logo" />
+              <img src="/logo-small.svg" alt="Re-Center" className="mobile-drawer-logo" />
               <h2>Навигация</h2>
             </div>
             <button type="button" className="secondary-button" onClick={closeMenu}>

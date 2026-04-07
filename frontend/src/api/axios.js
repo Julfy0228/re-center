@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const apiBaseUrl =
+  process.env.REACT_APP_API_BASE_URL ||
+  `${window.location.protocol}//${window.location.hostname}:8080/re-center/api`;
+
 const api = axios.create({
-  baseURL: "http://localhost:8080/re-center/api",
+  baseURL: apiBaseUrl,
 });
 
 api.interceptors.request.use((config) => {

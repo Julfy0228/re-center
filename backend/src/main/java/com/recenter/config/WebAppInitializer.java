@@ -4,6 +4,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletRegistration;
+import java.io.File;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -24,6 +25,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
         ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
         dispatcher.setLoadOnStartup(1);
         dispatcher.addMapping("/");
-        dispatcher.setMultipartConfig(new MultipartConfigElement(""));
+        String tempDir = System.getProperty("java.io.tmpdir") + File.separator + "re-center-uploads";
+        dispatcher.setMultipartConfig(new MultipartConfigElement(tempDir, 10_000_000, 20_000_000, 1_048_576));
     }
 }

@@ -3,7 +3,6 @@ export default function DashboardLayout({ title, subtitle, children }) {
     <main className="content-panel card">
       <header className="page-header">
         <div>
-          <p className="eyebrow">Личный кабинет</p>
           <h2>{title}</h2>
           <p className="muted">{subtitle}</p>
         </div>
