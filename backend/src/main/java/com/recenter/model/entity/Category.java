@@ -1,0 +1,39 @@
+package com.recenter.model.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+/**
+ * Категория услуг (например, «Прокат квадрациклов», «Рыбалка»).
+ * <p>
+ * Используется для группировки услуг и для применения акций на целые категории.
+ * </p>
+ *
+ * @see Service
+ * @see PromotionCategory
+ */
+@Entity
+@Table(name = "Categories")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Category {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, length = 100)
+    private String name;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    private List<Service> services = new ArrayList<>();
+
+    private String description;
+}
