@@ -1,67 +1,166 @@
-# Re-Center — система бронирования
+# Re-Center
 
-Этот репозиторий — учебный веб‑проект (WAR), реализованный на Spring MVC. Проект использует Java 17 и собирается через Maven. В нём есть API (REST‑контроллеры, использующие DTO) и классический JSP‑фронтенд.
+Веб-приложение для базы отдыха с backend на Spring MVC и frontend на React.
 
+Сейчас в проекте есть:
 
-## Требования
+- JWT-аутентификация и роли пользователей
+- каталог услуг и подробная страница услуги
+- бронирования, оплаты и отзывы
+- новости, уведомления, акции и скидки
+- админ-панель для управления контентом
+- загрузка изображений для услуг и новостей
 
-- Java JDK 17+
-- Apache Maven 3.6+
-- (опционально) редактор/IDE (VS Code / IntelliJ)
+## Стек
 
-## Сборка и запуск локально
+- Java 17
+- Maven
+- Spring MVC
+- Spring Security
+- Hibernate / JPA
+- React
+- Axios
 
-1. Откройте терминал в корне проекта:
+## Структура проекта
+
+- [`backend/`](backend) — серверная часть
+- [`frontend/`](frontend) — клиентская часть
+- [`pom.xml`](pom.xml) — корневой Maven-проект
+
+## Backend
+
+Backend запускается на:
+
+- `http://localhost:8080/re-center`
+
+API находится по адресу:
+
+- `http://localhost:8080/re-center/api`
+
+Загрузка картинок отдаётся через:
+
+- `http://localhost:8080/re-center/uploads/...`
+
+### Запуск backend
+
+Из корня проекта:
 
 ```powershell
-cd "c:\Users\user\Desktop\Учёба\Лабораторные Работы\5 Семестр\РПС\re-center"
+mvn -pl backend cargo:run -DskipTests
 ```
 
-2. Соберите и запустите контейнер Tomcat с помощью Maven/Cargo (включён в pom.xml):
+Если нужен полный прогон тестов:
 
 ```powershell
-mvn clean package cargo:run -DskipTests
+mvn -pl backend test
 ```
 
-3. Откройте приложение в браузере:
+## Frontend
 
+Frontend разработческий сервер обычно работает на:
+
+- `http://localhost:3000`
+
+### Важно про запуск frontend
+
+Фронт использует `react-scripts`. Если команда `npm start` пишет, что `react-scripts` не найден, значит зависимости не установлены.
+
+Тогда в папке `frontend` нужно выполнить:
+
+```powershell
+npm install
 ```
-http://localhost:8080/re-center/
+
+После этого запуск:
+
+```powershell
+npm start
 ```
 
+Если вы запускаете локальный Node из папки `frontend/node`, команды будут такие:
 
-## Где что находится (важные пути)
+```powershell
+.\node\npm.cmd install
+.\node\npm.cmd start
+```
 
-- Конфигурация Spring MVC: `src/main/java/com/recenter/config/WebConfig.java`, `WebAppInitializer.java`.
-- DTO: `src/main/java/com/recenter/dto/`.
-- Контроллеры (REST): `src/main/java/com/recenter/controllers/`.
-- Модели: `src/main/java/com/recenter/model/`.
-- JSP/статические файлы: `src/main/webapp/`.
+## Работа с другого устройства по локальной сети
 
-## REST API — краткий обзор
+Проект уже настроен так, чтобы frontend мог обращаться к backend не только через `localhost`, но и через IP машины в локальной сети.
 
-Контроллеры расположены под `/api/*`. Основные эндпоинты (пример):
+Что нужно:
 
-- `POST /api/users/register` — регистрация (RegistrationRequestDto)
-- `POST /api/users/login` — логин (LoginRequestDto)
-- `GET /api/users/{id}` — информация о пользователе
-- `GET /api/services`, `POST /api/services`, `GET /api/services/{id}` — управление услугами
-- `POST /api/bookings`, `GET /api/bookings/{id}` — бронирования
-- `GET/POST /api/promotions`, `GET /api/promotions/{id}` — акции
-- `GET/POST /api/discounts`, `POST /api/discounts/assign` — скидки
-- `POST /api/payments`, `GET /api/payments/{id}` — платежи
-- `GET/POST /api/news` — новости
+1. Запустить backend на основном компьютере.
+2. Запустить frontend на основном компьютере.
+3. Узнать IP основного компьютера в локальной сети.
+4. Открывать сайт с другого устройства по адресу вида:
 
-## Дальнейшие шаги (планы)
+```text
+http://192.168.1.50:3000
+```
 
-- Подключить JdbcTemplate/DAO к SQLite (в `WebConfig` есть бин DataSource/JdbcTemplate).
-- Добавить полноценные мапперы model <-> dto и тесты.
-- Перевести контроллеры с in‑memory на реальное хранение в БД.
+Frontend сам формирует API-адрес на основе текущего хоста:
 
----
-Автор(ы):
+- если сайт открыт на `192.168.1.50:3000`, запросы пойдут на `192.168.1.50:8080/re-center/api`
 
-- Мошталев Г.С.
-- Турков Б.С.
+Если с другого устройства сайт открывается, но backend недоступен, проверьте:
 
-*ВлГУ, 2025*
+- что backend реально запущен
+- что порт `8080` не блокируется фаерволом
+- что frontend открыт именно по IP, а не по `localhost`
+
+## Загрузка картинок
+
+Загрузка изображений работает через endpoint:
+
+- `POST /api/uploads/images`
+
+Картинки можно прикреплять в админ-панели при создании и редактировании:
+
+- услуг
+- новостей
+
+Файлы сохраняются в папку `backend/uploads`.
+
+Поддерживаются форматы:
+
+- `jpg`
+- `jpeg`
+- `png`
+- `webp`
+- `gif`
+
+## Основные пользовательские разделы
+
+- каталог услуг
+- страница услуги
+- мои бронирования
+- новости
+- уведомления
+- акции и скидки
+- профиль
+
+## Основные админские разделы
+
+- управление услугами
+- управление новостями
+- управление бронированиями
+- управление отзывами
+- управление платежами
+- управление промоакциями
+- управление скидками
+
+## Полезные файлы
+
+- [`frontend/src/App.jsx`](frontend/src/App.jsx) — роутинг и shell приложения
+- [`frontend/src/App.css`](frontend/src/App.css) — основные стили
+- [`frontend/src/api/axios.js`](frontend/src/api/axios.js) — конфигурация API
+- [`backend/src/main/java/com/recenter/config/SecurityConfig.java`](backend/src/main/java/com/recenter/config/SecurityConfig.java) — security и CORS
+- [`backend/src/main/java/com/recenter/config/WebConfig.java`](backend/src/main/java/com/recenter/config/WebConfig.java) — MVC и resource handlers
+- [`backend/src/main/java/com/recenter/controller/`](backend/src/main/java/com/recenter/controller) — контроллеры backend
+
+## Замечания
+
+- Старые `run.bat`-скрипты могут быть неактуальны.
+- Если frontend не стартует, сначала проверьте наличие `react-scripts`.
+- После изменений в backend, связанных с multipart, security или resource handlers, backend нужно перезапускать полностью.
