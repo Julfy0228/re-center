@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,4 +35,23 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @EntityGraph(attributePaths = {"user", "service"})
     List<Booking> findByService(Service service);
+
+    @EntityGraph(attributePaths = {"user", "service"})
+    @Query("""
+            select b from Booking b
+            where (:userId is null or b.user.id = :userId)
+              and (:dateFrom is null or b.endDate >= :dateFrom)
+              and (:dateTo is null or b.startDate <= :dateTo)
+              and (
+                    :paid is null
+                    or (:paid = true and exists (select p.id from Payment p where p.booking = b))
+                    or (:paid = false and not exists (select p.id from Payment p where p.booking = b))
+                  )
+            order by b.createdAt desc
+            """)
+    List<Booking> findFiltered(
+            @Param("userId") @Nullable Long userId,
+            @Param("dateFrom") @Nullable LocalDateTime dateFrom,
+            @Param("dateTo") @Nullable LocalDateTime dateTo,
+            @Param("paid") @Nullable Boolean paid);
 }

@@ -3,12 +3,14 @@ package com.recenter.controller;
 import com.recenter.mapper.EntityDtoMapper;
 import com.recenter.model.dto.NewsRequest;
 import com.recenter.model.dto.NewsResponse;
+import com.recenter.model.dto.PageResponse;
 import com.recenter.model.entity.News;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.NewsStatus;
 import com.recenter.service.NewsService;
 import com.recenter.service.UserService;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,9 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/news")
@@ -70,11 +71,22 @@ public class NewsController {
     }
 
     @GetMapping("/published")
-    public ResponseEntity<List<NewsResponse>> getPublished() {
-        List<NewsResponse> responses = newsService.getPublished().stream()
-                .map(EntityDtoMapper::toNewsResponse)
-                .toList();
-        return ResponseEntity.ok(responses);
+    public ResponseEntity<PageResponse<NewsResponse>> getPublished(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "6") int size) {
+        var newsPage = newsService.getPublishedPage(page, size);
+
+        PageResponse<NewsResponse> response = PageResponse.<NewsResponse>builder()
+                .items(newsPage.getContent().stream().map(EntityDtoMapper::toNewsResponse).toList())
+                .page(newsPage.getNumber())
+                .size(newsPage.getSize())
+                .totalItems(newsPage.getTotalElements())
+                .totalPages(newsPage.getTotalPages())
+                .first(newsPage.isFirst())
+                .last(newsPage.isLast())
+                .build();
+
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")

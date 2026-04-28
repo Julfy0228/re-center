@@ -4,6 +4,8 @@ import com.recenter.model.entity.News;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.NewsStatus;
 import com.recenter.repository.NewsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -34,6 +36,13 @@ public class NewsService {
 
     public List<News> getPublished() {
         return getByStatus(NewsStatus.PUBLISHED);
+    }
+
+    public Page<News> getPublishedPage(int page, int size) {
+        return newsRepository.findByStatusOrderByPublishedAtDesc(
+                NewsStatus.PUBLISHED,
+                PageRequest.of(Math.max(page, 0), Math.max(size, 1))
+        );
     }
 
     public List<News> getByAuthor(User author) {

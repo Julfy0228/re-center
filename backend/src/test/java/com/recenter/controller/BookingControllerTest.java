@@ -3,12 +3,18 @@ package com.recenter.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.recenter.model.dto.BookingRequest;
-import com.recenter.model.entity.*;
+import com.recenter.model.entity.Booking;
+import com.recenter.model.entity.User;
 import com.recenter.model.enums.BookingStatus;
 import com.recenter.model.enums.UserRole;
+import com.recenter.repository.PaymentRepository;
 import com.recenter.service.BookingService;
 import com.recenter.service.ServiceService;
 import com.recenter.service.UserService;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,20 +23,25 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class BookingControllerTest {
@@ -46,10 +57,13 @@ class BookingControllerTest {
     @Mock
     private ServiceService serviceService;
 
+    @Mock
+    private PaymentRepository paymentRepository;
+
     @InjectMocks
     private BookingController bookingController;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private User user;
     private com.recenter.model.entity.Service service;
@@ -58,7 +72,6 @@ class BookingControllerTest {
     @BeforeEach
     void setup() {
         mockMvc = MockMvcBuilders.standaloneSetup(bookingController).build();
-
         objectMapper.registerModule(new JavaTimeModule());
 
         user = User.builder()
@@ -85,6 +98,9 @@ class BookingControllerTest {
                 .initialPrice(BigDecimal.valueOf(3000))
                 .status(BookingStatus.PENDING)
                 .build();
+
+        lenient().when(paymentRepository.existsByBooking_Id(anyLong())).thenReturn(false);
+        lenient().when(paymentRepository.findPaidBookingIds(any())).thenReturn(List.of());
     }
 
     private void authenticateUser() {
@@ -95,21 +111,13 @@ class BookingControllerTest {
                 .build();
 
         TestingAuthenticationToken auth =
-                new TestingAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+                new TestingAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
-        lenient().when(userService.getByEmail(user.getEmail()))
-                .thenReturn(Optional.of(user));
+        lenient().when(userService.getByEmail(user.getEmail())).thenReturn(Optional.of(user));
     }
 
-    // -----------------------------
-    // POST /api/bookings
-    // -----------------------------
     @Test
     void create_ReturnsCreatedBooking() throws Exception {
         authenticateUser();
@@ -121,6 +129,7 @@ class BookingControllerTest {
         request.setPeopleCount(4);
 
         when(serviceService.getById(5L)).thenReturn(Optional.of(service));
+        when(bookingService.getAll()).thenReturn(List.of());
         when(bookingService.create(any(Booking.class))).thenReturn(booking);
 
         mockMvc.perform(post("/api/bookings")
@@ -128,12 +137,10 @@ class BookingControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.peopleCount").value(4))
-                .andExpect(jsonPath("$.status").value("PENDING"));
+                .andExpect(jsonPath("$.status").value("PENDING"))
+                .andExpect(jsonPath("$.paid").value(false));
     }
 
-    // -----------------------------
-    // GET /api/bookings/{id}
-    // -----------------------------
     @Test
     void getById_Found_ReturnsBooking() throws Exception {
         when(bookingService.getById(1L)).thenReturn(Optional.of(booking));
@@ -151,35 +158,25 @@ class BookingControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // -----------------------------
-    // GET /api/bookings
-    // -----------------------------
     @Test
-    void getAll_ReturnsList() throws Exception {
-        when(bookingService.getAll()).thenReturn(List.of(booking));
+    void getAll_ReturnsFilteredList() throws Exception {
+        when(bookingService.getFiltered(null, null, null, null)).thenReturn(List.of(booking));
 
         mockMvc.perform(get("/api/bookings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].peopleCount").value(4));
     }
 
-    // -----------------------------
-    // GET /api/bookings/my
-    // -----------------------------
     @Test
     void getMyBookings_ReturnsUserBookings() throws Exception {
         authenticateUser();
-
-        when(bookingService.getByUser(user)).thenReturn(List.of(booking));
+        when(bookingService.getFiltered(eq(user.getId()), any(), any(), any())).thenReturn(List.of(booking));
 
         mockMvc.perform(get("/api/bookings/my"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].status").value("PENDING"));
     }
 
-    // -----------------------------
-    // PUT /api/bookings/{id}
-    // -----------------------------
     @Test
     void update_Found_ReturnsUpdatedBooking() throws Exception {
         Booking updated = booking.toBuilder()
@@ -214,9 +211,6 @@ class BookingControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // -----------------------------
-    // DELETE /api/bookings/{id}
-    // -----------------------------
     @Test
     void delete_ReturnsSuccessMessage() throws Exception {
         doNothing().when(bookingService).delete(1L);

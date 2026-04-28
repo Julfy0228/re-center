@@ -2,6 +2,8 @@ package com.recenter.service;
 
 import com.recenter.model.entity.*;
 import com.recenter.repository.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,12 @@ public class BookingService {
 
     public List<Booking> getByUser(User user) {
         return bookingRepository.findByUser(user);
+    }
+
+    public List<Booking> getFiltered(Long userId, LocalDate dateFrom, LocalDate dateTo, Boolean paid) {
+        LocalDateTime from = dateFrom != null ? dateFrom.atStartOfDay() : null;
+        LocalDateTime to = dateTo != null ? dateTo.plusDays(1).atStartOfDay().minusNanos(1) : null;
+        return bookingRepository.findFiltered(userId, from, to, paid);
     }
 
     public List<Booking> getByService(com.recenter.model.entity.Service service) {

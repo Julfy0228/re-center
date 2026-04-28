@@ -22,28 +22,47 @@ function formatPrice(value) {
   return `${new Intl.NumberFormat("ru-RU").format(value || 0)} ₽`;
 }
 
+const initialFilters = {
+  status: "PENDING",
+  dateFrom: "",
+  dateTo: "",
+  paid: "all",
+};
+
 export default function BookingManager({ user }) {
   const [bookings, setBookings] = useState([]);
-  const [filter, setFilter] = useState("PENDING");
+  const [filters, setFilters] = useState(initialFilters);
   const [loading, setLoading] = useState(true);
   const [actionId, setActionId] = useState(null);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    getAllBookings()
+    const params = {};
+    if (filters.dateFrom) {
+      params.dateFrom = filters.dateFrom;
+    }
+    if (filters.dateTo) {
+      params.dateTo = filters.dateTo;
+    }
+    if (filters.paid !== "all") {
+      params.paid = filters.paid === "paid";
+    }
+
+    setLoading(true);
+    getAllBookings(params)
       .then((response) => setBookings(response.data))
       .catch(() => setError("Не удалось загрузить бронирования для управления."))
       .finally(() => setLoading(false));
-  }, []);
+  }, [filters.dateFrom, filters.dateTo, filters.paid]);
 
   const filteredBookings = useMemo(() => {
-    if (filter === "ALL") {
+    if (filters.status === "ALL") {
       return bookings;
     }
 
-    return bookings.filter((item) => item.status === filter);
-  }, [bookings, filter]);
+    return bookings.filter((item) => item.status === filters.status);
+  }, [bookings, filters.status]);
 
   const updateBookingStatus = async (booking, nextStatus) => {
     const actionKey = `${nextStatus}-${booking.id}`;
@@ -106,43 +125,61 @@ export default function BookingManager({ user }) {
         <p className="eyebrow">Бронирования</p>
         <h3>Подтверждение броней</h3>
         <p className="muted">
-          Подтверждайте, отменяйте и очищайте брони прямо из панели управления.
+          Подтверждайте, отменяйте и отфильтровывайте брони по статусу, датам и оплате.
         </p>
       </div>
 
-      <div className="filter-toggle">
-        <button
-          type="button"
-          className={filter === "PENDING" ? "secondary-button toggle-active" : "secondary-button"}
-          onClick={() => setFilter("PENDING")}
-        >
-          Ожидают
-        </button>
-        <button
-          type="button"
-          className={
-            filter === "CONFIRMED" ? "secondary-button toggle-active" : "secondary-button"
-          }
-          onClick={() => setFilter("CONFIRMED")}
-        >
-          Подтверждённые
-        </button>
-        <button
-          type="button"
-          className={
-            filter === "CANCELLED" ? "secondary-button toggle-active" : "secondary-button"
-          }
-          onClick={() => setFilter("CANCELLED")}
-        >
-          Отменённые
-        </button>
-        <button
-          type="button"
-          className={filter === "ALL" ? "secondary-button toggle-active" : "secondary-button"}
-          onClick={() => setFilter("ALL")}
-        >
-          Все
-        </button>
+      <div className="booking-filter-grid admin-filter-grid">
+        <label className="filter-field">
+          <span>Статус</span>
+          <select
+            value={filters.status}
+            onChange={(event) =>
+              setFilters((current) => ({ ...current, status: event.target.value }))
+            }
+          >
+            <option value="PENDING">Ожидают</option>
+            <option value="CONFIRMED">Подтверждённые</option>
+            <option value="CANCELLED">Отменённые</option>
+            <option value="ALL">Все</option>
+          </select>
+        </label>
+
+        <label className="filter-field">
+          <span>Дата от</span>
+          <input
+            type="date"
+            value={filters.dateFrom}
+            onChange={(event) =>
+              setFilters((current) => ({ ...current, dateFrom: event.target.value }))
+            }
+          />
+        </label>
+
+        <label className="filter-field">
+          <span>Дата до</span>
+          <input
+            type="date"
+            value={filters.dateTo}
+            onChange={(event) =>
+              setFilters((current) => ({ ...current, dateTo: event.target.value }))
+            }
+          />
+        </label>
+
+        <label className="filter-field">
+          <span>Оплата</span>
+          <select
+            value={filters.paid}
+            onChange={(event) =>
+              setFilters((current) => ({ ...current, paid: event.target.value }))
+            }
+          >
+            <option value="all">Все</option>
+            <option value="paid">Оплаченные</option>
+            <option value="unpaid">Неоплаченные</option>
+          </select>
+        </label>
       </div>
 
       {loading ? <p className="muted">Загружаем бронирования...</p> : null}
@@ -172,6 +209,7 @@ export default function BookingManager({ user }) {
               </span>
               <span className="detail-chip">{item.peopleCount} гостей</span>
               <span className="detail-chip">{formatPrice(item.initialPrice)}</span>
+              <span className="detail-chip">{item.paid ? "Оплачено" : "Не оплачено"}</span>
             </div>
 
             <div className="manage-actions">

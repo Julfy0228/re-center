@@ -14,20 +14,43 @@ function truncateText(value, maxLength = 220) {
   return `${value.slice(0, maxLength).trimEnd()}...`;
 }
 
+const PAGE_SIZE = 6;
+
 export default function NewsFeed({ user, onLogout }) {
   const [items, setItems] = useState([]);
+  const [page, setPage] = useState(0);
+  const [pagination, setPagination] = useState({
+    page: 0,
+    totalPages: 0,
+    totalItems: 0,
+    first: true,
+    last: true,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
-    getPublishedNews()
-      .then((response) => setItems(response.data))
+    setLoading(true);
+    setError("");
+
+    getPublishedNews({ page, size: PAGE_SIZE })
+      .then((response) => {
+        const payload = response.data;
+        setItems(payload.items || []);
+        setPagination({
+          page: payload.page ?? 0,
+          totalPages: payload.totalPages ?? 0,
+          totalItems: payload.totalItems ?? 0,
+          first: Boolean(payload.first),
+          last: Boolean(payload.last),
+        });
+      })
       .catch(() =>
         setError("Не удалось загрузить новости. Проверьте backend и опубликованные записи.")
       )
       .finally(() => setLoading(false));
-  }, []);
+  }, [page]);
 
   const selectedItem = useMemo(
     () => items.find((item) => item.id === selectedId) || null,
@@ -82,6 +105,31 @@ export default function NewsFeed({ user, onLogout }) {
           </article>
         ))}
       </section>
+
+      {!loading && pagination.totalPages > 1 ? (
+        <section className="pagination-bar">
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => setPage((current) => Math.max(current - 1, 0))}
+            disabled={pagination.first}
+          >
+            Назад
+          </button>
+          <p className="muted pagination-copy">
+            Страница {pagination.page + 1} из {pagination.totalPages}
+            {pagination.totalItems ? `, всего новостей: ${pagination.totalItems}` : ""}
+          </p>
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => setPage((current) => current + 1)}
+            disabled={pagination.last}
+          >
+            Вперёд
+          </button>
+        </section>
+      ) : null}
 
       <Modal isOpen={Boolean(selectedItem)} onClose={() => setSelectedId(null)}>
         {selectedItem ? (

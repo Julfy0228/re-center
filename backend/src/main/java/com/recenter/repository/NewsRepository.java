@@ -3,6 +3,8 @@ package com.recenter.repository;
 import com.recenter.model.entity.News;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.NewsStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -26,4 +28,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     @EntityGraph(attributePaths = {"author"})
     List<News> findByStatusOrderByPublishedAtDesc(NewsStatus status);
+
+    @EntityGraph(attributePaths = {"author"})
+    Page<News> findByStatusOrderByPublishedAtDesc(NewsStatus status, Pageable pageable);
 }

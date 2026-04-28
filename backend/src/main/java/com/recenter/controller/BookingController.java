@@ -6,25 +6,30 @@ import com.recenter.model.entity.Booking;
 import com.recenter.model.entity.Service;
 import com.recenter.model.entity.User;
 import com.recenter.model.enums.BookingStatus;
+import com.recenter.repository.PaymentRepository;
 import com.recenter.service.BookingService;
 import com.recenter.service.ServiceService;
 import com.recenter.service.UserService;
 import jakarta.validation.Valid;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-/**
- * REST контроллер для управления бронированиями в системе базы отдыха.
- * <p>
- * Предоставляет API для создания новых бронирований и просмотра истории бронирований
- * текущего авторизованного пользователя.
- */
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {
@@ -38,48 +43,36 @@ public class BookingController {
     @Autowired
     private UserService userService;
 
-    /**
-     * Создаёт новое бронирование для текущего пользователя.
-     * <p>
-     * Перед созданием проверяется:
-     * <ul>
-     *     <li>Корректность дат (выезд не раньше заезда)</li>
-     *     <li>Существование выбранной услуги (домика)</li>
-     *     <li>Свободен ли домик на указанные даты (нет пересекающихся бронирований)</li>
-     * </ul>
-     * Бронирование сохраняется со статусом {@code PENDING} и количеством гостей по умолчанию 1.
-     *
-     * @param request объект с данными бронирования (идентификатор услуги, даты заезда и выезда)
-     * @return сообщение об успешном создании бронирования или ошибка с описанием проблемы
-     */
+    @Autowired
+    private PaymentRepository paymentRepository;
+
     @PostMapping
     public ResponseEntity<?> createBooking(@Valid @RequestBody BookingRequest request) {
-
         if (request.getServiceId() == null || request.getStartDate() == null || request.getEndDate() == null) {
-            return ResponseEntity.badRequest().body("serviceId, startDate, и endDate обязательны");
+            return ResponseEntity.badRequest().body("serviceId, startDate, endDate are required");
         }
 
         if (request.getEndDate().isBefore(request.getStartDate())) {
-            return ResponseEntity.badRequest().body("Дата выезда не может быть раньше даты заезда");
+            return ResponseEntity.badRequest().body("End date cannot be earlier than start date");
         }
 
         Service service = serviceService.getById(request.getServiceId())
-                .orElseThrow(() -> new RuntimeException("Услуга не найдена"));
+                .orElseThrow(() -> new RuntimeException("Service not found"));
 
         boolean isBusy = bookingService.getAll().stream()
                 .filter(b -> b.getService().getId().equals(request.getServiceId()))
-                .anyMatch(b -> !(b.getEndDate().isBefore(request.getStartDate()) || 
-                                b.getStartDate().isAfter(request.getEndDate())));
+                .anyMatch(b -> !(b.getEndDate().isBefore(request.getStartDate())
+                        || b.getStartDate().isAfter(request.getEndDate())));
 
         if (isBusy) {
-            return ResponseEntity.badRequest().body("Извините, этот домик уже забронирован на выбранные даты");
+            return ResponseEntity.badRequest().body("Selected service is already booked for these dates");
         }
 
         String email = ((UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername();
 
         User user = userService.getByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         Booking booking = new Booking();
         booking.setService(service);
@@ -94,53 +87,26 @@ public class BookingController {
         return ResponseEntity.ok(toResponse(createdBooking));
     }
 
-    /**
-     * Возвращает список бронирований текущего авторизованного пользователя.
-     * <p>
-     * Метод использует транзакцию только для чтения. Бронирования возвращаются в том порядке,
-     * в котором они сохранены в базе (обычно по убыванию даты создания, если репозиторий настроен).
-     *
-     * @return список объектов {@link BookingResponse} с детальной информацией о каждом бронировании
-     */
     @GetMapping("/my")
     @Transactional(readOnly = true)
-    public List<BookingResponse> getMyBookings() {
-
+    public List<BookingResponse> getMyBookings(
+            @RequestParam(name = "dateFrom", required = false) LocalDate dateFrom,
+            @RequestParam(name = "dateTo", required = false) LocalDate dateTo,
+            @RequestParam(name = "paid", required = false) Boolean paid) {
         String email = ((UserDetails) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername();
 
         User user = userService.getByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        List<Booking> bookings = bookingService.getByUser(user);
+        List<Booking> bookings = bookingService.getFiltered(user.getId(), dateFrom, dateTo, paid);
+        Set<Long> paidBookingIds = getPaidBookingIds(bookings);
 
         return bookings.stream()
-                .map(this::toResponse)
+                .map(booking -> toResponse(booking, paidBookingIds.contains(booking.getId())))
                 .toList();
     }
 
-    private BookingResponse toResponse(Booking b) {
-        return BookingResponse.builder()
-                .id(b.getId())
-                .serviceId(b.getService().getId())
-                .serviceTitle(b.getService().getTitle())
-                .userId(b.getUser().getId())
-                .userEmail(b.getUser().getEmail())
-                .startDate(b.getStartDate())
-                .endDate(b.getEndDate())
-                .peopleCount(b.getPeopleCount())
-                .initialPrice(b.getInitialPrice())
-                .status(b.getStatus())
-                .createdAt(b.getCreatedAt())
-                .build();
-    }
-
-    /**
-     * Получает бронирование по идентификатору.
-     *
-     * @param id идентификатор бронирования
-     * @return объект бронирования или 404, если не найдено
-     */
     @GetMapping("/{id}")
     public ResponseEntity<BookingResponse> getById(@PathVariable Long id) {
         return bookingService.getById(id)
@@ -148,25 +114,19 @@ public class BookingController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    /**
-     * Возвращает список всех бронирований.
-     *
-     * @return список всех бронирований
-     */
     @GetMapping
-    public List<BookingResponse> getAll() {
-        return bookingService.getAll().stream()
-                .map(this::toResponse)
+    public List<BookingResponse> getAll(
+            @RequestParam(name = "dateFrom", required = false) LocalDate dateFrom,
+            @RequestParam(name = "dateTo", required = false) LocalDate dateTo,
+            @RequestParam(name = "paid", required = false) Boolean paid) {
+        List<Booking> bookings = bookingService.getFiltered(null, dateFrom, dateTo, paid);
+        Set<Long> paidBookingIds = getPaidBookingIds(bookings);
+
+        return bookings.stream()
+                .map(booking -> toResponse(booking, paidBookingIds.contains(booking.getId())))
                 .toList();
     }
 
-    /**
-     * Обновляет существующее бронирование.
-     *
-     * @param id идентификатор бронирования
-     * @param request данные для обновления
-     * @return обновленное бронирование или 404, если не найдено
-     */
     @PutMapping("/{id}")
     public ResponseEntity<BookingResponse> update(@PathVariable Long id, @Valid @RequestBody BookingRequest request) {
         Booking bookingToUpdate = new Booking();
@@ -190,15 +150,38 @@ public class BookingController {
         return ResponseEntity.ok(toResponse(updated));
     }
 
-    /**
-     * Удаляет бронирование по идентификатору.
-     *
-     * @param id идентификатор бронирования
-     * @return сообщение об успешном удалении
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         bookingService.delete(id);
         return ResponseEntity.ok("Booking deleted successfully");
+    }
+
+    private BookingResponse toResponse(Booking booking) {
+        return toResponse(booking, paymentRepository.existsByBooking_Id(booking.getId()));
+    }
+
+    private BookingResponse toResponse(Booking booking, boolean isPaid) {
+        return BookingResponse.builder()
+                .id(booking.getId())
+                .serviceId(booking.getService().getId())
+                .serviceTitle(booking.getService().getTitle())
+                .userId(booking.getUser().getId())
+                .userEmail(booking.getUser().getEmail())
+                .startDate(booking.getStartDate())
+                .endDate(booking.getEndDate())
+                .peopleCount(booking.getPeopleCount())
+                .initialPrice(booking.getInitialPrice())
+                .status(booking.getStatus())
+                .createdAt(booking.getCreatedAt())
+                .paid(isPaid)
+                .build();
+    }
+
+    private Set<Long> getPaidBookingIds(List<Booking> bookings) {
+        List<Long> bookingIds = bookings.stream().map(Booking::getId).toList();
+        if (bookingIds.isEmpty()) {
+            return Set.of();
+        }
+        return new HashSet<>(paymentRepository.findPaidBookingIds(bookingIds));
     }
 }

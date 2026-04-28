@@ -9,26 +9,35 @@ import com.recenter.model.enums.NewsStatus;
 import com.recenter.model.enums.UserRole;
 import com.recenter.service.NewsService;
 import com.recenter.service.UserService;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.List;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
 class NewsControllerTest {
@@ -44,17 +53,14 @@ class NewsControllerTest {
     @InjectMocks
     private NewsController newsController;
 
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     private User admin;
     private News news;
 
     @BeforeEach
     void setup() {
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(newsController)
-                .build();
-
+        mockMvc = MockMvcBuilders.standaloneSetup(newsController).build();
         objectMapper.registerModule(new JavaTimeModule());
 
         admin = User.builder()
@@ -72,9 +78,6 @@ class NewsControllerTest {
                 .build();
     }
 
-    // -----------------------------
-    // POST /api/news (ADMIN/MANAGER)
-    // -----------------------------
     @Test
     void create_AsAdmin_ReturnsCreatedNews() throws Exception {
         NewsRequest request = new NewsRequest();
@@ -82,7 +85,6 @@ class NewsControllerTest {
         request.setContent("Мы построили новый домик у озера!");
         request.setStatus(NewsStatus.PUBLISHED);
 
-        // principal = UserDetails
         UserDetails userDetails = org.springframework.security.core.userdetails.User
                 .withUsername(admin.getEmail())
                 .password("pass")
@@ -90,11 +92,7 @@ class NewsControllerTest {
                 .build();
 
         TestingAuthenticationToken auth =
-                new TestingAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+                new TestingAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
@@ -108,9 +106,6 @@ class NewsControllerTest {
                 .andExpect(jsonPath("$.title").value("Открытие нового домика"));
     }
 
-    // -----------------------------
-    // GET /api/news/{id}
-    // -----------------------------
     @Test
     void getById_Found_ReturnsNews() throws Exception {
         when(newsService.getById(1L)).thenReturn(Optional.of(news));
@@ -128,9 +123,6 @@ class NewsControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // -----------------------------
-    // GET /api/news
-    // -----------------------------
     @Test
     void getAll_ReturnsList() throws Exception {
         when(newsService.getAll()).thenReturn(List.of(news));
@@ -140,21 +132,18 @@ class NewsControllerTest {
                 .andExpect(jsonPath("$[0].title").value("Открытие нового домика"));
     }
 
-    // -----------------------------
-    // GET /api/news/published
-    // -----------------------------
     @Test
-    void getPublished_ReturnsPublishedNews() throws Exception {
-        when(newsService.getPublished()).thenReturn(List.of(news));
+    void getPublished_ReturnsPaginatedNews() throws Exception {
+        when(newsService.getPublishedPage(0, 6))
+                .thenReturn(new PageImpl<>(List.of(news), PageRequest.of(0, 6), 1));
 
         mockMvc.perform(get("/api/news/published"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].status").value("PUBLISHED"));
+                .andExpect(jsonPath("$.items[0].status").value("PUBLISHED"))
+                .andExpect(jsonPath("$.page").value(0))
+                .andExpect(jsonPath("$.totalPages").value(1));
     }
 
-    // -----------------------------
-    // PUT /api/news/{id} (ADMIN/MANAGER)
-    // -----------------------------
     @Test
     void update_AsAdmin_ReturnsUpdatedNews() throws Exception {
         NewsRequest request = new NewsRequest();
@@ -176,11 +165,7 @@ class NewsControllerTest {
                 .build();
 
         TestingAuthenticationToken auth =
-                new TestingAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+                new TestingAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
@@ -206,11 +191,7 @@ class NewsControllerTest {
                 .build();
 
         TestingAuthenticationToken auth =
-                new TestingAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+                new TestingAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 
@@ -222,9 +203,6 @@ class NewsControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // -----------------------------
-    // DELETE /api/news/{id} (ADMIN)
-    // -----------------------------
     @Test
     void delete_AsAdmin_ReturnsSuccessMessage() throws Exception {
         UserDetails userDetails = org.springframework.security.core.userdetails.User
@@ -234,11 +212,7 @@ class NewsControllerTest {
                 .build();
 
         TestingAuthenticationToken auth =
-                new TestingAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
+                new TestingAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
 

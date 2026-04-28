@@ -1,13 +1,12 @@
 package com.recenter.model.dto;
 
+import com.recenter.model.enums.BookingStatus;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-
-import com.recenter.model.enums.BookingStatus;
 
 @Data
 @NoArgsConstructor
@@ -15,20 +14,15 @@ import com.recenter.model.enums.BookingStatus;
 @Builder
 public class BookingResponse {
     private Long id;
-    
-    // Данные об услуге
     private Long serviceId;
-    private String serviceTitle; // Берем из Service.title [cite: 134]
-    
-    // Данные о пользователе
+    private String serviceTitle;
     private Long userId;
-    private String userEmail; // Берем из User.email [cite: 140]
-    
-    // Данные бронирования
-    private LocalDateTime startDate; // Из Booking.startDate [cite: 87]
-    private LocalDateTime endDate;   // Твое новое поле
-    private Integer peopleCount;     // Из Booking.peopleCount [cite: 87]
-    private BigDecimal initialPrice;   // Из Booking.initialPrice [cite: 87]
-    private BookingStatus status;           // Из Booking.status [cite: 88]
-    private LocalDateTime createdAt; // Из Booking.createdAt [cite: 88]
+    private String userEmail;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private Integer peopleCount;
+    private BigDecimal initialPrice;
+    private BookingStatus status;
+    private LocalDateTime createdAt;
+    private boolean paid;
 }
