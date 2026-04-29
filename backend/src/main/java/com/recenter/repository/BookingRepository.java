@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,8 +49,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             order by b.createdAt desc
             """)
     List<Booking> findFiltered(
-            @Param("userId") @Nullable Long userId,
-            @Param("dateFrom") @Nullable LocalDateTime dateFrom,
-            @Param("dateTo") @Nullable LocalDateTime dateTo,
-            @Param("paid") @Nullable Boolean paid);
+            @Param("userId") Long userId,
+            @Param("dateFrom") LocalDateTime dateFrom,
+            @Param("dateTo") LocalDateTime dateTo,
+            @Param("paid") Boolean paid);
 }
