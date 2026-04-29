@@ -630,6 +630,61 @@ button:disabled {
   gap: 20px;
 }
 
+.admin-tabs-container {
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: var(--color-paper-soft);
+  border-radius: 18px;
+  padding: 8px;
+}
+
+.admin-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-ink-600);
+  cursor: pointer;
+  transition: all 200ms ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.admin-tab:hover {
+  background: var(--color-paper);
+  color: var(--color-ink-800);
+}
+
+.admin-tab.active {
+  background: var(--color-paper);
+  border-color: var(--color-brand-600);
+  color: var(--color-brand-700);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tab-label {
+  display: inline;
+}
+
+.admin-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .service-card,
 .booking-card,
 .news-card,
@@ -1299,6 +1354,24 @@ button:disabled {
   .profile-grid,
   .offers-insights {
     grid-template-columns: 1fr;
+  }
+
+  .admin-tabs {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    padding: 8px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab-label {
+    display: inline;
+  }
+
+  .admin-tab {
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 
   .booking-card-extended,
