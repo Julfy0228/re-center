@@ -1,1 +1,1 @@
-cd backend && run
+cd backend && call run.bat %*

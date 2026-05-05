@@ -1,0 +1,67 @@
+2026-05-05 22:43:53,796 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2026-05-05 22:43:53,840 INFO o.a.j.JMeter: Loading user properties from: C:\Apache\JMeter\bin\user.properties
+2026-05-05 22:43:53,840 INFO o.a.j.JMeter: Loading system properties from: C:\Apache\JMeter\bin\system.properties
+2026-05-05 22:43:53,841 INFO o.a.j.JMeter: Setting JMeter property: host=localhost
+2026-05-05 22:43:53,841 INFO o.a.j.JMeter: Setting JMeter property: port=8080
+2026-05-05 22:43:53,841 INFO o.a.j.JMeter: Setting JMeter property: contextPath=/re-center
+2026-05-05 22:43:53,853 INFO o.a.j.JMeter: Copyright (c) 1998-2024 The Apache Software Foundation
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: Version 5.6.3
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: java.version=17.0.18
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: os.name=Windows 11
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: os.arch=amd64
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: os.version=10.0
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: file.encoding=Cp1251
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: java.awt.headless=true
+2026-05-05 22:43:53,856 INFO o.a.j.JMeter: Max memory     =1073741824
+2026-05-05 22:43:53,857 INFO o.a.j.JMeter: Available Processors =8
+2026-05-05 22:43:53,876 INFO o.a.j.JMeter: Default Locale=English (EN)
+2026-05-05 22:43:53,876 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2026-05-05 22:43:53,877 INFO o.a.j.JMeter: JMeterHome=C:\Apache\JMeter
+2026-05-05 22:43:53,877 INFO o.a.j.JMeter: user.dir  =C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\6 Семестр\РПС\re-center\jmeter-tests
+2026-05-05 22:43:53,878 INFO o.a.j.JMeter: PWD       =C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\6 Семестр\РПС\re-center\jmeter-tests
+2026-05-05 22:43:58,862 INFO o.a.j.JMeter: IP: 192.168.77.27 Name: DESKTOP-CHGIGO0 FullName: DESKTOP-CHGIGO0
+2026-05-05 22:43:58,879 INFO o.a.j.s.FileServer: Default base='C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\6 Семестр\РПС\re-center\jmeter-tests'
+2026-05-05 22:43:58,882 INFO o.a.j.s.FileServer: Set new base='C:\Users\Julfy\Desktop\Учёба\Лабораторные Работы\6 Семестр\РПС\re-center\jmeter-tests'
+2026-05-05 22:43:59,148 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2026-05-05 22:43:59,186 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2026-05-05 22:43:59,190 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2026-05-05 22:43:59,194 INFO o.a.j.s.SaveService: Loading file: booking.jmx
+2026-05-05 22:43:59,241 INFO o.a.j.p.h.c.CookieManager: Settings: Delete null: true Check: true Allow variable: true Save: false Prefix: COOKIE_
+2026-05-05 22:43:59,266 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-05-05 22:43:59,266 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-05-05 22:43:59,266 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-05-05 22:43:59,266 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2026-05-05 22:43:59,266 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2026-05-05 22:43:59,267 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2026-05-05 22:43:59,337 ERROR o.a.j.JMeter: Error in NonGUIDriver
+java.lang.ClassCastException: class org.apache.jorphan.collections.ListedHashTree cannot be cast to class org.apache.jmeter.testelement.TestElement (org.apache.jorphan.collections.ListedHashTree and org.apache.jmeter.testelement.TestElement are in unnamed module of loader org.apache.jmeter.DynamicClassLoader @e9e54c2)
+	at org.apache.jmeter.gui.tree.JMeterTreeModel.addSubTree(JMeterTreeModel.java:114) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.gui.tree.JMeterTreeModel.addSubTree(JMeterTreeModel.java:131) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.gui.tree.JMeterTreeModel.addSubTree(JMeterTreeModel.java:131) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.gui.tree.JMeterTreeModel.addSubTree(JMeterTreeModel.java:123) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.JMeter.runNonGui(JMeter.java:959) [ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.JMeter.startNonGui(JMeter.java:940) [ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.JMeter.start(JMeter.java:508) [ApacheJMeter_core.jar:5.6.3]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at org.apache.jmeter.NewDriver.main(NewDriver.java:259) [ApacheJMeter.jar:5.6.3]
+2026-05-05 22:43:59,347 ERROR o.a.j.JMeter: An error occurred: 
+org.apache.jmeter.report.config.ConfigurationException: Error in NonGUIDriver class org.apache.jorphan.collections.ListedHashTree cannot be cast to class org.apache.jmeter.testelement.TestElement (org.apache.jorphan.collections.ListedHashTree and org.apache.jmeter.testelement.TestElement are in unnamed module of loader org.apache.jmeter.DynamicClassLoader @e9e54c2)
+	at org.apache.jmeter.JMeter.runNonGui(JMeter.java:1049) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.JMeter.startNonGui(JMeter.java:940) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.JMeter.start(JMeter.java:508) [ApacheJMeter_core.jar:5.6.3]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[?:?]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:569) ~[?:?]
+	at org.apache.jmeter.NewDriver.main(NewDriver.java:259) [ApacheJMeter.jar:5.6.3]
+Caused by: java.lang.ClassCastException: class org.apache.jorphan.collections.ListedHashTree cannot be cast to class org.apache.jmeter.testelement.TestElement (org.apache.jorphan.collections.ListedHashTree and org.apache.jmeter.testelement.TestElement are in unnamed module of loader org.apache.jmeter.DynamicClassLoader @e9e54c2)
+	at org.apache.jmeter.gui.tree.JMeterTreeModel.addSubTree(JMeterTreeModel.java:114) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.gui.tree.JMeterTreeModel.addSubTree(JMeterTreeModel.java:131) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.gui.tree.JMeterTreeModel.addSubTree(JMeterTreeModel.java:131) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.gui.tree.JMeterTreeModel.addSubTree(JMeterTreeModel.java:123) ~[ApacheJMeter_core.jar:5.6.3]
+	at org.apache.jmeter.JMeter.runNonGui(JMeter.java:959) ~[ApacheJMeter_core.jar:5.6.3]
+	... 7 more

@@ -286,7 +286,7 @@
                             <artifactId>backend</artifactId>
                             <type>war</type>
                             <properties>
-                                <context></context>
+                                <context>re-center</context>
                             </properties>
                         </deployable>
                     </deployables>
@@ -294,4 +294,28 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>jmeter-test</id>
+            <properties>
+                <spring.profiles.active>jmeter-test</spring.profiles.active>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven3-plugin</artifactId>
+                        <configuration>
+                            <configuration>
+                                <properties>
+                                    <cargo.jvmargs>-Dspring.profiles.active=jmeter-test</cargo.jvmargs>
+                                </properties>
+                            </configuration>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

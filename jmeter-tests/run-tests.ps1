@@ -24,7 +24,7 @@ $backendReady = $false
 
 while ($retryCount -lt $maxRetries) {
     try {
-        $response = Invoke-RestMethod -Uri "$BaseUrl/auth/me" -Method Get -ErrorAction Stop
+        $response = Invoke-RestMethod -Uri "$BaseUrl/services" -Method Get -ErrorAction Stop
         $backendReady = $true
         Write-Log "Бэкенд доступен!" "Success"
         break
@@ -56,7 +56,7 @@ Start-Sleep -Seconds 3
 Write-Log "Подготовка тестовых данных..." "Info"
 
 Write-Log "Регистрация обычных пользователей..." "Info"
-$userRows = Import-Csv -Path ".\lab4-users.csv"
+$userRows = Import-Csv -Path ".\users.csv"
 foreach ($row in $userRows) {
     $body = @{
         email = $row.email
@@ -76,7 +76,7 @@ foreach ($row in $userRows) {
 }
 
 Write-Log "Регистрация администраторов..." "Info"
-$adminRows = Import-Csv -Path ".\lab4-admin-users.csv"
+$adminRows = Import-Csv -Path ".\admin-users.csv"
 foreach ($row in $adminRows) {
     $body = @{
         email = $row.email
@@ -100,9 +100,9 @@ if (-not (Test-Path $ResultsDir)) {
 }
 
 $tests = @(
-    @{ Name = "Booking Flow"; File = "recenter-lab4-booking.jmx" },
-    @{ Name = "Admin Service Flow"; File = "recenter-lab4.jmx" },
-    @{ Name = "Profile Flow"; File = "recenter-lab4-profile.jmx" }
+    @{ Name = "Booking"; File = "booking.jmx" },
+    @{ Name = "Admin"; File = "admin.jmx" },
+    @{ Name = "Profile"; File = "profile.jmx" }
 )
 
 $testResults = @()
