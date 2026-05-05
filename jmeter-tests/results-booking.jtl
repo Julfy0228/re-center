@@ -1,0 +1,660 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1778000480779,704,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,1,1,http://localhost:8080/re-center/api/auth/login,704,0,35
+1778000483533,386,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,2,2,http://localhost:8080/re-center/api/auth/me,386,0,0
+1778000485658,117,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,2,2,http://localhost:8080/re-center/api/auth/login,117,0,2
+1778000485922,287,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,2,2,http://localhost:8080/re-center/api/services,286,0,0
+1778000487791,4,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,2,2,http://localhost:8080/re-center/api/auth/me,4,0,0
+1778000488226,20,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,2,2,http://localhost:8080/re-center/api/services/1,20,0,0
+1778000489804,8,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,3,3,http://localhost:8080/re-center/api/services,8,0,0
+1778000490259,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,3,3,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000491658,126,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,3,3,http://localhost:8080/re-center/api/auth/login,126,0,2
+1778000491825,6,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,3,3,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000492273,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,3,3,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000493799,4,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,3,3,http://localhost:8080/re-center/api/auth/me,4,0,0
+1778000493846,6,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,3,3,http://localhost:8080/re-center/api/bookings,6,0,0
+1778000494280,4,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,3,3,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000495812,9,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,4,4,http://localhost:8080/re-center/api/services,9,0,0
+1778000495859,4,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,4,4,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000496293,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000497660,111,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,4,4,http://localhost:8080/re-center/api/auth/login,111,0,1
+1778000497832,5,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,4,4,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000497878,3,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000498314,6,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,4,4,http://localhost:8080/re-center/api/bookings/my,5,0,0
+1778000499787,3,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,4,4,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000499850,3,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,4,4,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000499896,4,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000500331,113,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,4,4,http://localhost:8080/re-center/api/auth/login,113,0,0
+1778000501797,7,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000501859,3,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000501905,4,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000502449,3,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000503655,116,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,116,0,2
+1778000503807,8,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,8,0,0
+1778000503869,3,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000503915,116,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,116,0,0
+1778000504458,10,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,10,0,0
+1778000505785,3,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000505832,4,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,4,0,0
+1778000505878,3,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000506048,3,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000506483,5,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000507801,7,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000507848,4,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000507895,3,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000508065,8,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,8,0,0
+1778000508500,4,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,4,0,0
+1778000509822,6,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000509854,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000509900,110,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,110,0,0
+1778000510087,6,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000510507,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000511836,5,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,5,0,0
+1778000511868,4,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000512024,3,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000512101,3,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000512522,2,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000513857,4,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000513887,3,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000514041,7,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000514118,3,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000514537,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000515869,3,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000515900,110,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,110,0,0
+1778000516056,6,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000516132,3,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000516550,3,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000517883,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000518021,5,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,5,0,0
+1778000518069,4,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,4,0,0
+1778000518148,7,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,7,0,0
+1778000518571,112,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,111,0,0
+1778000519898,4,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000520039,7,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000520085,3,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000520164,4,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000520691,2,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000521907,111,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,111,0,0
+1778000522064,6,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000522095,3,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000522173,108,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000522700,6,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000524032,5,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,5,0,0
+1778000524079,6,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,6,0,0
+1778000524110,5,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000524295,3,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000524715,5,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000526053,6,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000526100,2,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000526132,2,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000526302,7,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000526736,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000528073,5,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000528119,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000528151,110,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,110,0,0
+1778000528321,5,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000528742,2,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000530080,4,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000530127,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000530267,3,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000530328,4,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,4,0,0
+1778000530751,2,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000532094,4,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000532140,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000532280,7,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000532342,3,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000532755,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000534106,4,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000534152,120,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,120,0,0
+1778000534292,4,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000534354,4,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000534773,3,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000536123,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000536278,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000536309,3,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000536372,3,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000536792,112,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,112,0,0
+1778000538143,3,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000538285,5,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000538316,3,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000538379,2,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000538906,3,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000540148,113,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,113,0,0
+1778000540304,5,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000540335,2,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000540398,111,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,111,0,0
+1778000540925,8,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,8,0,2
+1778000542277,3,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000542325,2,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000542340,3,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000542512,3,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000542947,6,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000544285,7,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000544332,5,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,5,0,0
+1778000544348,4,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000544520,7,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000544956,2,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000546307,5,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000546339,3,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000546354,113,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,113,0,0
+1778000546540,5,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,1
+1778000546961,2,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000548314,3,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000548345,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000548469,3,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000548547,3,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000548966,2,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000550330,4,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000550361,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000550484,7,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000550560,3,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000550984,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000552347,6,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,6,0,0
+1778000552380,111,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,111,0,0
+1778000552503,5,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,1
+1778000552565,2,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000552998,2,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000554366,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000554507,3,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000554522,4,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,4,0,0
+1778000554583,3,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000555002,151,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,151,0,0
+1778000556371,4,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000556512,10,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,10,0,0
+1778000556543,2,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000556590,3,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000557164,3,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000558378,140,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,139,0,0
+1778000558548,3,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000558548,8,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,7,0,2
+1778000558609,128,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,128,0,0
+1778000559183,6,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000560532,3,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000560565,3,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000560563,5,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,5,0,0
+1778000560751,5,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,5,0,0
+1778000561192,254,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,254,0,0
+1778000562545,33,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,33,0,0
+1778000562576,3,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000562580,11,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,11,0,0
+1778000562762,12,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,11,0,0
+1778000563462,7,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,7,0,0
+1778000564608,350,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,350,0,0
+1778000564594,389,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,389,0,3
+1778000564593,433,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,433,0,0
+1778000564780,301,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,300,0,0
+1778000565474,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000566962,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000566993,3,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000567041,3,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000567087,2,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000567487,4,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000568968,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000568999,3,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000569045,9,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,9,0,0
+1778000569093,2,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000569497,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000571018,3,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000571064,5,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000571097,3,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000570987,119,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,119,0,0
+1778000571512,3,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000573034,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000573081,2,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000573113,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000573113,2,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000573522,108,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000575048,3,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000575095,2,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000575127,2,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000575127,5,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000575642,19,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,19,0,0
+1778000759580,167,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,1,1,http://localhost:8080/re-center/api/auth/login,166,0,45
+1778000761805,3,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,1,1,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000763812,8,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,2,2,http://localhost:8080/re-center/api/services,7,0,0
+1778000764302,109,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,2,2,http://localhost:8080/re-center/api/auth/login,109,0,1
+1778000765825,7,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,2,2,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000766427,3,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,2,2,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000767846,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,2,2,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000768434,6,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,3,3,http://localhost:8080/re-center/api/services,6,0,0
+1778000769864,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,3,3,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000770297,112,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,3,3,http://localhost:8080/re-center/api/auth/login,111,0,2
+1778000770450,6,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,3,3,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000771879,5,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,3,3,http://localhost:8080/re-center/api/bookings/NOT_FOUND,5,0,0
+1778000772418,4,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,3,3,http://localhost:8080/re-center/api/auth/me,4,0,0
+1778000772464,3,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,3,3,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000773895,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,3,3,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000774437,10,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,4,4,http://localhost:8080/re-center/api/services,10,0,0
+1778000774469,3,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,4,4,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000775899,4,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,4,4,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000776301,110,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,4,4,http://localhost:8080/re-center/api/auth/login,110,0,2
+1778000776457,6,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,4,4,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000776496,3,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000777917,121,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,4,4,http://localhost:8080/re-center/api/auth/login,121,0,0
+1778000778429,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,4,4,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000778476,12,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,4,4,http://localhost:8080/re-center/api/bookings,12,0,0
+1778000778506,3,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000780044,3,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,4,4,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000780448,6,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000780494,3,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000780525,3,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000782049,7,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000782295,109,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,1
+1778000782463,5,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000782510,7,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,7,0,0
+1778000782542,107,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,107,0,0
+1778000784064,5,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000784418,3,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000784482,5,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,5,0,0
+1778000784527,3,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000784664,2,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000786072,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000786430,7,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000786492,3,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000786538,2,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000786678,6,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000788091,5,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000788449,5,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000788512,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000788543,108,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000788699,5,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000790103,2,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000790461,3,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000790523,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000790663,3,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000790709,2,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000792108,4,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000792466,4,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000792528,3,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000792670,5,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000792717,2,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000794123,2,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000794482,2,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000794540,112,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,112,0,0
+1778000794680,5,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000794726,4,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000796137,117,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,117,0,0
+1778000796493,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000796665,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000796696,2,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000796741,3,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000798263,2,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000798512,3,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000798682,8,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000798715,2,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000798746,3,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000800268,6,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000800532,108,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000800701,5,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000800732,2,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000800764,109,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,0
+1778000802286,4,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000802645,3,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000802721,2,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000802736,3,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000802875,3,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000804303,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000804662,6,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000804739,2,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000804754,3,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000804879,5,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000806319,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000806747,7,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,7,0,0
+1778000806689,66,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,66,0,0
+1778000806899,16,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,16,0,0
+1778000806762,156,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,156,0,0
+1778000808326,4,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000808763,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000808763,3,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000808919,2,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000808935,2,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000810345,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000810776,3,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000810776,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000810929,2,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000810944,7,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000812364,3,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000812781,2,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000812781,112,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,112,0,0
+1778000812937,3,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000812954,5,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000814383,113,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,113,0,0
+1778000814785,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000814907,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000814953,2,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000814968,3,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000816503,4,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,4,0,0
+1778000816798,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000816920,7,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000816967,2,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000816983,3,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000818509,6,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000818805,108,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000818944,5,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000818991,4,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000818976,114,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,114,0,0
+1778000820524,8,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,8,0,4
+1778000820928,2,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000820960,2,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000821005,3,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000821098,3,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000822545,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000822933,6,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000822964,2,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000823011,3,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000823104,6,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000824551,4,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000824955,5,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000824971,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000825018,109,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,0
+1778000825126,6,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,6,0,2
+1778000826560,3,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000826965,2,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000826981,2,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000827136,4,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000827136,4,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000828566,2,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000828972,2,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000828987,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000829144,3,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000829144,7,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000830572,2,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000830989,2,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000830990,107,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,107,0,0
+1778000831160,3,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000831160,7,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,7,0,2
+1778000832582,113,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,113,0,0
+1778000833001,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000833110,3,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000833173,2,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000833173,2,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000834697,2,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000835006,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000835116,7,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000835178,2,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000835178,2,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000836707,5,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000837018,106,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,106,0,0
+1778000837127,6,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,6,0,2
+1778000837191,2,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000837191,111,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,111,0,0
+1778000838714,5,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000839134,2,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000839134,2,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000839197,2,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000839306,3,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000840734,2,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000841138,3,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000841138,6,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000841201,2,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000841325,6,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000842738,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000843143,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000843158,7,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,7,0,3
+1778000843205,110,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,110,0,0
+1778000843333,4,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000844745,2,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000845147,2,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000845178,3,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000845318,2,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000845348,3,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000846760,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000847165,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000847196,2,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000847335,5,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000847366,2,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000848767,3,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000849203,3,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000849171,108,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000849357,4,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000849373,1,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,1,0,0
+1778000850775,107,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,107,0,0
+1778000851211,2,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000851289,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000851368,3,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000851383,2,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000852889,2,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000853218,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000853296,5,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000853373,3,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000853388,3,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000854894,8,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,8,0,0
+1778000855312,5,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000855235,109,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,0
+1778000855390,2,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000855404,118,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,118,0,0
+1778000856917,5,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000857322,4,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,4,0,0
+1778000857353,3,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000857400,3,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000857525,2,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000858924,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000859332,3,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000859363,5,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000859410,2,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000859535,7,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000860931,2,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000861351,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000861382,4,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000861428,109,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,0
+1778000861552,4,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000862938,2,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000863358,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000863389,1,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,1,0,0
+1778000863542,3,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000863558,2,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000864955,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000865373,4,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000865405,2,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000865561,7,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000865576,3,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000866961,2,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000867413,2,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000867383,112,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,112,0,0
+1778000867584,3,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000867584,5,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000868966,108,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000869418,2,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000869511,3,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000869590,2,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000869591,2,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000871085,4,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,4,0,0
+1778000871428,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000871521,6,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000871599,2,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000871599,2,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000873094,8,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,8,0,0
+1778000873433,108,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000873542,4,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000873603,2,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000873603,110,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,110,0,0
+1778000875106,4,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000875558,4,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000875558,4,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000875620,2,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000875714,2,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000877125,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000877574,4,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000877574,8,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,8,0,0
+1778000877636,2,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000877730,4,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,4,0,0
+1778000879143,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000879581,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000879596,5,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000879738,4,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000879643,108,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000881151,5,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,5,0,3
+1778000881598,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000881613,3,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000881753,3,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000881767,3,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000883163,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000883615,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000883631,2,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000883771,3,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000883786,7,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000885171,2,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000885638,3,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000885623,110,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,0
+1778000885780,4,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,2
+1778000885795,5,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000887181,109,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,0
+1778000887646,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000887740,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000887786,2,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000887802,2,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000889295,3,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000889665,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000889756,6,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000889801,2,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000889817,2,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000891313,7,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000891669,110,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,110,0,0
+1778000891776,4,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000891823,3,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,2
+1778000891807,107,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,107,0,0
+1778000893333,5,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000893783,2,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000893783,2,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000893829,2,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000893925,2,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000895348,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000895797,4,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000895797,7,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000895843,3,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000895938,5,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000897354,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000897804,4,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,2
+1778000897820,4,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000897850,107,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,107,0,0
+1778000897959,4,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000899363,3,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000899815,2,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000899831,2,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000899971,2,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000899971,2,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000901373,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000901825,3,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000901840,4,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,4,0,0
+1778000901979,2,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000901979,6,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000903381,3,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000903849,4,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,2
+1778000903833,108,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000903987,2,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000903987,4,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000905386,112,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,112,0,0
+1778000905854,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000905948,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000905995,5,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,5,0,0
+1778000905995,5,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,5,0,0
+1778000907513,3,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000907869,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000907963,5,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000908010,3,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000908010,3,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000909520,7,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000909972,4,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000909877,112,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,112,0,0
+1778000910018,2,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000910018,106,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,106,0,0
+1778000911531,6,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000911982,2,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000911997,3,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000912028,2,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000912137,2,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000913547,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000913999,3,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000914016,7,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,7,0,0
+1778000914046,2,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000914154,8,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,8,0,0
+1778000915558,3,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000916008,3,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000916024,7,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000916055,106,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,106,0,0
+1778000916180,4,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000917575,3,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000918024,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000918039,3,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000918163,2,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000918194,2,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000919582,2,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000920033,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000920048,2,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000920173,5,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000920204,2,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000921589,3,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000922058,4,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,4,0,0
+1778000922042,109,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,0
+1778000922182,3,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,3,0,0
+1778000922212,2,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000923609,111,Login,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,111,0,0
+1778000924075,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000924167,2,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,1,0,0
+1778000924197,3,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000924228,2,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,1,0,0
+1778000925732,2,Get Current User,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000926089,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000926183,5,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000926215,2,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000926246,1,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,1,0,0
+1778000927739,7,Get Services,200,,5 Booking Users 1-1,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000928192,3,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,3,0,0
+1778000928098,109,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,109,0,0
+1778000928222,3,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000928254,108,Login,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000929760,5,Get Service By Id,200,,5 Booking Users 1-1,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000930199,2,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000930215,2,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000930231,2,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000930371,3,Get Current User,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000931780,3,Create Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,3,0,0
+1778000932215,2,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000932231,5,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,5,0,0
+1778000932246,2,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000932384,8,Get Services,200,,5 Booking Users 1-2,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,8,0,0
+1778000933798,2,Get My Bookings,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000934229,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000934244,5,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,5,0,0
+1778000934260,112,Login,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,276,5,5,http://localhost:8080/re-center/api/auth/login,112,0,0
+1778000934400,6,Get Service By Id,200,,5 Booking Users 1-2,text,true,,617,199,5,5,http://localhost:8080/re-center/api/services/1,6,0,0
+1778000935813,3,Get Booking By Id,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,240,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000936234,2,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000936264,2,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000936375,2,Get Current User,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,229,5,5,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000936419,2,Create Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,348,5,5,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000937827,3,Delete Booking,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,262,5,5,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000938247,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000938278,1,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,1,0,0
+1778000938386,6,Get Services,200,,5 Booking Users 1-3,text,true,,1339,197,5,5,http://localhost:8080/re-center/api/services,6,0,0
+1778000938433,2,Get My Bookings,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000939835,3,Get My Bookings After Delete,403,,5 Booking Users 1-1,text,false,Test failed: code expected to contain /200/,1093,233,5,5,http://localhost:8080/re-center/api/bookings/my,3,0,0
+1778000940285,2,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000940253,110,Login,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,276,4,4,http://localhost:8080/re-center/api/auth/login,110,0,0
+1778000940395,4,Get Service By Id,200,,5 Booking Users 1-3,text,true,,617,199,4,4,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000940442,2,Get Booking By Id,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,240,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,1,0,0
+1778000942291,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000942369,3,Get Current User,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,229,4,4,http://localhost:8080/re-center/api/auth/me,3,0,0
+1778000942415,2,Create Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,348,4,4,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000942446,2,Delete Booking,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,262,4,4,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000944309,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,4,4,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000944387,7,Get Services,200,,5 Booking Users 1-4,text,true,,1339,197,4,4,http://localhost:8080/re-center/api/services,7,0,0
+1778000944419,2,Get My Bookings,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,4,4,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000944464,2,Get My Bookings After Delete,403,,5 Booking Users 1-2,text,false,Test failed: code expected to contain /200/,1093,233,4,4,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000946402,4,Get Service By Id,200,,5 Booking Users 1-4,text,true,,617,199,3,3,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000946322,108,Login,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,276,3,3,http://localhost:8080/re-center/api/auth/login,108,0,0
+1778000946431,2,Get Booking By Id,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,240,3,3,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000948421,2,Create Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,348,3,3,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000948437,2,Delete Booking,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,262,3,3,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000948437,2,Get Current User,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,229,3,3,http://localhost:8080/re-center/api/auth/me,2,0,0
+1778000950434,1,Get My Bookings,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,3,3,http://localhost:8080/re-center/api/bookings/my,1,0,0
+1778000950449,2,Get My Bookings After Delete,403,,5 Booking Users 1-3,text,false,Test failed: code expected to contain /200/,1093,233,3,3,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000950449,5,Get Services,200,,5 Booking Users 1-5,text,true,,1339,197,2,2,http://localhost:8080/re-center/api/services,5,0,0
+1778000952449,2,Get Booking By Id,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,240,2,2,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000952465,4,Get Service By Id,200,,5 Booking Users 1-5,text,true,,617,199,2,2,http://localhost:8080/re-center/api/services/1,4,0,0
+1778000954458,3,Delete Booking,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,262,2,2,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000954474,2,Create Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,348,2,2,http://localhost:8080/re-center/api/bookings,2,0,0
+1778000956468,2,Get My Bookings After Delete,403,,5 Booking Users 1-4,text,false,Test failed: code expected to contain /200/,1093,233,2,2,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000956484,2,Get My Bookings,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,1,1,http://localhost:8080/re-center/api/bookings/my,2,0,0
+1778000958490,2,Get Booking By Id,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,240,1,1,http://localhost:8080/re-center/api/bookings/NOT_FOUND,2,0,0
+1778000960500,3,Delete Booking,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,262,1,1,http://localhost:8080/re-center/api/bookings/NOT_FOUND,3,0,0
+1778000962509,2,Get My Bookings After Delete,403,,5 Booking Users 1-5,text,false,Test failed: code expected to contain /200/,1093,233,1,1,http://localhost:8080/re-center/api/bookings/my,2,0,0

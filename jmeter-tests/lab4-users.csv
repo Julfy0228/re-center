@@ -1,0 +1,6 @@
+email,password,firstName,lastName,middleName,phoneNumber
+lab4_user1@example.com,lab41234,Ivan,Petrov,Sergeevich,+79990000001
+lab4_user2@example.com,lab41234,Petr,Ivanov,Alekseevich,+79990000002
+lab4_user3@example.com,lab41234,Anna,Smirnova,Olegovna,+79990000003
+lab4_user4@example.com,lab41234,Elena,Kuznetsova,Igorevna,+79990000004
+lab4_user5@example.com,lab41234,Sergey,Sokolov,Andreevich,+79990000005
