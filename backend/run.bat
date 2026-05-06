@@ -3,10 +3,10 @@ setlocal enabledelayedexpansion
 
 set PROFILE=
 set SPRING_ARGS=
-if "%1"=="--jmeter-test" (
-    set PROFILE=-Pjmeter-test
-    set SPRING_ARGS=-Dspring.profiles.active=jmeter-test
-    echo 🧪 Запуск в режиме JMeter тестирования (in-memory БД)
+if "%1"=="--test-data" (
+    set PROFILE=-Ptest-data
+    set SPRING_ARGS=-Dspring.profiles.active=test-data
+    echo 🧪 Запуск в режиме инициализации тестовых данных (in-memory БД)
 )
 
 call mvn clean

@@ -297,9 +297,9 @@
 
     <profiles>
         <profile>
-            <id>jmeter-test</id>
+            <id>test-data</id>
             <properties>
-                <spring.profiles.active>jmeter-test</spring.profiles.active>
+                <spring.profiles.active>test-data</spring.profiles.active>
             </properties>
             <build>
                 <plugins>
@@ -309,7 +309,7 @@
                         <configuration>
                             <configuration>
                                 <properties>
-                                    <cargo.jvmargs>-Dspring.profiles.active=jmeter-test</cargo.jvmargs>
+                                    <cargo.jvmargs>-Dspring.profiles.active=test-data</cargo.jvmargs>
                                 </properties>
                             </configuration>
                         </configuration>

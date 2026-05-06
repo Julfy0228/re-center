@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Lab4 Re-Center Profile Flow Load Test" enabled="true">
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Re-Center Profile Flow Load Test">
       <stringProp name="TestPlan.comments">Load test for the authenticated profile flow: login, auth info, profile read, profile update, activity log.</stringProp>
-      <boolProp name="TestPlan.functional_mode">false</boolProp>
-      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
-      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
         <collectionProp name="Arguments.arguments">
           <elementProp name="protocol" elementType="Argument">
             <stringProp name="Argument.name">protocol</stringProp>
@@ -29,15 +27,16 @@
           </elementProp>
         </collectionProp>
       </elementProp>
-      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
     </TestPlan>
     <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5 Profile Users" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="5 Profile Users">
         <intProp name="ThreadGroup.num_threads">5</intProp>
         <intProp name="ThreadGroup.ramp_time">30</intProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
           <stringProp name="LoopController.loops">10</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
@@ -110,7 +109,7 @@
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert 200 Login" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="0">200</stringProp>
+              <stringProp name="49586">200</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -141,7 +140,7 @@
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert 200 Get Current User" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="0">200</stringProp>
+              <stringProp name="49586">200</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -172,7 +171,7 @@
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert 200 Get My Profile" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="0">200</stringProp>
+              <stringProp name="49586">200</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -224,7 +223,7 @@ vars.put(&apos;profileActivityDetails&apos;, &apos;Profile updated via JMeter, p
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert 200 Update My Profile" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="0">200</stringProp>
+              <stringProp name="49586">200</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -255,7 +254,7 @@ vars.put(&apos;profileActivityDetails&apos;, &apos;Profile updated via JMeter, p
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert 200 Get My Profile After Update" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="0">200</stringProp>
+              <stringProp name="49586">200</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -292,7 +291,7 @@ vars.put(&apos;profileActivityDetails&apos;, &apos;Profile updated via JMeter, p
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert 200 Create Activity" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="0">200</stringProp>
+              <stringProp name="49586">200</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
@@ -323,7 +322,7 @@ vars.put(&apos;profileActivityDetails&apos;, &apos;Profile updated via JMeter, p
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Assert 200 Get My Activities" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="0">200</stringProp>
+              <stringProp name="49586">200</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_code</stringProp>
