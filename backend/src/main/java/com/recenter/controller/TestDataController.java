@@ -33,9 +33,6 @@ public class TestDataController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    /**
-     * Проверить, активен ли профиль test-data
-     */
     private boolean isTestDataMode() {
         return Arrays.asList(environment.getActiveProfiles()).contains("test-data");
     }
@@ -69,7 +66,6 @@ public class TestDataController {
                 for (String query : queries) {
                     String trimmedQuery = query.trim();
                     if (!trimmedQuery.isEmpty()) {
-                        // Хешируем пароли в INSERT запросах
                         trimmedQuery = hashPasswordsInQuery(trimmedQuery);
                         
                         try {
@@ -107,19 +103,14 @@ public class TestDataController {
      * Ищет паттерн 'computeHash(password)' и заменяет на хешированный пароль
      */
     private String hashPasswordsInQuery(String query) {
-        // Ищем паттерн 'computeHash(password)' с кавычками
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("'computeHash\\(([^)]+)\\)'");
         java.util.regex.Matcher matcher = pattern.matcher(query);
         
         StringBuffer sb = new StringBuffer();
         while (matcher.find()) {
-            // Извлекаем пароль из 'computeHash(password)'
             String password = matcher.group(1);
-            // Хешируем пароль
             String hashedPassword = passwordEncoder.encode(password);
-            // Экранируем спецсимволы для replaceAll
             String escapedHash = java.util.regex.Matcher.quoteReplacement("'" + hashedPassword + "'");
-            // Заменяем на хешированный пароль в кавычках
             matcher.appendReplacement(sb, escapedHash);
         }
         matcher.appendTail(sb);
@@ -145,16 +136,13 @@ public class TestDataController {
             try (Connection conn = dataSource.getConnection();
                  Statement stmt = conn.createStatement()) {
                 
-                // Отключаем проверку внешних ключей для H2
                 stmt.execute("SET REFERENTIAL_INTEGRITY FALSE");
                 
-                // Удаляем данные из таблиц
                 stmt.execute("DELETE FROM Bookings");
                 stmt.execute("DELETE FROM Reviews");
                 stmt.execute("DELETE FROM Services");
                 stmt.execute("DELETE FROM Users");
                 
-                // Включаем проверку внешних ключей
                 stmt.execute("SET REFERENTIAL_INTEGRITY TRUE");
                 
                 return ResponseEntity.ok(new ExecutionResult(
@@ -191,7 +179,6 @@ public class TestDataController {
         ));
     }
 
-    // DTO классы
     public static class SqlRequest {
         private String sql;
 

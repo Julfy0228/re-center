@@ -6,7 +6,7 @@ set SPRING_ARGS=
 if "%1"=="--test-data" (
     set PROFILE=-Ptest-data
     set SPRING_ARGS=-Dspring.profiles.active=test-data
-    echo 🧪 Запуск в режиме инициализации тестовых данных (in-memory БД)
+    echo In-memory database profile enabled
 )
 
 call mvn clean
