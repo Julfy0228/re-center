@@ -43,8 +43,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
               and (:dateTo is null or b.startDate <= :dateTo)
               and (
                     :paid is null
-                    or (:paid = true and exists (select p.id from Payment p where p.booking = b))
-                    or (:paid = false and not exists (select p.id from Payment p where p.booking = b))
+                    or (:paid = true and exists (select p.id from Payment p where p.booking = b and p.status = 'COMPLETED'))
+                    or (:paid = false and not exists (select p.id from Payment p where p.booking = b and p.status = 'COMPLETED'))
                   )
             order by b.createdAt desc
             """)

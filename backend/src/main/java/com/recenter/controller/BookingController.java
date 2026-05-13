@@ -157,7 +157,7 @@ public class BookingController {
     }
 
     private BookingResponse toResponse(Booking booking) {
-        return toResponse(booking, paymentRepository.existsByBooking_Id(booking.getId()));
+        return toResponse(booking, paymentRepository.existsByBooking_IdAndStatus(booking.getId(), "COMPLETED"));
     }
 
     private BookingResponse toResponse(Booking booking, boolean isPaid) {

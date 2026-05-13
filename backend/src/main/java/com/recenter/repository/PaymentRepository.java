@@ -32,6 +32,8 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     boolean existsByBooking_Id(Long bookingId);
 
-    @Query("select distinct p.booking.id from Payment p where p.booking.id in :bookingIds")
+    boolean existsByBooking_IdAndStatus(Long bookingId, String status);
+
+    @Query("select distinct p.booking.id from Payment p where p.booking.id in :bookingIds and p.status = 'COMPLETED'")
     List<Long> findPaidBookingIds(@Param("bookingIds") List<Long> bookingIds);
 }
