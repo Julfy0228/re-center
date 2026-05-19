@@ -1,0 +1,298 @@
+<mxfile host="65bd71144e">
+    <diagram name="Диаграмма прецедентов" id="0">
+        <mxGraphModel dx="1036" dy="732" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="client" value="Клиент" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=16" parent="1" vertex="1">
+                    <mxGeometry x="600" y="275" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="manager" value="Менеджер" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=16" parent="1" vertex="1">
+                    <mxGeometry x="570" y="780" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_auth" value="Регистрация / вход" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="620" y="145" width="170" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_jwt" value="Проверка JWT" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="625" y="15" width="160" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_catalog" value="Просмотр каталога услуг" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="820" y="275" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_details" value="Просмотр деталей услуги" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="820" y="145" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_filter" value="Фильтрация по категориям" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="1130" y="260" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_booking" value="Создание бронирования" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="815" y="365" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_availability" value="Проверка доступности" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="1160" y="350" width="180" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_discount" value="Применение скидки" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="645" y="525" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_discount_valid" value="Проверка срока действия" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="945" y="535" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_pay" value="Оплата бронирования" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="340" y="270" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_booking_status" value="Проверка статуса брони" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="40" y="365" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_confirm_booking" value="Подтверждение бронирования" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="10" y="255" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_my_bookings" value="Просмотр своих бронирований" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="325" y="545" width="210" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_review" value="Оставление отзыва" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="340" y="385" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_review_duplicate" value="Проверка дубликата отзыва" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="40" y="495" width="210" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_notifications" value="Просмотр уведомлений" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="400" y="145" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_unread" value="Подсчёт непрочитанных" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="60" y="155" width="190" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_profile" value="Управление профилем" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="800" y="455" width="180" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_services" value="Управление услугами" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="370" y="665" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_news" value="Управление новостями" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="220" y="860" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_promos" value="Управление акциями" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="270" y="770" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_bookings_manage" value="Подтверждение / отмена бронирований" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="680" y="732.5" width="240" height="75" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_review_moderation" value="Модерация отзывов" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="625" y="905" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_review_status" value="Изменение статуса отзыва" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="590" y="1025" width="200" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_all_reviews" value="Просмотр всех отзывов" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="620" y="635" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend_client" value="Клиентские сценарии" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="830" y="1060" width="170" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend_support" value="Включаемые проверки" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="1020" y="1060" width="170" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend_manager" value="Сценарии менеджера" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="1210" y="1060" width="170" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="legend_admin" value="Сценарии администратора" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" parent="1" vertex="1">
+                    <mxGeometry x="1400" y="1060" width="190" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_client_auth" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="client" target="uc_auth" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_client_catalog" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="client" target="uc_catalog" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_client_booking" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="client" target="uc_booking" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_client_pay" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="client" target="uc_pay" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_client_my_bookings" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="client" target="uc_my_bookings" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_client_review" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="client" target="uc_review" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_client_notifications" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="client" target="uc_notifications" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_client_profile" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="client" target="uc_profile" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_manager_services" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="manager" target="uc_services" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_manager_news" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="manager" target="uc_news" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_manager_promos" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="manager" target="uc_promos" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_manager_discounts" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="manager" target="uc_discounts_manage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_manager_bookings" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="manager" target="uc_bookings_manage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_manager_review_moderation" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="manager" target="uc_review_moderation" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_manager_all_reviews" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="manager" target="uc_all_reviews" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_admin_users" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="admin" target="uc_users" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="assoc_admin_payments" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000" parent="1" source="admin" target="uc_payments_manage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="gen_manager_client" value="" style="endArrow=block;endFill=0;html=1;rounded=0;strokeColor=#666666" parent="1" source="manager" target="client" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="gen_admin_manager" value="" style="endArrow=block;endFill=0;html=1;rounded=0;strokeColor=#666666" parent="1" source="admin" target="manager" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_auth_jwt" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_auth" target="uc_jwt" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_catalog_filter" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_catalog" target="uc_filter" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_catalog_details" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_catalog" target="uc_details" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_booking_availability" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_booking" target="uc_availability" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_discount_valid" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_discount" target="uc_discount_valid" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_pay_status" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_pay" target="uc_booking_status" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ext_pay_confirm" value="&amp;lt;&amp;lt;extend&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#b85450;fontSize=12" parent="1" source="uc_pay" target="uc_confirm_booking" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_review_status" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_review" target="uc_booking_status" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_review_duplicate" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_review" target="uc_review_duplicate" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_notifications_unread" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_notifications" target="uc_unread" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="inc_moderation_status" value="&amp;lt;&amp;lt;include&amp;gt;&amp;gt;" style="endArrow=open;html=1;rounded=0;dashed=1;strokeColor=#666666;fontSize=12" parent="1" source="uc_review_moderation" target="uc_review_status" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_users" value="Управление пользователями" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="1170" y="905" width="220" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="uc_payments_manage" value="Управление платежами" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="1210" y="735" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="admin" value="Администратор" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=16" parent="1" vertex="1">
+                    <mxGeometry x="1040" y="780" width="60" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="NPFbXb76OnpBaT7hBVOD-7" value="" style="endArrow=none;html=1;rounded=0;" parent="1" source="client" target="uc_discount" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="800" y="475" as="sourcePoint"/>
+                        <mxPoint x="750" y="525" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="uc_discounts_manage" value="Управление скидками" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14" parent="1" vertex="1">
+                    <mxGeometry x="345" y="935" width="190" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_auth" value="Кнопки «Войти», «Регистрация»&lt;br&gt;на страницах входа/регистрации" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="445" y="50" width="155" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_catalog" value="Кнопка «Каталог»&lt;br&gt;на главной странице" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="1065" y="180" width="140" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_details" value="Кнопка «Подробнее»&lt;br&gt;на карточке услуги" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="1060" y="82.5" width="145" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_booking" value="Кнопка «Забронировать»&lt;br&gt;на странице услуги" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="1030" y="425" width="150" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_pay" value="Кнопка «Оплатить»&lt;br&gt;в списке бронирований" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="230" y="210" width="150" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_review" value="Кнопка «Оставить отзыв»&lt;br&gt;у подтверждённой брони" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="110" y="570" width="165" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_notifications" value="Кнопка «Уведомления»&lt;br&gt;в верхнем меню" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="225" y="82.5" width="145" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_profile" value="Кнопка «Профиль»&lt;br&gt;в меню пользователя" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="1180" y="505" width="145" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_services" value="Кнопки «Добавить», «Изменить», «Удалить»&lt;br&gt;в панели услуг" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="140" y="650" width="180" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_news_promos" value="Кнопки CRUD&lt;br&gt;в панелях новостей и акций" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="55" y="790" width="155" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_manage_bookings" value="Кнопки «Подтвердить», «Отменить»&lt;br&gt;в панели бронирований" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="925" y="695" width="180" height="65" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_moderation" value="Кнопки «Одобрить», «Отклонить»&lt;br&gt;в панели отзывов" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="855" y="960" width="170" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_payments" value="Кнопка «Завершить платёж»&lt;br&gt;в панели платежей" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="1390" y="640" width="165" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_users" value="Кнопки управления пользователями&lt;br&gt;в админ-панели" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacing=6" parent="1" vertex="1">
+                    <mxGeometry x="1400" y="825" width="180" height="55" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_auth" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_auth" target="uc_auth" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_catalog" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_catalog" target="uc_catalog" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_details" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_details" target="uc_details" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_booking" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_booking" target="uc_booking" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_pay" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_pay" target="uc_pay" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_review" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_review" target="uc_review" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_notifications" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_notifications" target="uc_notifications" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_profile" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_profile" target="uc_profile" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_services" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_services" target="uc_services" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_news" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_news_promos" target="uc_news" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_promos" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_news_promos" target="uc_promos" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_manage_bookings" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_manage_bookings" target="uc_bookings_manage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_moderation" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_moderation" target="uc_review_moderation" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_payments" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_payments" target="uc_payments_manage" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="note_edge_users" value="" style="endArrow=none;dashed=1;html=1;rounded=0;strokeColor=#d6b656" parent="1" source="note_users" target="uc_users" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
