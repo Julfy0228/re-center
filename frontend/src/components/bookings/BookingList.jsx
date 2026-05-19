@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { getMyBookings } from "../../api/bookings";
 import { getMyPayments } from "../../api/payments";
 import { getMyReviews } from "../../api/reviews";
@@ -34,7 +34,7 @@ export default function BookingList({ user, onLogout }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  useEffect(() => {
+  const loadData = useCallback(() => {
     const bookingParams = {};
     if (filters.dateFrom) {
       bookingParams.dateFrom = filters.dateFrom;
@@ -79,6 +79,10 @@ export default function BookingList({ user, onLogout }) {
       .finally(() => setLoading(false));
   }, [filters]);
 
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
   const paymentsByBookingId = useMemo(() => buildBookingMap(payments), [payments]);
   const reviewsByBookingId = useMemo(() => buildBookingMap(reviews), [reviews]);
 
@@ -89,6 +93,17 @@ export default function BookingList({ user, onLogout }) {
       title="Мои бронирования"
       subtitle="Здесь собраны все ваши оформленные брони, быстрые действия по оплате и уже сохранённые отзывы."
     >
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "16px" }}>
+        <button
+          type="button"
+          className="secondary-button"
+          onClick={loadData}
+          disabled={loading}
+        >
+          {loading ? "Обновляем..." : "Обновить данные"}
+        </button>
+      </div>
+
       <section className="card-like booking-filter-panel">
         <div>
           <p className="eyebrow">Фильтры</p>

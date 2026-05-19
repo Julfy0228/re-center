@@ -128,6 +128,11 @@ public class PaymentController {
     @PutMapping("/{id}/complete")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PaymentResponse> completePayment(@PathVariable("id") Long id) {
+        Payment payment = paymentService.getById(id).orElse(null);
+        if (payment == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         Payment paymentDetails = new Payment();
         paymentDetails.setStatus("COMPLETED");
         paymentDetails.setPaymentDate(LocalDateTime.now());
@@ -135,6 +140,13 @@ public class PaymentController {
         Payment updated = paymentService.update(id, paymentDetails);
         if (updated == null) {
             return ResponseEntity.notFound().build();
+        }
+
+        Booking booking = updated.getBooking();
+        if (booking != null && booking.getStatus() == BookingStatus.PENDING) {
+            Booking bookingUpdate = new Booking();
+            bookingUpdate.setStatus(BookingStatus.CONFIRMED);
+            bookingService.update(booking.getId(), bookingUpdate);
         }
 
         return ResponseEntity.ok(EntityDtoMapper.toPaymentResponse(updated));

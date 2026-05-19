@@ -91,6 +91,11 @@ export default function BookingPaymentForm({ booking, payment, onPaymentCreated 
             <strong>{formatPaymentStatus(payment.status)}</strong>.
           </p>
           <p>Способ оплаты: {formatPaymentMethod(payment.paymentMethod)}</p>
+          {payment.status === "PENDING" && booking.status === "CONFIRMED" && (
+            <p className="muted" style={{ marginTop: "8px" }}>
+              Бронирование подтверждено. Возможно, платёж уже обработан - обновите страницу.
+            </p>
+          )}
         </div>
       ) : (
         <form className="admin-form" onSubmit={handleSubmit}>
