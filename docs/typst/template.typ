@@ -87,5 +87,14 @@
   // Таблицы
   show figure.where(kind: table): set block(breakable: true)
 
+  // Содержание
+  show outline.entry: it => {
+    if it.level == 1 {
+      [#upper(it)]
+    } else {
+      it
+    }
+  }
+
   doc
 }
